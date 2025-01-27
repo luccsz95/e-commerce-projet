@@ -21,7 +21,7 @@
             <!-- Si l'utilisateur n'est pas connecté, afficher Connexion et Inscription -->
             <a href="index.php">Page d'accueil </a>
             <a href="connexion.php">Se connecter</a>
-            <a href="inscription.php">S'inscrire</a>
+            <a href="vendor/phpmailer/inscription.php">S'inscrire</a>
         <?php else: ?>
             <!-- Si l'utilisateur est connecté, afficher Déconnexion -->
             <span>Bienvenue, <?php echo $_SESSION['username']; ?></span>

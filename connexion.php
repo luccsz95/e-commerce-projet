@@ -47,6 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
 
+<div class="">
+    <div class="header">
+        <a class="logo-link" href="index.php"><img src="images/Image_immeuble.jpg" alt="logo"></a> <!-- ../image/Image_immeuble.jpg -->
+    </div>
+</div>
+
 <div class="signup">
     <h2>Connexion</h2>
     <form action="connexion.php" method="POST">
@@ -59,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="submit" value="Se connecter">
     </form>
 
-    <p>Pas encore inscrit ? <a href="inscription.php">Inscrivez-vous ici</a></p>
+    <p>Pas encore inscrit ? <a href="vendor/phpmailer/inscription.php">Inscrivez-vous ici</a></p>
     <p>Oublie de mot de passe ? <a href="reset_password_request.php">Cliquez ici</a></p>
 </div>
 
