@@ -4,7 +4,7 @@ body {
     background-color: #f4f4f9;
     color: #333;
     margin: 0;
-    padding: 20px 0; /* Ajout d'une marge en haut */
+    padding: 20px 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,7 +13,7 @@ body {
 
 h2 {
     text-align: center;
-    color: #2e7d32; /* Remplacement du bleu par un vert foncé */
+    color: #2e7d32;
 }
 
 /* Conteneur du formulaire */
@@ -51,7 +51,7 @@ input[type="password"] {
 input[type="text"]:focus,
 input[type="email"],
 input[type="password"]:focus {
-    border-color: #2e7d32; /* Remplacement du bleu par un vert foncé */
+    border-color: #2e7d32;
     outline: none;
     box-shadow: 0 0 5px rgba(46, 125, 50, 0.2);
 }
@@ -68,12 +68,12 @@ button {
 }
 
 input[type="submit"] {
-    background-color: #2e7d32; /* Remplacement du bleu par un vert foncé */
+    background-color: #2e7d32;
     color: #fff;
 }
 
 input[type="submit"]:hover {
-    background-color: #255d27; /* Teinte plus foncée de vert */
+    background-color: #255d27;
     transform: scale(1.02);
 }
 
@@ -128,7 +128,7 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2e7d32; /* Vert foncé pour correspondre au style d'inscription */
+    background-color: #2e7d32;
     padding: 10px 20px;
     z-index: 1000; /* Assure que la navbar reste au-dessus des autres éléments */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
