@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 
 <div class="">
     <div class="header">
-        <a class="logo-link" href="../../index.php"><img src="../../images/Image_immeuble.jpg" alt="logo"></a> <!-- ../image/Image_immeuble.jpg -->
+        <a class="logo-link" href="../../index.php"><img src="../../images/Image_immeuble.jpg" alt="logo"></a>
     </div>
 </div>
 
@@ -66,9 +66,29 @@
         return true;
     }
     }
-</script>
+</script>-->
 
 <?php
+
+/*require 'PHPMailer.php';
+require 'SMTP.php';
+require 'Exception.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+$mail = new PHPMailer(true);
+
+$mail->isSMTP();
+$mail->Host = 'smtp.mail.gmail.com';
+$mail->SMTPAuth = true;
+$mail->Username = 'casenazl95610@gmail.com';
+$mail->Password = 'J@f6#k93CaW@HCD97Y'; // À sécuriser avec des variables d'environnement
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+$mail->Port = 587;
+$mail->setFrom('casenazl95610@gmail.com', 'ecom INSTA');
+$mail->addAddress($email, htmlspecialchars("$firstname $lastname"));*/
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lastname = htmlspecialchars($_POST['lastname']);
     $firstname = htmlspecialchars($_POST['firstname']);
@@ -82,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-    include "bdd.php";
+    include "../../../../bdd.php";
 
     try {
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
@@ -103,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bindParam(':password', $hashedPassword);
             $stmt->bindParam(':phonenumber', $phonenumber);
             if ($stmt->execute()) {
-                header("Location: connexion.php");
+                header("Location: ../../../../connexion.php");
                 exit();
             } else {
                 echo "<p style='color: red;'>Erreur lors de l'inscription</p>";
