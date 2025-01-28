@@ -30,8 +30,7 @@ $mail->addAddress($email);
 $mail->isHTML(true);
 $mail->CharSet = 'UTF-8';
 $mail->Subject = 'Réinitialisation de mot de passe';
-$mail->Body = "Bonjour Avez vous bien demandé la réinitialisation de votre mot de passe ?";
-//$mail->Body = "Bonjour " . htmlspecialchars($firstname) ." Avez vous bien demandé la réinitialisation de votre mot de passe ? Si oui, cliquez sur le lien suivant pour le réinitialiser: <a href='http://localhost/ecom/reset_password.php?email=$email'>Réinitialiser le mot de passe</a>";
+/*$mail->Body = "Bonjour Avez vous bien demandé la réinitialisation de votre mot de passe ?";*/
 
 $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -39,6 +38,12 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
 $stmt->bindParam(':email', $email);
 $stmt->execute();
+
+$token = bin2hex(random_bytes(16));
+
+$mail->Body = "Bonjour, <br>Vous avez demandé une réinitialisation de votre mot de passe sur E-Commerce. 
+Cliquez sur le lien ci-dessous pour réinitialiser votre mot de passe : 
+<br><a href='http://localhost/BTS-project/newE-project/reset_password.php?token=" . urlencode($token) . "'>Réinitialiser mon mot de passe</a>";
 
 if ($stmt->rowCount() == 0) {
     echo "<p style='color: red;'>Cet email n'existe pas dans nos bases.</p>";

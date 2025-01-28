@@ -54,13 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->Password = 'ndvmyqlrsnmeecxw';
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
-                $mail->setFrom('kouicicontact@yahoo.com', 'ecom INSTA');
+                $mail->setFrom('kouicicontact@yahoo.com', 'E-commerce');
                 $mail->addAddress($email, htmlspecialchars("$firstname $lastname"));
 
                 $mail->isHTML(true);
                 $mail->CharSet = 'UTF-8';
                 $mail->Subject = 'Inscription réussie';
-                $mail->Body = "Bonsoir" . htmlspecialchars($firstname) ."Est ce que ça marche ???";
+                $mail->Body = "Bonsoir " . htmlspecialchars($firstname) ." Est ce que ça marche ???";
 
                 if($mail->send()){
                     error_log("E-mail de vérification envoyé avec succès à $email.");
