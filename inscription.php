@@ -1,10 +1,12 @@
 <?php
 
-include "../../../../bdd.php";
+include "bdd.php";
 
-require 'PHPMailer.php';
+require 'vendor/autoload.php';
+
+/*require 'PHPMailer.php';
 require 'SMTP.php';
-require 'Exception.php';
+require 'Exception.php';*/
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -70,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $mail->SMTPDebug = SMTP::DEBUG_SERVER;
 
-//                header("Location: ../../../../connexion.php");
+                header("Location: connexion.php");
 
                 exit();
             } else {
