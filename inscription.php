@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->bindParam(':email', $email);
         $stmt->execute();
+        $token = bin2hex(random_bytes(16));
 
         if ($stmt->rowCount() > 0) {
             echo "<p style='color: red;'>Cet email est déjà utilisé</p>";
@@ -45,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bindParam(':phonenumber', $phonenumber);
             $stmt->bindParam(':token', $token);
 
-            $token = bin2hex(random_bytes(16));
             $mail = new PHPMailer(true);
 
             if ($stmt->execute()) {
@@ -72,7 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['message'] = "L'envoi de l'e-mail a échoué.";
                     error_log("Erreur lors de l'envoi de l'e-mail: {$mail->ErrorInfo}");
                 }
-
 
                 $mail->SMTPDebug = SMTP::DEBUG_SERVER;
 

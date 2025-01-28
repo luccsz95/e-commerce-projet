@@ -3,9 +3,11 @@ require 'vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = htmlspecialchars($_POST['email']);
 }
+
 try {
     // Générer un token sécurisé
     $token = bin2hex(random_bytes(16));
@@ -26,6 +28,7 @@ try {
     $mail->Body = "Bonjour, <br>Vous avez demandé une réinitialisation de votre mot de passe sur E-Commerce.
     Cliquez sur le lien ci-dessous pour réinitialiser votre mot de passe :
     <br><a href='http://localhost/BTS-project/newE-project/newPassword.php?token=" . urlencode($token) . "'>Réinitialiser mon mot de passe</a>";
+
     // Connexion à la base de données
     $servername = "localhost";
     $dbname = "e_commerce_project";
@@ -33,14 +36,18 @@ try {
     $dbpassword = "";
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
     // Vérifier si l'email existe
     $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
     $stmt->bindParam(':email', $email);
     $stmt->execute();
+
     if ($stmt->rowCount() == 0) {
-        echo "<p style='color: red;'>Si cet email est enregistré, un lien de réinitialisation a été envoyé.</p>";
+        echo "<p style='color: red;'>Si cet email est enregistré, un lien de réinitialisation a été envoyé.</p><br>
+        <a href='connexion.php'>Retour à la page de connexion</a>";
         exit;
     }
+
     // Insertion du token dans la base de données
     $expires_at = date("Y-m-d H:i:s", strtotime("+15 minutes"));
     $etat_du_ticket = 1;
@@ -52,7 +59,8 @@ try {
     $insertStmt->execute();
     // Envoi du mail
     $mail->send();
-    echo "Un e-mail de réinitialisation a été envoyé.";
+    echo "<p style='color:green'>Un e-mail de réinitialisation a été envoyé.</p><br>
+    <a href='connexion.php'>Retour à la page de connexion</a>";
 } catch (Exception $e) {
     echo "Erreur : " . $e->getMessage();
 }
