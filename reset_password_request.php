@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //enregistrer le token dans la base de données
             $conn->prepare("INSERT INTO password_resets (email, token, expires_at, created_at) VALUES (:email, :token, :expires_at, NOW())")
             ->execute([':email' => $email, ':token' => $token, ':expires_at' => $expires_at]);
-                $resetLink = "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "/reset_password.php?token=$token";
+                $resetLink = "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "/oldReset_password.php?token=$token";
 
                 $subject = "=?UTF-8?B?" . base64_encode("Réinitialisation du mot de passe") . "?=";
 
