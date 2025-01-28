@@ -1,68 +1,17 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page d'incription</title>
-    <link rel="stylesheet" href="style/inscription.css">
-</head>
-<body>
-
-<div class="signup">
-    <h2>Inscription</h2>
-    <form action="" method="POST" onsubmit="return validateform()">
-        <label for="lastname">Nom de famille</label>
-        <input type="text" name="lastname" id="lastname" placeholder="Nom de famille" required>
-
-        <label for="firstname">Prénom</label>
-        <input type="text" name="firstname" id="firstname" placeholder="Prénom" required>
-
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" placeholder="Email" required>
-
-        <label for="phonenumber">Numéro de téléphone</label>
-        <input type="text" name="phonenumber" id="phonenumber" placeholder="Numéro de téléphone" maxlength="10" required>
-
-        <label for="password">Mot de passe</label>
-        <input type="password" name="password" id="password" placeholder="Mot de passe" required>
-
-        <label for="confirm-password">Confirmer le mot de passe</label>
-        <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirmer le mot de passe" required>
-
-        <input type="submit" value="S'inscrire">
-        <p>Déjà un compte ? <a href="connexion.php">Connectez-vous ici</a></p>
-        
-    </form>
-
-    <p id="error-msg"></p>
-</div>
-
-<script>
-    function validateform() {
-        var lastname = document.getElementById('lastname').value;
-        var firstname = document.getElementById('firstname').value;
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-        var confirm_password = document.getElementById('confirm-password').value;
-        var phonenumber = document.getElementById('phonenumber').value;
-
-        if (lastname == "" || firstname == "" || email == "" || password == "" || confirm_password == "" || phonenumber == "") {
-            document.getElementById('error-msg').innerHTML = "Tous les champs sont obligatoires";
-            return false;
-        }
-
-        if (password != confirm_password) {
-            document.getElementById('error-msg').innerHTML = "Les mots de passe ne correspondent pas";
-            errorMSG.style.color = "red";
-            return false;
-        }
-
-        return true;
-    }
-    }
-</script>
-
 <?php
+
+include "bdd.php";
+
+require 'vendor/autoload.php';
+
+/*require 'PHPMailer.php';
+require 'SMTP.php';
+require 'Exception.php';*/
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lastname = htmlspecialchars($_POST['lastname']);
     $firstname = htmlspecialchars($_POST['firstname']);
@@ -76,8 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-    include "bdd.php";
-
     try {
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -90,14 +37,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "<p style='color: red;'>Cet email est déjà utilisé</p>";
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO users (lastname, firstname, email, password, phonenumber) VALUES (:lastname, :firstname, :email, :password, :phonenumber)");
+            $stmt = $conn->prepare("INSERT INTO users (lastname, firstname, email, password, phonenumber, token) VALUES (:lastname, :firstname, :email, :password, :phonenumber, :token)");
             $stmt->bindParam(':lastname', $lastname);
             $stmt->bindParam(':firstname', $firstname);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $hashedPassword);
             $stmt->bindParam(':phonenumber', $phonenumber);
+            $stmt->bindParam(':token', $token);
+
+            $token = bin2hex(random_bytes(16));
+            $mail = new PHPMailer(true);
+
             if ($stmt->execute()) {
+                $mail->isSMTP();
+                $mail->Host = 'smtp.mail.yahoo.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'kouicicontact@yahoo.com';
+                $mail->Password = 'ndvmyqlrsnmeecxw';
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587;
+                $mail->setFrom('kouicicontact@yahoo.com', 'E-commerce');
+                $mail->addAddress($email, htmlspecialchars("$firstname $lastname"));
+
+                $mail->isHTML(true);
+                $mail->CharSet = 'UTF-8';
+                $mail->Subject = 'Inscription réussie';
+                $mail->Body = "Bonjour " . htmlspecialchars($firstname) .". Vous êtes maintenant inscrit.
+                <br><a href='http://localhost/BTS-project/newE-project/email_verif.php?token=" . urlencode($token) . "'>
+                Vérifier votre email</a>";
+
+                if($mail->send()){
+                    error_log("E-mail de vérification envoyé avec succès à $email.");
+                } else {
+                    $_SESSION['message'] = "L'envoi de l'e-mail a échoué.";
+                    error_log("Erreur lors de l'envoi de l'e-mail: {$mail->ErrorInfo}");
+                }
+
+
+                $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+
                 header("Location: connexion.php");
+
                 exit();
             } else {
                 echo "<p style='color: red;'>Erreur lors de l'inscription</p>";
@@ -109,5 +89,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $conn = null;
 }
 ?>
-</body>
-</html>
+

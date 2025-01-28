@@ -1,9 +1,15 @@
 <?php
+// connexion.php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    session_start(); // Démarrer la session pour accéder aux variables de session
+
     $email = htmlspecialchars(trim($_POST['email']));
     $password = htmlspecialchars(trim($_POST['password']));
 
-    include 'bdd.php';
+    $servername = "localhost";
+    $dbname = "e_commerce_project";
+    $dbusername = "root";
+    $dbpassword = "";
 
     try {
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
@@ -13,20 +19,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(':email', $email);
         $stmt->execute();
 
-        if($stmt->rowCount() > 0) {
+        if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            if ($user['etat_du_token'] == 0) {
+                echo "<p style='color: red;'>Votre compte n'est pas activé. Veuillez vérifier vos emails pour l'activer.</p>";
+                exit;
+            }
+
             if (password_verify($password, $user['password'])) {
-                $_SESSION['username'] = $user['username'];
+                // Stocker le prénom dans la session
+                $_SESSION['firstname'] = $user['firstname'];
                 echo "<p style='color: green;'>Connexion réussie !</p>";
                 header("Location: index.php");
                 exit();
-            } else {
-                echo "<p style='color: red;'>Utilisateur non trouvé ou identifiant incorrect.</p>";
             }
-        } else {
-            echo "<p style='color: red;'>Utilisateur non trouvé ou identifiant incorrect.</p>";
+
+            else {
+                echo "<p style='color: red;'>Mot de passe incorrect.</p>";
+            }
         }
+
+        else {
+            echo "<p style='color: red;'>Utilisateur non trouvé.</p>";
+        }
+
     } catch (PDOException $e) {
         echo "Erreur : " . $e->getMessage();
     }
@@ -47,6 +64,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
 
+<div class="">
+    <div class="header">
+        <a class="logo-link" href="index.php"><img src="images/Image_immeuble.jpg" alt="logo"></a>
+    </div>
+</div>
+
 <div class="signup">
     <h2>Connexion</h2>
     <form action="connexion.php" method="POST">
@@ -59,8 +82,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="submit" value="Se connecter">
     </form>
 
-    <p>Pas encore inscrit ? <a href="inscription.php">Inscrivez-vous ici</a></p>
-    <p>Oublie de mot de passe ? <a href="reset_password_request.php">Cliquez ici</a></p>
+    <p>Pas encore inscrit ? <a href="inscription.html">Inscrivez-vous ici</a></p>
+    <p>Oubli de mot de passe ? <a href="reset_password.html">Cliquez ici</a></p>
 </div>
 
 </body>

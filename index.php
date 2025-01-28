@@ -1,3 +1,6 @@
+<?php
+session_start(); // Démarrer la session pour accéder aux variables de session
+?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -8,8 +11,21 @@
     <title>Accueil</title>
 </head>
 <body>
-    <?php include 'navbar.php';?>
+<?php include 'navbar.php';?>
 
-    <h1 class="title">Bienvenue dans notre agence !</h1>
+<h1 class="title">Bienvenue dans notre agence !</h1>
+
+<?php
+if (isset($_SESSION['firstname'])) {
+    echo "<h2>Bonjour, " . htmlspecialchars($_SESSION['firstname']) . " !</h2>";
+}
+?>
+
+<!--<div class="disconnect-button">
+    <form action="logout.php" method="POST">
+        <button type="submit">Disconnect</button>
+    </form>
+</div>-->
+
 </body>
 </html>
