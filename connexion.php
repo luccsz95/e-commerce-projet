@@ -6,7 +6,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = htmlspecialchars(trim($_POST['email']));
     $password = htmlspecialchars(trim($_POST['password']));
 
-    include 'bdd.php';
+    $servername = "localhost";
+    $dbname = "e_commerce_project";
+    $dbusername = "root";
+    $dbpassword = "";
 
     try {
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
@@ -19,18 +22,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            if ($user['etat_du_token'] == 0) {
+                echo "<p style='color: red;'>Votre compte n'est pas activé. Veuillez vérifier vos emails pour l'activer.</p>";
+                exit;
+            }
+
             if (password_verify($password, $user['password'])) {
                 // Stocker le prénom dans la session
                 $_SESSION['firstname'] = $user['firstname'];
                 echo "<p style='color: green;'>Connexion réussie !</p>";
                 header("Location: index.php");
                 exit();
-            } else {
+            }
+
+            else {
                 echo "<p style='color: red;'>Mot de passe incorrect.</p>";
             }
-        } else {
+        }
+
+        else {
             echo "<p style='color: red;'>Utilisateur non trouvé.</p>";
         }
+
     } catch (PDOException $e) {
         echo "Erreur : " . $e->getMessage();
     }

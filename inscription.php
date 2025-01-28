@@ -37,13 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "<p style='color: red;'>Cet email est déjà utilisé</p>";
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO users (lastname, firstname, email, password, phonenumber) VALUES (:lastname, :firstname, :email, :password, :phonenumber)");
+            $stmt = $conn->prepare("INSERT INTO users (lastname, firstname, email, password, phonenumber, token) VALUES (:lastname, :firstname, :email, :password, :phonenumber, :token)");
             $stmt->bindParam(':lastname', $lastname);
             $stmt->bindParam(':firstname', $firstname);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $hashedPassword);
             $stmt->bindParam(':phonenumber', $phonenumber);
+            $stmt->bindParam(':token', $token);
 
+            $token = bin2hex(random_bytes(16));
             $mail = new PHPMailer(true);
 
             if ($stmt->execute()) {
@@ -60,7 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->isHTML(true);
                 $mail->CharSet = 'UTF-8';
                 $mail->Subject = 'Inscription réussie';
-                $mail->Body = "Bonsoir " . htmlspecialchars($firstname) ." Est ce que ça marche ???";
+                $mail->Body = "Bonjour " . htmlspecialchars($firstname) .". Vous êtes maintenant inscrit.
+                <br><a href='http://localhost/BTS-project/newE-project/email_verif.php?token=" . urlencode($token) . "'>
+                Vérifier votre email</a>";
 
                 if($mail->send()){
                     error_log("E-mail de vérification envoyé avec succès à $email.");
