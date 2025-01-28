@@ -33,6 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(':email', $email);
         $stmt->execute();
 
+        $token = bin2hex(random_bytes(16));
+
         if ($stmt->rowCount() > 0) {
             echo "<p style='color: red;'>Cet email est déjà utilisé</p>";
         } else {
@@ -45,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bindParam(':phonenumber', $phonenumber);
             $stmt->bindParam(':token', $token);
 
-            $token = bin2hex(random_bytes(16));
+
             $mail = new PHPMailer(true);
 
             if ($stmt->execute()) {
