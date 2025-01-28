@@ -1,5 +1,7 @@
 <?php
+
 require 'vendor/autoload.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
@@ -11,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 try {
     // Générer un token sécurisé
     $token = bin2hex(random_bytes(16));
+
     // Création de l'instance PHPMailer
     $mail = new PHPMailer(true);
     $mail->isSMTP();
@@ -34,6 +37,7 @@ try {
     $dbname = "e_commerce_project";
     $dbusername = "root";
     $dbpassword = "";
+
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -51,12 +55,14 @@ try {
     // Insertion du token dans la base de données
     $expires_at = date("Y-m-d H:i:s", strtotime("+15 minutes"));
     $etat_du_ticket = 1;
+
     $insertStmt = $conn->prepare("INSERT INTO password_resets (email, token, expires_at, etat_du_ticket) VALUES (:email, :token, :expires_at, :etat_du_ticket)");
     $insertStmt->bindParam(':email', $email);
     $insertStmt->bindParam(':token', $token);
     $insertStmt->bindParam(':expires_at', $expires_at);
     $insertStmt->bindParam(':etat_du_ticket', $etat_du_ticket);
     $insertStmt->execute();
+    
     // Envoi du mail
     $mail->send();
     echo "<p style='color:green'>Un e-mail de réinitialisation a été envoyé.</p><br>
@@ -66,4 +72,5 @@ try {
 }
 // Fermeture de la connexion à la base de données
 $conn = null;
+
 ?>

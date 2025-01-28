@@ -41,8 +41,8 @@ if($stmt->rowCount() > 0){
         ->execute(['token' => $token]);
 }
 if ($stmt->execute()) {
-    echo "<p style='color: green;'>Votre mot de passe a été réinitialisé avec succès !</p><br>
-    <a href='connexion.php'>Retour à la page de connexion</a>";
+    echo "<p style='color: green;'>Votre mot de passe a été réinitialisé avec succès !</p>";
 } else {
     echo "<p style='color: red;'>Une erreur est survenue lors de la réinitialisation de votre mot de passe. Veuillez réessayer.</p>";
+
 }

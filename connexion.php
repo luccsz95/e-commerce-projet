@@ -85,6 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <p>Pas encore inscrit ? <a href="inscription.html">Inscrivez-vous ici</a></p>
     <p>Mot de passe oublié ? <a href="reset_password.html">Cliquez ici</a></p>
 </div>
-
 </body>
+
 </html>
