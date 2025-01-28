@@ -1,5 +1,6 @@
 <?php
 
+include 'bdd.php';
 require 'vendor/autoload.php';
 
 /*require 'PHPMailer.php';
@@ -32,6 +33,17 @@ $mail->Subject = 'Réinitialisation de mot de passe';
 $mail->Body = "Bonjour Avez vous bien demandé la réinitialisation de votre mot de passe ?";
 //$mail->Body = "Bonjour " . htmlspecialchars($firstname) ." Avez vous bien demandé la réinitialisation de votre mot de passe ? Si oui, cliquez sur le lien suivant pour le réinitialiser: <a href='http://localhost/ecom/reset_password.php?email=$email'>Réinitialiser le mot de passe</a>";
 
+$conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
+$stmt->bindParam(':email', $email);
+$stmt->execute();
+
+if ($stmt->rowCount() == 0) {
+    echo "<p style='color: red;'>Cet email n'existe pas dans nos bases.</p>";
+    exit;
+}
 
 if($mail->send()){
     error_log("E-mail de vérification envoyé avec succès à $email.");
