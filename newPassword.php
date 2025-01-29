@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET['token'])) {
     $token = $_GET['token'];
-    var_dump($token);
+    //var_dump($token);
 } else {
     // Rediriger ou afficher un message d'erreur si le token est absent
     die('Token manquant.');

@@ -52,7 +52,7 @@ try {
     $insertStmt->execute();
     // Envoi du mail
     $mail->send();
-    echo "Un e-mail de réinitialisation a été envoyé.";
+    echo "<p>Un e-mail de réinitialisation a été envoyé. Vous pouvez fermer cette page</p>";
 } catch (Exception $e) {
     echo "Erreur : " . $e->getMessage();
 }

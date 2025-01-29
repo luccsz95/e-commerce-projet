@@ -41,6 +41,7 @@ $update_token->execute(['token' => $token]);
     <title>Vérification d'email</title>
 </head>
 <body>
-  <p> Votre email a été vérifié, vous pouvez fermer cette page.</p>
+  <p> Votre email a été vérifié, vous pouvez retourner à la page de connexion.</p>
+    <a href="connexion.php">Retour à la page de connexion</a>
 </body>
 </html>
