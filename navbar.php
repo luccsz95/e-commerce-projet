@@ -38,5 +38,38 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
 </div>
 
+<script>
+    $(document).ready(function() {
+        const productInput = $('#query');
+        const datalist = $('#data-list');
+
+        function handleProductSearch() {
+            const query = productInput.val();
+            if (query.length > 0) {
+                fetchProductSuggestions(query);
+            } else {
+                datalist.empty();
+            }
+        }
+
+        function fetchProductSuggestions(query) {
+            $.ajax({
+                url: 'recup_animals.php',
+                type: 'GET',
+                data: { search_term: query },
+                success: function(response) {
+                    datalist.html(response);
+                },
+                error: function() {
+                    console.error('Erreur lors de la récupération des suggestions.');
+                    datalist.html('<option value="">Erreur lors de la récupération des suggestions.</option>');
+                }
+            });
+        }
+
+        productInput.on('input', handleProductSearch);
+    });
+</script>
+
 </body>
 </html>
