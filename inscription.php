@@ -53,12 +53,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($stmt->execute()) {
                 $mail->isSMTP();
                 $mail->Host = 'smtp.mail.yahoo.com';
+                //$mail->Host = 'smtp.mail.gmail.com';
                 $mail->SMTPAuth = true;
                 $mail->Username = 'kouicicontact@yahoo.com';
+                //$mail->Username = 'e.commerce.project.insta@gmail.com';
                 $mail->Password = 'ndvmyqlrsnmeecxw';
+                //$mail->Password = 'phpmailer';
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
                 $mail->setFrom('kouicicontact@yahoo.com', 'E-commerce');
+                //$mail->setFrom('e.commerce.project.insta@gmail.com', 'E-commerce');
                 $mail->addAddress($email, htmlspecialchars("$firstname $lastname"));
 
                 $mail->isHTML(true);
@@ -74,7 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['message'] = "L'envoi de l'e-mail a échoué.";
                     error_log("Erreur lors de l'envoi de l'e-mail: {$mail->ErrorInfo}");
                 }
-
 
                 $mail->SMTPDebug = SMTP::DEBUG_SERVER;
 
