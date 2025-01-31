@@ -16,7 +16,7 @@
 
 /* Ajouter un espace sous la navbar pour éviter que le contenu ne soit masqué */
 body {
-    margin-top: 90px; /* Ajuste la hauteur pour correspondre à celle de la navbar */
+    margin-top: 150px; /* Ajuste la hauteur pour correspondre à celle de la navbar */
 }
 
 /* Style des liens dans la navbar */
@@ -29,11 +29,11 @@ body {
 .navbar-right a, .navbar-right button {
     color: #ffffff;
     text-decoration: none;
-    padding: 10px 20px;
+    padding: 5px 20px;
     font-size: 1rem;
-    border-radius: 5px;
+    border-radius: 20px;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    background-color: transparent;
+    background-color: #2e7d32;
     border: none;
     cursor: pointer;
 }

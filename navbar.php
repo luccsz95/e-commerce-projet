@@ -18,6 +18,9 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <div class="navbar">
     <div class="navbar-right">
+
+        <a href="index.php"><img src="image/logo_chat.png" style="height: 100px; width:100px;"></a>
+
         <?php if (!isset($_SESSION['firstname'])): ?>
             <a href="connexion.php">Se connecter</a>
         <?php else: ?>
@@ -27,16 +30,17 @@ if (session_status() === PHP_SESSION_NONE) {
             </form>
         <?php endif; ?>
 
-        <form class="search-form" role="search">
+        <form class="search-form" role="search" action="search.php" method="GET" style="display: flex; align-items: center;">
             <datalist id="data-list"></datalist>
             <input class="nav-search" type="search" id="query" name="query" placeholder="Search" aria-label="Search">
             <button class="btn-search" type="submit">Search</button>
         </form>
 
-        <a href="cart.php">Panier</a>
         <a href="store.php">Store Page</a>
+        <a href="cart.php">Panier</a>
     </div>
 </div>
 
 </body>
 </html>
+
