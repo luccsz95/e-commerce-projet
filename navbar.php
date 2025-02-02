@@ -31,8 +31,9 @@ if (session_status() === PHP_SESSION_NONE) {
         <?php endif; ?>
 
         <form class="search-form" role="search" action="search.php" method="GET" style="display: flex; align-items: center;">
+            <input list="data-list" class="nav-search" type="search" id="query" name="query" placeholder="Search" aria-label="Search">
             <datalist id="data-list"></datalist>
-            <input class="nav-search" type="search" id="query" name="query" placeholder="Search" aria-label="Search">
+            </input>
             <button class="btn-search" type="submit">Search</button>
         </form>
 

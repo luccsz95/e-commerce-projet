@@ -15,9 +15,16 @@ try {
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    echo json_encode($results);
-} catch (PDOException $e) {
-    echo json_encode(['error' => $e->getMessage()]);
-}
+    if ($results) {
+        foreach ($results as $product) {
+            $cleanedProductName = $product['typeAnimals'];
+            echo '<option value=""' . $cleanedProductName . htmlspecialchars($product['idAnimals'], ENT_QUOTES, 'UTF-8') . '">' . '</option>';
+        }
+    }
+        echo json_encode($results);
+
+    } catch (PDOException $e) {
+        echo json_encode(['error' => $e->getMessage()]);
+    }
 
 ?>
