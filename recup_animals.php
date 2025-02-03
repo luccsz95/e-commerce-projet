@@ -11,20 +11,13 @@ try {
     $search = isset($_GET['search']) ? $_GET['search'] : '';
     $stmt = $conn->prepare("SELECT typeAnimals FROM animals WHERE typeAnimals LIKE :search");
     $search = '%' . $search . '%';
-    $stmt->bindParam('search', $search, PDO::PARAM_STR);
+    $stmt->bindParam(':search', $search, PDO::PARAM_STR); // Ajout du ":" manquant
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($results) {
-        foreach ($results as $product) {
-            $cleanedProductName = $product['typeAnimals'];
-            echo '<option value=""' . $cleanedProductName . htmlspecialchars($product['idAnimals'], ENT_QUOTES, 'UTF-8') . '">' . '</option>';
-        }
-    }
-        echo json_encode($results);
+    echo json_encode($results); // Placer ici pour envoyer une réponse correcte en JSON
 
-    } catch (PDOException $e) {
-        echo json_encode(['error' => $e->getMessage()]);
-    }
-
+} catch (PDOException $e) {
+    echo json_encode(['error' => $e->getMessage()]);
+}
 ?>
