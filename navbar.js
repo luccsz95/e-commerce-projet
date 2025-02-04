@@ -1,28 +1,26 @@
-const productInput = $('#query');
-const datalist = $('#data-list');
+const productInput = $('#product');
+const datalist = $('#products');
 
 productInput.on('input', function() {
-    const query = productInput.val();
+    const query = productInput.val().trim();
 
     if (query.length > 0) {
         $.ajax({
             url: 'recup_animals.php',
-            method: 'GET',
-            dataType: 'json',
-            data: { search: query },
+            type: 'GET',
+            data: { search_term: query, timestamp: new Date().getTime() },
+            dataType: 'html', // Assure que la réponse est du HTML
             cache: false,
             success: function(response) {
-                datalist.empty(); // Nettoyer avant d'ajouter les nouvelles options
-                if (response.length > 0) {
-                    response.forEach(function(item) {
-                        datalist.append(`<option value="${item.typeAnimals}"></option>`);
-                    });
-                } else {
-                    datalist.append('<option value="">Aucun résultat</option>');
-                }
+                console.log("Réponse AJAX :", response);
+                datalist.html(response);
             },
-            error: function() {
-                console.error('Erreur de la requête AJAX.');
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Erreur de la requête.');
+                console.error('Statut :', textStatus);
+                console.error('Erreur :', errorThrown);
+                console.error('Réponse serveur :', jqXHR.responseText);
+                datalist.html('<option value="">Erreur lors de la récupération des suggestions.</option>');
             }
         });
     } else {

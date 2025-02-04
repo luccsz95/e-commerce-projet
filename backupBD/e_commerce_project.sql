@@ -31,8 +31,9 @@ CREATE TABLE `animals` (
   `bithdayAnimals` date NOT NULL,
   `weight Animals` varchar(100) NOT NULL,
   `colorAnimals` varchar(100) NOT NULL,
+  `priceAnimals` varchar(100) NOT NULL,
   PRIMARY KEY (`idAnimals`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +42,7 @@ CREATE TABLE `animals` (
 
 LOCK TABLES `animals` WRITE;
 /*!40000 ALTER TABLE `animals` DISABLE KEYS */;
-INSERT INTO `animals` VALUES (1,'Eclipse','British Shorthair','female','cat','0000-00-00','7kg','black'),(2,'Fluffy','Persian','female','cat','0000-00-00','5kg','orange'),(3,'Woody','','Male','dog','0000-00-00','10kg','Brown and White'),(4,'franklin','turtle','male','sea turtle','0000-00-00','0.5kg','green');
+INSERT INTO `animals` VALUES (1,'Eclipse','British Shorthair','Female','Cat','0000-00-00','5','Black','9 999 999 999 999'),(2,'Fluffy','Persian','Female','Cat','0000-00-00','3','Orange','3500'),(3,'Woody','Beagle','Male','Dog','0000-00-00','20','Brown and White','2400'),(4,'Franklin','Turtle','Male','Turtle','0000-00-00','0.5','Green','150'),(5,'Phoebe','Stray Cat','Female','Cat','0000-00-00','8','White and Black','3400'),(6,'Elphie','Corgi','Female','Dog','0000-00-00','4','Orange','2500'),(7,'Valentine','Corgi','Female','Dog','0000-00-00','10','Orange','2500');
 /*!40000 ALTER TABLE `animals` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,4 +116,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-01-31 13:05:39
+-- Dump completed on 2025-02-04  9:45:42
