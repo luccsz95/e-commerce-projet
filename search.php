@@ -16,7 +16,7 @@ if(isset($_GET['product'])) {
 
     $stmt = $conn->prepare("SELECT * FROM animals WHERE nameAnimals LIKE :product");
     $query = '%' . $search_term . '%';
-    $stmt->bindParam(':product', $product, PDO::PARAM_STR);
+    $stmt->bindParam(':product', $query, PDO::PARAM_STR);
     $stmt->execute();
 
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -42,7 +42,6 @@ if(isset($_GET['product'])) {
         <?php foreach ($results as $result): ?>
             <div class="product">
                 <h2><?= htmlspecialchars($result['typeAnimals']) ?></h2>
-<!--                <img src="--><?php //= htmlspecialchars($result['image']) ?><!--" alt="--><?php //= htmlspecialchars($result['nameAnimals']) ?><!--">-->
                 <p><?= htmlspecialchars($result['nameAnimals']) ?></p>
                 <p><?= htmlspecialchars($result['genderAnimals']) ?></p>
                 <p><?= htmlspecialchars($result['raceAnimals']) ?></p>
