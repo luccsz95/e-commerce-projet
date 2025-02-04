@@ -21,11 +21,5 @@ if (isset($_SESSION['firstname'])) {
 }
 ?>
 
-<!--<div class="disconnect-button">
-    <form action="logout.php" method="POST">
-        <button type="submit">Disconnect</button>
-    </form>
-</div>-->
-
 </body>
 </html>

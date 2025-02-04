@@ -15,20 +15,7 @@
     <!-- Image à gauche -->
     <!-- <div class="navbar-left"><img src="images/logo.jpg" alt="Logo" class="navbar-logo"></div> -->
 
-    <!-- Liens de navigation à droite -->
-    <div class="navbar-right">
-        <?php if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true): ?>
-            <!-- Si l'utilisateur n'est pas connecté, afficher Connexion et Inscription -->
-            <a href="index.php">Page d'accueil </a>
-            <a href="connexion.php">Se connecter</a>
-            <a href="vendor/phpmailer/inscription.php">S'inscrire</a>
-        <?php else: ?>
-            <!-- Si l'utilisateur est connecté, afficher Déconnexion -->
-            <span>Bienvenue, <?php echo $_SESSION['username']; ?></span>
-            <a href="store.php">Store Page</a>
-            <a href="logout.php">Déconnexion</a>
-        <?php endif; ?>
-    </div>
+    <?php include 'navbar.php';?>
 </div>
 
 <h1 class="store-title">Choix des produits</h1>

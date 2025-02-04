@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <div class="">
     <div class="header">
-        <a class="logo-link" href="index.php"><img src="images/Image_immeuble.jpg" alt="logo"></a>
+        <a class="logo-link" href="index.php"><img src="image/logo_chat.png" alt="logo" style="height: 100px; width:100px;"></a>
     </div>
 </div>
 

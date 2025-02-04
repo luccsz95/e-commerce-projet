@@ -1,4 +1,22 @@
 /* Style général */
+/* Positionnement du logo en haut à gauche */
+.header {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.logo-link img {
+    height: 80px; /* Ajuste la taille du logo */
+    width: auto;
+}
+
+/* S'assurer qu'il ne chevauche pas la navbar */
+body {
+    padding-top: 120px; /* Ajuste si nécessaire selon la hauteur du logo */
+}
+
+
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f4f4f9;
