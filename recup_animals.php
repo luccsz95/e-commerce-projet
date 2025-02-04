@@ -10,9 +10,9 @@ if (!isset($_GET['search_term']) || empty(trim($_GET['search_term']))) {
 
 $searchTerm = '%' . trim($_GET['search_term']) . '%';
 
-$sql = "SELECT nameAnimals 
+$sql = "SELECT typeAnimals 
         FROM animals 
-        WHERE nameAnimals LIKE :search_term 
+        WHERE typeAnimals LIKE :search_term 
         LIMIT 10";
 
 $stmt = $pdo->prepare($sql);

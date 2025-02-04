@@ -5,7 +5,7 @@
     left: 0;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
     align-items: center;
     background-color: #2e7d32; /* Vert foncé pour correspondre au style d'inscription */
     padding: 15px 30px;
@@ -14,16 +14,35 @@
     font-family: 'Arial', sans-serif;
 }
 
+.navbar .btn {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 5px 20px;
+    font-size: 1rem;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: #2e7d32; /* Même couleur que les autres boutons */
+    border: none;
+    cursor: pointer;
+    margin: 20px;
+}
+
+.navbar .btn:hover {
+    background-color: #255d27; /* Teinte plus foncée pour le survol */
+    transform: scale(1.05);
+}
+
 /* Ajouter un espace sous la navbar pour éviter que le contenu ne soit masqué */
 body {
     margin-top: 150px; /* Ajuste la hauteur pour correspondre à celle de la navbar */
 }
 
-/* Style des liens dans la navbar */
-.navbar-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+/* Style pour le logo */
+.navbar .navbar-brand {
+    font-size: 1.5rem;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .navbar-right a, .navbar-right button {
@@ -38,47 +57,87 @@ body {
     cursor: pointer;
 }
 
-.navbar-right a:hover, .navbar-right button:hover {
+.navbar .navbar-brand:hover {
+    color: #d4e157;
+}
+
+/* Style pour les boutons burger (mobile) */
+.navbar .navbar-toggler {
+    background-color: #ffffff;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.navbar .navbar-toggler-icon {
+    background-image: url('data:image/svg+xml;charset=UTF8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="%232e7d32" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.5 3h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1zm0 5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1zm0 5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1z"/></svg>');
+}
+
+/* Style des liens et boutons dans la navbar */
+.navbar .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navbar .navbar-right a, .navbar .navbar-right button {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 5px 20px;
+    font-size: 1rem;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: #2e7d32;
+    border: none;
+    cursor: pointer;
+}
+
+.navbar .navbar-right a:hover, .navbar .navbar-right button:hover {
     background-color: #255d27; /* Teinte plus foncée de vert pour le survol */
     transform: scale(1.05);
 }
 
-/* Style de bienvenue pour l'utilisateur connecté */
-.navbar-right span {
+/* Style du message de bienvenue pour l'utilisateur connecté */
+.navbar .navbar-right span {
     color: #ffffff;
     font-size: 1rem;
     margin-right: 10px;
 }
 
 /* Style du formulaire de recherche */
-.search-form {
+.navbar .search-form {
     display: flex;
     align-items: center;
     gap: 5px;
     background: #fff;
     padding: 5px 10px;
     border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.nav-search {
+.navbar .search-form input {
     border: none;
     padding: 8px;
     border-radius: 20px;
     outline: none;
+    font-size: 1rem;
+    width: 250px;
 }
 
-.btn-search {
+.navbar .search-form button {
     background: #2e7d32;
     color: white;
     border: none;
     padding: 8px 12px;
     border-radius: 20px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.btn-search:hover {
+.navbar .search-form button:hover {
     background: #255d27;
+    transform: scale(1.05);
 }
 
 /* Responsive Design */
@@ -90,19 +149,19 @@ body {
         padding: 20px;
     }
 
-    .navbar-right {
+    .navbar .navbar-right {
         flex-direction: column;
         width: 100%;
         align-items: center;
         gap: 10px;
     }
 
-    .navbar-right a, .navbar-right button {
+    .navbar .navbar-right a, .navbar .navbar-right button {
         width: 100%;
         text-align: center;
     }
 
-    .search-form {
+    .navbar .search-form {
         width: 100%;
         justify-content: center;
     }

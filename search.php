@@ -4,8 +4,8 @@ $dbname = "e_commerce_project";
 $dbusername = "root";
 $dbpassword = "";
 
-if(isset($_GET['query'])) {
-    $search = htmlspecialchars(trim($_GET['query']));
+if(isset($_GET['product'])) {
+    $search_term = htmlspecialchars(trim($_GET['product']));
 
     try {
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
@@ -14,9 +14,9 @@ if(isset($_GET['query'])) {
         die('Erreur : ' . $e->getMessage());
     }
 
-    $stmt = $conn->prepare("SELECT * FROM animals WHERE typeAnimals LIKE :query");
-    $query = '%' . $search . '%';
-    $stmt->bindParam(':query', $query, PDO::PARAM_STR);
+    $stmt = $conn->prepare("SELECT * FROM animals WHERE nameAnimals LIKE :product");
+    $query = '%' . $search_term . '%';
+    $stmt->bindParam(':product', $product, PDO::PARAM_STR);
     $stmt->execute();
 
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -35,7 +35,7 @@ if(isset($_GET['query'])) {
 <body>
 <?php include 'navbar.php';?>
 
-<h1>Résultats pour "<?= htmlspecialchars($search) ?>"</h1>
+<h1>Résultats pour "<?= htmlspecialchars($search_term) ?>"</h1>
 
 <div class="product-list">
     <?php if (!empty($results)): ?>
@@ -55,7 +55,7 @@ if(isset($_GET['query'])) {
             </div>
         <?php endforeach; ?>
     <?php else: ?>
-        <p>Aucun résultat trouvé pour "<?= htmlspecialchars($search) ?>"</p>
+        <p>Aucun résultat trouvé pour "<?= htmlspecialchars($search_term) ?>"</p>
     <?php endif; ?>
 </div>
 
