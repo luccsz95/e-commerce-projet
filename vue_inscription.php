@@ -45,9 +45,8 @@ $_SESSION['captcha'] = $captcha;
         <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirmer le mot de passe" required>
 
         <label for="captcha">Recopier le code</label>
-        <?php echo $_SESSION['captcha']; ?>
+        <div class="captcha"><?php echo $_SESSION['captcha']; ?></div>
         <input type="text" name="captcha" id="captcha" placeholder="Recopier le code" required>
-
 
         <input type="submit" value="S'inscrire">
         <p>Déjà un compte ? <a href="connexion.php">Connectez-vous ici</a></p>

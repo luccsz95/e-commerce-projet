@@ -16,7 +16,6 @@ body {
     padding-top: 120px; /* Ajuste si nécessaire selon la hauteur du logo */
 }
 
-
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f4f4f9;
@@ -206,3 +205,17 @@ body {
     }
 }
 
+/* Style pour le captcha */
+.captcha {
+    font-family: 'Impact', sans-serif;
+    font-size: 20px; /* Réduction de la taille de la police */
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background-color: #805F94; /* Couleur de fond violette */
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    width: 150px; /* Réduction de la largeur */
+    text-align: center;
+}

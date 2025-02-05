@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($_POST['captcha'] != $_SESSION['captcha']) {
         echo "<p style='color: red;'>Le code de vérification est incorrect</p>";
+        exit;
     }
 
     if ($password != $confirmPassword) {
