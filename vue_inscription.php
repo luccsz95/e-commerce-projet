@@ -45,7 +45,14 @@ $_SESSION['captcha'] = $captcha;
         <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirmer le mot de passe" required>
 
         <label for="captcha">Recopier le code</label>
-        <div class="captcha"><?php echo $_SESSION['captcha']; ?></div>
+        <div class="captcha">
+            <?php
+            $captcha_move = str_split($_SESSION['captcha']);
+            foreach ($captcha_move as $char) {
+                echo "<span>" . $char . "</span>";
+            }
+            ?>
+        </div>
         <input type="text" name="captcha" id="captcha" placeholder="Recopier le code" required>
 
         <input type="submit" value="S'inscrire">
