@@ -205,27 +205,10 @@ body {
     }
 }
 
-/* Style pour le captcha */
-/*.captcha {
-    font-family: 'Impact', sans-serif;
-    font-size: 20px; !* Réduction de la taille de la police *!
-    color: #333;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    background-color: #805F94; !* Couleur de fond violette *!
-    padding: 5px;
-    border-radius: 5px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    width: 150px; !* Réduction de la largeur *!
-    text-align: center;
-}*/
-
 .captcha {
     font-family: 'Courier New', Courier, monospace;
     width: 250px;
     font-size: 40px;
-
-    text-transform: uppercase;
     letter-spacing: 4px;
     text-align: center;
     position: relative;
@@ -239,32 +222,31 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%) rotate(0deg);
-    /* Correction de la position verticale */
     opacity: 0.6;
-    animation: rotateCaptcha 2s infinite linear;
+    animation: rotateCaptcha 2s infinite linear, blinkCaptcha 3s infinite ease-in-out, colorChange 5s infinite linear;
 }
 
 .captcha span:nth-child(2) {
     transform: translateY(-50%) rotate(-10deg);
-    animation: rotateCaptcha 2s infinite reverse linear;
+    animation: rotateCaptcha 2s infinite reverse linear, blinkCaptcha 3s infinite ease-in-out;
     color: #e74c3c;
 }
 
 .captcha span:nth-child(3) {
     transform: translateY(-50%) rotate(15deg);
-    animation: rotateCaptcha 5s infinite linear;
+    animation: rotateCaptcha 5s infinite linear, blinkCaptcha 3s infinite ease-in-out;
     color: #2ecc71;
 }
 
 .captcha span:nth-child(4) {
     transform: translateY(-50%) rotate(-5deg);
-    animation: rotateCaptcha 8s infinite reverse linear;
+    animation: rotateCaptcha 8s infinite reverse linear, blinkCaptcha 3s infinite ease-in-out;
     color: #f39c12;
 }
 
 .captcha span:nth-child(5) {
     transform: translateY(-50%) rotate(20deg);
-    animation: rotateCaptcha 2s infinite linear;
+    animation: rotateCaptcha 2s infinite linear, blinkCaptcha 3s infinite ease-in-out;
     color: #9b59b6;
 }
 
@@ -272,32 +254,37 @@ body {
     0% {
         transform: rotate(35deg);
     }
-
     50% {
         transform: rotate(-30deg);
     }
-
     70% {
         transform: rotate(-80deg);
     }
-
     100% {
         transform: rotate(70deg);
     }
 }
 
-/* Appliquer un espacement aléatoire pour chaque caractère */
+@keyframes blinkCaptcha {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 0.2;
+    }
+}
+
 .captcha span {
     position: absolute;
     top: 50%;
     transform: translateY(-50%) rotate(0deg);
-    /* Centrer verticalement */
+    opacity: 0.6;
+    animation: rotateCaptcha 2s infinite linear, blinkCaptcha 3s infinite ease-in-out, colorChange 5s infinite linear;
 }
 
 .captcha span:nth-child(1) {
     left: 10%;
     top: -5px;
-
 }
 
 .captcha span:nth-child(2) {

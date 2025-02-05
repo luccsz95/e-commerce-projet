@@ -2,11 +2,9 @@
 
 session_start();
 
-require 'vendor/autoload.php';
 
-/*require 'PHPMailer.php';
-require 'SMTP.php';
-require 'Exception.php';*/
+
+require 'vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -26,7 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $phonenumber = htmlspecialchars($_POST['phonenumber']);
 
     if ($_POST['captcha'] != $_SESSION['captcha']) {
-        echo "<p style='color: red;'>Le code de vérification est incorrect</p>";
+        $_SESSION['errorMessage'] = "<p style='color: red;'>Le code de vérification est incorrect</p>";
+        header("Location: " . $_SERVER['HTTP_REFERER']);
         exit;
     }
 
