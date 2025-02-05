@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+$captcha = random_int(10000, 99999);
+$_SESSION['captcha'] = $captcha;
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -34,6 +43,11 @@
 
         <label for="confirm-password">Confirmer le mot de passe</label>
         <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirmer le mot de passe" required>
+
+        <label for="captcha">Recopier le code</label>
+        <?php echo $_SESSION['captcha']; ?>
+        <input type="text" name="captcha" id="captcha" placeholder="Recopier le code" required>
+
 
         <input type="submit" value="S'inscrire">
         <p>Déjà un compte ? <a href="connexion.php">Connectez-vous ici</a></p>
