@@ -17,7 +17,7 @@ session_start(); // Démarrer la session pour accéder aux variables de session
 
 <?php
 if (isset($_SESSION['firstname'])) {
-    echo "<h2>Bonjour, " . htmlspecialchars($_SESSION['firstname']) . " !</h2>";
+    echo "<h2>" . htmlspecialchars($_SESSION['firstname']) . " !</h2>";
 }
 ?>
 

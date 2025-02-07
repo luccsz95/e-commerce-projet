@@ -8,7 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $hash = hash('sha256', $password);
 
     // Connexion à la base de données
-    include "bdd.php";
+
+    $servername = "localhost";
+    $dbname = "e_commerce_project";
+    $dbusername = "root";
+    $dbpassword = "";
 
     try {
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);

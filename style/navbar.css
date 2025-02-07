@@ -21,14 +21,14 @@
     font-size: 1rem;
     border-radius: 20px;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    background-color: #2e7d32; /* Même couleur que les autres boutons */
+    background-color: #2e7d32;
     border: none;
     cursor: pointer;
     margin: 20px;
 }
 
 .navbar .btn:hover {
-    background-color: #255d27; /* Teinte plus foncée pour le survol */
+    background-color: #255d27;
     transform: scale(1.05);
 }
 

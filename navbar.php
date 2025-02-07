@@ -36,6 +36,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <button type="submit" class="btn-search">Rechercher</button>
     </form>
 
+    <a href="store.php" class="btn">Animaux</a>
     <a href="cart.php" class="btn">Panier</a>
 
 </nav>
