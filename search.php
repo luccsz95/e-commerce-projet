@@ -47,8 +47,8 @@ if(isset($_GET['product'])) {
                 <p><?= htmlspecialchars($result['raceAnimals']) ?></p>
                 <h3>Prix : <?= htmlspecialchars($result['priceAnimals']) ?> €</h3>
 
-                <form action="add_to_cart.php" method="POST">
-                    <input type="hidden" name="id" value="<?= htmlspecialchars($result['idAnimals']) ?>">
+                <form action="cart.php" method="POST">
+                    <input type="hidden" name="product_id" value="<?= htmlspecialchars($result['idAnimals']) ?>">
                     <button type="submit">Ajouter au panier</button>
                 </form>
             </div>

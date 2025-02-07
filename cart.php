@@ -15,13 +15,24 @@ try {
 } catch (PDOException $e) {
     echo "Erreur de connexion : " . $e->getMessage();
     exit;
+
 }
 
-$cart_items = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+
+//$cart_items = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 $total = 0;
+$product_id = $_POST['product_id'];
+$_SESSION['cart'][] = $product_id;
+$cart_items = $_SESSION['cart'];
 
 if (isset($_POST['clear_cart'])) {
     unset($_SESSION['cart']);
+    $cart_items = [];
+    $count_item = 0;
     header("Location: cart.php");
     exit;
 }
@@ -90,9 +101,12 @@ if (isset($_POST['remove_item'])) {
                 return $prod['idAnimals'] == $idAnimals;
             });
 
-            $product = array_values($product)[0];
-            $total += $product['priceAnimals'];
+            if (!empty($product)) {
+                $product = array_values($product)[0];
+                $total += $product['priceAnimals'];
+            }
             ?>
+
             <tr>
                 <td><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['nameAnimals']; ?>" width="100"></td>
                 <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>

@@ -42,7 +42,7 @@ CREATE TABLE `animals` (
 
 LOCK TABLES `animals` WRITE;
 /*!40000 ALTER TABLE `animals` DISABLE KEYS */;
-INSERT INTO `animals` VALUES (1,'Eclipse','British Shorthair','Female','Cat','0000-00-00','5','Black','9 999 999 999 999'),(2,'Fluffy','Persian','Female','Cat','0000-00-00','3','Orange','3500'),(3,'Woody','Beagle','Male','Dog','0000-00-00','20','Brown and White','2400'),(4,'Franklin','Turtle','Male','Turtle','0000-00-00','0.5','Green','150'),(5,'Phoebe','Stray Cat','Female','Cat','0000-00-00','8','White and Black','3400'),(6,'Elphie','Corgi','Female','Dog','0000-00-00','4','Orange','2500'),(7,'Valentine','Corgi','Female','Dog','0000-00-00','10','Orange','2500');
+INSERT INTO `animals` VALUES (1,'Wisky','British Shorthair','Male','Cat','0000-00-00','5','Gray','3000'),(2,'Wiskas','Persian','Female','Cat','0000-00-00','3','White','3500'),(3,'John','Beagle','Male','Dog','0000-00-00','20','Brown and White','2400'),(4,'Franklin','Turtle','Male','Turtle','0000-00-00','0.5','Green','150'),(5,'Frédérique','Stray Cat','Female','Cat','0000-00-00','8','White and Black','3400'),(6,'Roger','Corgi','Male','Dog','0000-00-00','4','Orange','2500'),(7,'Cerise','Corgi','Female','Dog','0000-00-00','10','Orange','2500');
 /*!40000 ALTER TABLE `animals` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +94,7 @@ CREATE TABLE `users` (
   `date_inscription` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`idUser`),
   UNIQUE KEY `unique_email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +103,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (0,'admin','admin','admin@admin.fr','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918','0','0','','2025-01-29 09:14:29'),(82,'toto','toto','toto@gmail.com','$2y$10$164QE43.5Lnma6T9IA.cWeB/9xewgHFHTRU9FHImUWAebjhQYdtMG','0123456789','0','','2025-01-29 09:14:29'),(83,'test','test','charles@gmail.com','$2y$10$kPLsIvYQ30tfQK5MXMtnYO66KnYb0.VF4MUfATPNNqSete/C2V3yO','0258741369','0','','2025-01-29 09:14:29'),(86,'Jean Pierre','Pernaut','e.commerceprojet@yahoo.fr','$2y$10$pyk2Nkl2xm6A4XfzfvXZxOMzwdenhw3IZLzowNYYtP8RQ2G5vwW0K','0852741963','0','','2025-01-29 09:14:29'),(106,'test','toto','casenazl95@gmail.com','$2y$10$G.Ba4IAm5aYw81cIhPpHfePK797JivCajc1Kem6fhDKgfz6UX..zS','0258741369','1','a8b31b395de528f61270bbafdd4a5c65','2025-01-29 09:14:29'),(112,'Lucas','Casenaz','lucascasenaz95@gmail.com','$2y$10$9OvY7bolbRjax5M8ho..ZOgdPG.70mkQFmBbS36hXBUx4H41iVYT.','0101010101','1','ad9f6139e1928d98e28b13e2f468242b','2025-01-29 10:09:12');
+INSERT INTO `users` VALUES (0,'admin','admin','e.commerce.project.insta@gmail','$2y$10$lGXbY7rcsqQv67Sl/5ho7OzcqTpDJ427GqaVjdSQWpiDeWsUtALse','0000000000','1','1fc63e2cb3db11bc6880644a06815f70','2025-02-07 11:57:47'),(128,'Lucas','Casenaz','casenazl95@gmail.com','$2y$10$HN46R/l3mog.I1ttS3TYJ.zcSR3eJYFmrv3stUre5mBK57EviF0iC','0123456789','1','3a508b4db3bfbddc94d97adda4d26930','2025-02-07 12:56:38');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -116,4 +116,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-04  9:45:42
+-- Dump completed on 2025-02-07 15:17:10
