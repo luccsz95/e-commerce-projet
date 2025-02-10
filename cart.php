@@ -93,7 +93,7 @@
                     $total += $product['priceAnimals'];
                 ?>
                 <tr>
-<!--                    <td><img src="<?php /*echo htmlspecialchars($product['imageAnimals']); */?>" alt="<?php /*echo htmlspecialchars($product['nameAnimals']); */?>" width="100"></td>-->                    <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>
+                <!--<td><img src="<?php /*echo htmlspecialchars($product['imageAnimals']); */?>" alt="<?php /*echo htmlspecialchars($product['nameAnimals']); */?>" width="100"></td>-->                    <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>
                     <td><?php echo htmlspecialchars($product['priceAnimals']); ?>€</td>
                     <td>
                         <form method="post" style="display: inline;">
