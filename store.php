@@ -43,7 +43,7 @@
                 <p>Prix: <?php echo htmlspecialchars($product['priceAnimals']); ?>€</p>
                 <form method="post" action="cart.php">
                     <input type="hidden" name="product_id" value="<?php echo $product['idAnimals']; ?>">
-                    <button type="submit">Ajouter au panier</button>
+                    <button type="submit" name="add_to_cart">Ajouter au panier</button>
                 </form>
             </div>
         <?php endforeach; ?>
