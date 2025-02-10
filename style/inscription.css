@@ -206,13 +206,15 @@ body {
 }
 
 .captcha {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Times New Roman', Courier, monospace;
     width: 250px;
     font-size: 40px;
     letter-spacing: 4px;
+    font-weight: bold;
     text-align: center;
     position: relative;
-    background: linear-gradient(45deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5));
+    /*background: linear-gradient(45deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5));*/
+    background: rgba(255, 255, 255, 0.5);
     padding: 20px;
     border: 2px solid #2c3e50;
     border-radius: 10px;
