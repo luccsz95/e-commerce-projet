@@ -2,8 +2,6 @@
 
 session_start();
 
-
-
 require 'vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -56,7 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bindParam(':phonenumber', $phonenumber);
             $stmt->bindParam(':token', $token);
 
-
             $mail = new PHPMailer(true);
 
         }
@@ -69,12 +66,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
             $mail->setFrom('kouicicontact@yahoo.com', 'E-commerce');
-            //$mail->setFrom('e.commerce.project.insta@gmail.com', 'E-commerce');
             $mail->addAddress($email, htmlspecialchars("$firstname $lastname"));
-
             $mail->isHTML(true);
             $mail->CharSet = 'UTF-8';
             $mail->Subject = 'Inscription réussie';
+
             $mail->Body = "Bonjour " . htmlspecialchars($firstname) .". Vous êtes maintenant inscrit.
                 <br><a href='http://localhost/BTS-project/newE-project/email_verif.php?token=" . urlencode($token) . "'>
                 Vérifier votre email</a>";

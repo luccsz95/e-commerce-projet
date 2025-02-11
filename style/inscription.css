@@ -16,6 +16,30 @@ body {
     padding-top: 120px; /* Ajuste si nécessaire selon la hauteur du logo */
 }
 
+#caracteres.invalid,
+#maj.invalid,
+#chiffre.invalid,
+#special.invalid,
+#password-match.invalid {
+    color: gray;
+}
+
+#caracteres.valid,
+#maj.valid,
+#chiffre.valid,
+#special.valid,
+#password-match.valid {
+    color: green;
+}
+
+li {
+    list-style: none;
+}
+
+.list-unstyled {
+    margin: 0;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f4f4f9;
@@ -25,7 +49,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 h2 {

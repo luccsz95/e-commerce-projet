@@ -34,7 +34,7 @@ $_SESSION['captcha'] = $getCaptchaCode;
 
 <div class="signup">
     <h2>Inscription</h2>
-    <form action="inscription.php" method="POST" onsubmit="return validateform()">
+    <form action="inscription.php" method="POST" onsubmit="return validateform()" id="validate_form">
         <label for="lastname">Nom de famille</label>
         <input type="text" name="lastname" id="lastname" placeholder="Nom de famille" required>
 
@@ -49,9 +49,19 @@ $_SESSION['captcha'] = $getCaptchaCode;
 
         <label for="password">Mot de passe</label>
         <input type="password" name="password" id="password" placeholder="Mot de passe" required>
+        <div class="force_password" id="force_password"></div>
+        <div id="password-requirements">
+            <ul class="list-unstyled">
+                <li id="caracteres" class="invalid">Au moins 8 caractères</li>
+                <li id="maj" class="invalid">Une majuscule</li>
+                <li id="chiffre" class="invalid">Un chiffre</li>
+                <li id="special" class="invalid">Un caractère spécial</li>
+            </ul>
+        </div>
 
         <label for="confirm-password">Confirmer le mot de passe</label>
         <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirmer le mot de passe" required>
+        <div class="password_confirm"></div>
 
         <label for="captcha">Recopier le code</label>
         <div class="captcha">
@@ -78,28 +88,7 @@ $_SESSION['captcha'] = $getCaptchaCode;
     <p id="error-msg"></p>
 </div>
 
-<script>
-    function validateform() {
-        var lastname = document.getElementById('lastname').value;
-        var firstname = document.getElementById('firstname').value;
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-        var confirm_password = document.getElementById('confirm-password').value;
-        var phonenumber = document.getElementById('phonenumber').value;
-
-        if (lastname == "" || firstname == "" || email == "" || password == "" || confirm_password == "" || phonenumber == "") {
-            document.getElementById('error-msg').innerHTML = "Tous les champs sont obligatoires";
-            return false;
-        }
-
-        if (password != confirm_password) {
-            document.getElementById('error-msg').innerHTML = "Les mots de passe ne correspondent pas";
-            errorMSG.style.color = "red";
-            return false;
-        }
-
-        return true;
-    }
-</script>
+<script src="validateForm.js"></script>
+<script src="inscription.js"></script>
 </body>
 </html>
