@@ -12,7 +12,8 @@ $getTableDB = $pdo->query('show tables;')->fetchAll(PDO::FETCH_COLUMN);
 
 foreach ($getTableDB as $table) {
     $sqlQuery = $pdo->query('select * from ' . $table);
-    $sqlstock = $sqlQuery->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($sqlstock);
+    $sqlStock = $sqlQuery->fetchAll(PDO::FETCH_ASSOC);
+    $data[$table] = $sqlQuery->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($sqlStock);
 }
 ?>
