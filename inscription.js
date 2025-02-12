@@ -1,9 +1,11 @@
 const email = document.getElementById('email');
 const password = document.getElementById('password');
+const phonenumber = document.getElementById('phonenumber');
 const confirm_password = document.getElementById('confirm-password');
 const validate_form = document.getElementById('validate_form');
 const lastname = document.getElementById('lastname');
 const firstname = document.getElementById('firstname');
+const captcha = document.getElementById('captcha');
 
 const lastname_error = document.createElement('div');
 lastname_error.style.color = "red";
@@ -17,6 +19,10 @@ const email_error = document.createElement('div');
 email_error.style.color = "red";
 email.insertAdjacentElement('afterend', email_error);
 
+const phonenumber_error = document.createElement('div');
+phonenumber_error.style.color = "red";
+phonenumber.insertAdjacentElement('afterend', phonenumber_error);
+
 const password_error = document.createElement('div');
 password_error.style.color = "red";
 password.insertAdjacentElement('afterend', password_error);
@@ -25,6 +31,9 @@ const confirm_password_error = document.createElement('div');
 confirm_password_error.style.color = "red";
 confirm_password.insertAdjacentElement('afterend', confirm_password_error);
 
+const captcha_error = document.createElement('div');
+captcha_error.style.color = "red";
+captcha.insertAdjacentElement('afterend', captcha_error);
 
 const checks = [
     [/.{8,}/, "caracteres"],
@@ -46,6 +55,13 @@ password.addEventListener("input", () => {
 
 validate_form.addEventListener('submit', function(event) {
     let isValid = true;
+    firstname_error.textContent = "";
+    lastname_error.textContent = "";
+    email_error.textContent = "";
+    password_error.textContent = "";
+    confirm_password_error.textContent = "";
+    phonenumber_error.textContent = "";
+    captcha_error.textContent = "";
 
     if (firstname.value.length < 2) {
         firstname_error.textContent = "Saisissez au moins 2 caractères";
@@ -59,6 +75,19 @@ validate_form.addEventListener('submit', function(event) {
 
     if (!email.value.includes('@')) {
         email_error.textContent = "Adresse e-mail invalide";
+        isValid = false;
+    }
+
+    if (phonenumber.value.length < 10) {
+        phonenumber_error.textContent = "Numéro de téléphone invalide";
+        isValid = false;
+    }
+
+    const captchaClient = captcha.value.trim();
+    const captchaSession= "<?= $_SESSION['captcha'] ?>";
+
+    if (captchaClient !== captchaSession) {
+        captcha_error.textContent = "Captcha invalide";
         isValid = false;
     }
 

@@ -43,8 +43,6 @@ if(isset($_GET['product'])) {
             <div class="product">
                 <h2><?= htmlspecialchars($result['typeAnimals']) ?></h2>
                 <p><?= htmlspecialchars($result['nameAnimals']) ?></p>
-                <p><?= htmlspecialchars($result['genderAnimals']) ?></p>
-                <p><?= htmlspecialchars($result['raceAnimals']) ?></p>
                 <h3>Prix : <?= htmlspecialchars($result['priceAnimals']) ?> €</h3>
 
                 <form action="cart.php" method="POST">
