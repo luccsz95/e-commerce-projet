@@ -64,9 +64,6 @@ $cart_items = $_SESSION['cart'];
                 'Paiement réussi!';
         });
     </script>
-
-
-
 </body>
 
 </html>

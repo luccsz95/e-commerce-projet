@@ -32,7 +32,7 @@
     if (isset($_POST['add_to_cart'])) {
         $product_id = $_POST['product_id'];
         $_SESSION['cart'][] = $product_id;
-        header("Location: cart.php");
+        header("Location: store.php");
         exit;
     }
 
@@ -102,7 +102,10 @@
                         </form>
                     </td>
                 </tr>
-                <?php } ?>
+                <?php }
+
+                $_SESSION['total_price'] = $total;
+                var_dump($_SESSION['total_price']);?>
             <?php endforeach; ?>
             </tbody>
         </table>
