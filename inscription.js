@@ -5,6 +5,27 @@ const validate_form = document.getElementById('validate_form');
 const lastname = document.getElementById('lastname');
 const firstname = document.getElementById('firstname');
 
+const lastname_error = document.createElement('div');
+lastname_error.style.color = "red";
+lastname.insertAdjacentElement('afterend', lastname_error);
+
+const firstname_error = document.createElement('div');
+firstname_error.style.color = "red";
+firstname.insertAdjacentElement('afterend', firstname_error);
+
+const email_error = document.createElement('div');
+email_error.style.color = "red";
+email.insertAdjacentElement('afterend', email_error);
+
+const password_error = document.createElement('div');
+password_error.style.color = "red";
+password.insertAdjacentElement('afterend', password_error);
+
+const confirm_password_error = document.createElement('div');
+confirm_password_error.style.color = "red";
+confirm_password.insertAdjacentElement('afterend', confirm_password_error);
+
+
 const checks = [
     [/.{8,}/, "caracteres"],
     [/[A-Z]/, "maj"],
@@ -15,44 +36,43 @@ const checks = [
 password.addEventListener("input", () => {
     checks.forEach(([regex, id_liste_obligation]) => {
         const element = document.getElementById(id_liste_obligation);
-        const isValid = regex.test(password.value);
-        element.classList.toggle("valid", isValid);
-        element.classList.toggle("invalid", !isValid);
+        if (element) {
+            const isValid = regex.test(password.value);
+            element.classList.toggle("valid", isValid);
+            element.classList.toggle("invalid", !isValid);
+        }
     });
 });
+
 validate_form.addEventListener('submit', function(event) {
     let isValid = true;
 
     if (firstname.value.length < 2) {
-        event.preventDefault();
-        document.getElementById('error-msg').innerHTML = "Le prénom doit comporter au moins 2 caractères.";
-        let errorMSG = document.getElementById('error-msg');
-        errorMSG.style.color = "red";
-        return false;
+        firstname_error.textContent = "Saisissez au moins 2 caractères";
+        isValid = false;
     }
 
     if (lastname.value.length < 2) {
-        event.preventDefault();
-        document.getElementById('error-msg').innerHTML = "Le nom doit comporter au moins 2 caractères.";
-        let errorMSG = document.getElementById('error-msg');
-        errorMSG.style.color = "red";
-        return false;
+        lastname_error.textContent = "Saisissez au moins 2 caractères";
+        isValid = false;
     }
 
-
-
-    if (!(password.value.length >= 8 && /[A-Z]/.test(password.value) && /\d/.test(password.value) && /[\W_]/.test(password.value))) {
+    if (!email.value.includes('@')) {
+        email_error.textContent = "Adresse e-mail invalide";
         isValid = false;
-        alert("Le mot de passe doit être fort (au moins 8 caractères, avec des majuscules, des chiffres et des caractères spéciaux).");
+    }
+
+    if (password.value.length < 8) {
+        password_error.textContent = "Le mot de passe doit contenir au moins 8 caractères";
+        isValid = false;
     }
 
     if (password.value !== confirm_password.value) {
+        confirm_password_error.textContent = "Les mots de passe ne correspondent pas";
         isValid = false;
-        alert("Les mots de passe ne correspondent pas.");
     }
 
     if (!isValid) {
-        event.preventDefault();
+        event.preventDefault(); 
     }
 });
-
