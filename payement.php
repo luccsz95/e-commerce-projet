@@ -13,4 +13,3 @@ try {
 } catch (\Stripe\Exception\ApiErrorException $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }
-?>
