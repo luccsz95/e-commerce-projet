@@ -22,7 +22,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <?php if (!isset($_SESSION['firstname'])): ?>
         <a href="connexion.php" class="btn">Se connecter</a>
     <?php else: ?>
-        <span>Bienvenue, <?php echo htmlspecialchars($_SESSION['firstname']); ?></span>
+        <span style="color: white; margin-left: 10px;">Bienvenue, <?php echo htmlspecialchars($_SESSION['firstname']); ?></span>
         <form action="logout.php" method="POST" style="display:inline;">
             <button type="submit" class="btn">Se déconnecter</button>
         </form>

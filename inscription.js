@@ -86,7 +86,7 @@ validate_form.addEventListener('submit', function(event) {
     const captchaClient = captcha.value.trim();
     const captchaSession= "<?= $_SESSION['captcha'] ?>";
 
-    if (captchaClient !== captchaSession) {
+    if (captchaClient.value !== captchaSession.value) {
         captcha_error.textContent = "Captcha invalide";
         isValid = false;
     }

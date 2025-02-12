@@ -77,11 +77,11 @@ $_SESSION['captcha'] = $getCaptchaCode;
             </div>
 
             <?php
-            if (isset($_SESSION['errorMessage'])) {
+/*            if (isset($_SESSION['errorMessage'])) {
                 echo $_SESSION['errorMessage'];
                 unset($_SESSION['errorMessage']);
             }
-            ?>
+            */?>
             <input type="text" name="captcha" id="captcha" placeholder="Recopier le code">
             <input type="submit" name="button" value="S'inscrire">
             <p>Déjà un compte ? <a href="connexion.php">Connectez-vous ici</a></p>
