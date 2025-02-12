@@ -1,3 +1,9 @@
+<?php
+session_start();
+
+$cart_items = $_SESSION['cart'];
+?>
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -6,49 +12,48 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Finalisation de l'achat</title>
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
-    <h1>Finalisation de l'achat</h1>
+<?php include 'navbar.php'?>
 
-    <?php if(!empty($cart_items)): ?>
+<h1>Finalisation de l'achat</h1>
+
+<?php if(!empty($cart_items)): ?>
 
     <p>Vous avez <?php echo count($cart_items);?> articles dans votre panier.</p>
 
-    <form action="checkout.php" method="post">
-        <label for="name">Nom</label>
-        <input type="text" name="name" id="name" required>
-        <br>
-
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" required>
-        <br>
-
-        <label for="address">Adresse</label>
-        <input type="text" name="address" id="address" required>
-        <br>
-
-        <label for="city">Ville</label>
-        <input type="text" name="city" id="city" required>
-        <br>
-
-        <label for="zip">Code postal</label>
-        <input type="text" name="zip" id="zip" required>
-        <br>
-
-        <label for="country">Pays</label>
-        <input type="text" name="country" id="country" required>
-        <br>
-
-        <label for="payement">Moyen de payement</label>
-        <select name="payement" id="payement" required>
-            <option value="visa">Visa</option>
-            <option value="mastercard">Mastercard</option>
-            <option value="paypal">Paypal</option>
-        </select>
-        <br>
-
-        <button type="submit" name="checkout">Finaliser l'achat</button>
+    <form id="payment-form">
+        <div id="card-element"></div>
+        <button type="submit">Payer</button>
+        <div id="payment-result"></div>
     </form>
+
+    <script>
+        const stripe = Stripe('pk_test_51QrcwuLUXdwi5EWDa2YC6hxkz4AjQEUuV3GdJeAJtnNtcIhX646SzWYeO9MplVNVOsDKmBL0awqT51NclmQFD9Ur00a3ZzOBRK');
+        const elements = stripe.elements();
+        const cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+        document.getElementById('payment-form')addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const response = await fetch('payement.php', {
+                method: 'POST';
+            });
+
+            const {
+                clientSecret
+            } = await response.json();
+
+            const result = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: card
+                }
+            });
+
+            document.getElementById('payment-result').innerText = result.error ? 'Erreur : ' + result.error.message : 'Paiement réussi!';
+        };
+    </script>
+
 <?php else: ?>
     <p>Votre panier est vide.</p>
 <?php endif; ?>

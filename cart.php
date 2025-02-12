@@ -112,13 +112,13 @@
             <button type="submit" name="clear_cart">Vider le panier</button>
         </form>
 
-        <form method="get" action="checkout.php">
-            <button type="submit">Payer</button>
-        </form>
-
     <?php else : ?>
         <p>Votre panier est vide.</p>
     <?php endif ?>
+
+    <form method="get" action="checkout.php">
+        <button type="submit">Payer</button>
+    </form>
 
     </body>
     </html>
