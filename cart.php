@@ -1,99 +1,99 @@
 <?php
-    session_start();
+session_start();
 
-    $servername = "localhost";
-    $dbname = "e_commerce_project";
-    $dbusername = "root";
-    $dbpassword = "";
+$servername = "localhost";
+$dbname = "e_commerce_project";
+$dbusername = "root";
+$dbpassword = "";
 
-    try {
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $conn->query("SELECT idAnimals, nameAnimals, priceAnimals FROM animals");
-        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        echo "Erreur de connexion : " . $e->getMessage();
-        exit;
-    }
+    $stmt = $conn->query("SELECT idAnimals, nameAnimals, priceAnimals FROM animals");
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Erreur de connexion : " . $e->getMessage();
+    exit;
+}
 
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
-    }
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
 
-    $total = 0;
+$total = 0;
 
-    if (isset($_POST['clear_cart'])) {
-        unset($_SESSION['cart']);
-        header("Location: cart.php");
-        exit;
-    }
+if (isset($_POST['clear_cart'])) {
+    unset($_SESSION['cart']);
+    header("Location: cart.php");
+    exit;
+}
 
-    if (isset($_POST['add_to_cart'])) {
-        $product_id = $_POST['product_id'];
-        $_SESSION['cart'][] = $product_id;
-        header("Location: store.php");
-        exit;
-    }
+if (isset($_POST['add_to_cart'])) {
+    $product_id = $_POST['product_id'];
+    $_SESSION['cart'][] = $product_id;
+    header("Location: store.php");
+    exit;
+}
 
-    if (isset($_POST['remove_item'])) {
-        $idAnimals = $_POST['idAnimals'];
+if (isset($_POST['remove_item'])) {
+    $idAnimals = $_POST['idAnimals'];
 
-        if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
-            $key = array_search($idAnimals, $_SESSION['cart']);
+    if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+        $key = array_search($idAnimals, $_SESSION['cart']);
 
-            if ($key !== false) {
-                unset($_SESSION['cart'][$key]);
-                $_SESSION['cart'] = array_values($_SESSION['cart']);
-            }
+        if ($key !== false) {
+            unset($_SESSION['cart'][$key]);
+            $_SESSION['cart'] = array_values($_SESSION['cart']);
         }
-
-        header("Location: cart.php");
-        exit;
     }
 
-    $cart_items = $_SESSION['cart'];
-    ?>
+    header("Location: cart.php");
+    exit;
+}
 
-    <!doctype html>
-    <html lang="fr">
+$cart_items = $_SESSION['cart'];
+?>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="">
-        <title>Panier</title>
-    </head>
+<!doctype html>
+<html lang="fr">
 
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style/cart.css">
+    <title>Panier</title>
+</head>
 
-    <?php include 'navbar.php'; ?>
+<body>
 
-    <h1>Votre Panier</h1>
+<?php include 'navbar.php'; ?>
 
-    <?php if (!empty($cart_items)): ?>
+<h1>Votre Panier</h1>
 
-        <table>
-            <thead>
-            <tr>
-                <th>Nom du produit</th>
-                <th>Prix</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($cart_items as $idAnimals) : ?>
-                <?php
-                $product = array_filter($products, function ($prod) use ($idAnimals) {
-                    return $prod['idAnimals'] == $idAnimals;
-                });
+<?php if (!empty($cart_items)): ?>
 
-                if (!empty($product)) {
-                    $product = array_values($product)[0];
-                    $total += $product['priceAnimals'];
+    <table>
+        <thead>
+        <tr>
+            <th class="name_product">Nom du produit</th>
+            <th class="price_product">Prix</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($cart_items as $idAnimals) : ?>
+            <?php
+            $product = array_filter($products, function ($prod) use ($idAnimals) {
+                return $prod['idAnimals'] == $idAnimals;
+            });
+
+            if (!empty($product)) {
+                $product = array_values($product)[0];
+                $total += $product['priceAnimals'];
                 ?>
                 <tr>
-                <!--<td><img src="<?php /*echo htmlspecialchars($product['imageAnimals']); */?>" alt="<?php /*echo htmlspecialchars($product['nameAnimals']); */?>" width="100"></td>-->                    <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>
+                    <!--<td><img src="<?php /*echo htmlspecialchars($product['imageAnimals']); */?>" alt="<?php /*echo htmlspecialchars($product['nameAnimals']); */?>" width="100"></td>-->                    <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>
                     <td><?php echo htmlspecialchars($product['priceAnimals']); ?>€</td>
                     <td>
                         <form method="post" style="display: inline;">
@@ -102,26 +102,29 @@
                         </form>
                     </td>
                 </tr>
-                <?php }
+            <?php }
 
-                $_SESSION['total_price'] = $total;
-                var_dump($_SESSION['total_price']);?>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-        <p>Total : <?php echo number_format($total, 2, ',', ' '); ?> €</p>
+            $_SESSION['total_price'] = $total;
+            //var_dump($_SESSION['total_price']);?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <p style="display: flex; justify-content: center">Total : <?php echo number_format($total, 2, ',', ' '); ?> €</p>
+
+    <div class="button-container">
+        <form method="get" action="checkout.php">
+            <button type="submit">Payer</button>
+        </form>
 
         <form method="post">
             <button type="submit" name="clear_cart">Vider le panier</button>
         </form>
+    </div>
 
-    <?php else : ?>
+<?php else : ?>
+    <div class="empty-cart">
         <p>Votre panier est vide.</p>
-    <?php endif ?>
-
-    <form method="get" action="checkout.php">
-        <button type="submit">Payer</button>
-    </form>
-
-    </body>
-    </html>
+    </div>
+<?php endif ?>
+</body>
+</html>

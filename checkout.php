@@ -1,7 +1,24 @@
 <?php
 session_start();
 
+$servername = "localhost";
+$dbname = "e_commerce_project";
+$dbusername = "root";
+$dbpassword = "";
+
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $stmt = $conn->query("SELECT idAnimals, nameAnimals, priceAnimals FROM animals");
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Erreur de connexion : " . $e->getMessage();
+    exit;
+}
+
 $cart_items = $_SESSION['cart'];
+
 ?>
 
 <!doctype html>
@@ -12,6 +29,7 @@ $cart_items = $_SESSION['cart'];
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Finalisation de l'achat</title>
+    <link rel="stylesheet" href="style/checkout.css">
     <script src="https://js.stripe.com/v3/"></script>
 </head>
 
@@ -21,12 +39,30 @@ $cart_items = $_SESSION['cart'];
     <h1>Finalisation de l'achat</h1>
 
     <?php if (!empty($cart_items)): ?>
-
-
         <p>Vous avez <?php echo count($cart_items); ?> articles dans votre panier.</p>
+
+        <div class="products">
+            <?php foreach ($cart_items as $idAnimals) : ?>
+                <?php
+                $product = array_filter($products, function ($prod) use ($idAnimals) {
+                    return $prod['idAnimals'] == $idAnimals;
+                });
+
+                if (!empty($product)) {
+                    $product = array_values($product)[0];
+                    ?>
+                    <div class="product">
+                        <h2><?php echo htmlspecialchars($product['nameAnimals']); ?></h2>
+                        <p>Prix: <?php echo htmlspecialchars($product['priceAnimals']); ?>€</p>
+                    </div>
+                <?php } ?>
+            <?php endforeach; ?>
+        </div>
+
     <?php else: ?>
         <p>Votre panier est vide.</p>
     <?php endif; ?>
+
     <form id="payment-form">
         <div id="card-element"></div>
         <button type="submit">Payer</button>
@@ -42,7 +78,6 @@ $cart_items = $_SESSION['cart'];
         document.getElementById('payment-form').addEventListener('submit', async (event) => {
             event.preventDefault();
 
-
             const response = await fetch('payement.php', {
                 method: 'POST',
             });
@@ -57,7 +92,6 @@ $cart_items = $_SESSION['cart'];
                     card: cardElement,
                 },
             });
-
 
             document.getElementById('payment-result').innerText = result.error ?
                 'Erreur : ' + result.error.message :

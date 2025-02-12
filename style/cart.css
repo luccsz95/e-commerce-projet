@@ -1,0 +1,153 @@
+/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+h1, h2, h3 {
+    color: #343a40;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Conteneur principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Tableau des produits */
+table {
+    width: 90%;
+    border-collapse: collapse;
+    margin: 20px 5%;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table thead {
+    background-color: #2E7D32;
+    color: #ffffff;
+}
+
+table th, table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+}
+
+table th {
+    font-size: 16px;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+table td:last-child {
+    text-align: center;
+    background-color: transparent; /* Rendre le fond transparent */
+}
+
+/* Boutons */
+button {
+    background-color: #2E7D32;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #255d27;
+}
+
+button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Panier vide - centré */
+.empty-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #6c757d;
+    text-align: center;
+    margin: 0; /* Pas de marge supplémentaire */
+}
+
+/* Texte du panier vide */
+.empty-cart p {
+    font-size: 20px;
+    color: #495057;
+    margin: 0;
+}
+
+/* Formulaires */
+form {
+    display: inline-block;
+    margin: 10px;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Total */
+.total {
+    text-align: right;
+    font-size: 18px;
+    margin: 50px 50px;
+    font-weight: bold;
+}
+
+/* Bouton de paiement */
+.checkout {
+    display: block;
+    margin: 30px auto;
+    background-color: #28a745;
+    padding: 15px 30px;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.checkout:hover {
+    background-color: #218838;
+}
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+
+    table th, table td {
+        padding: 10px;
+    }
+
+    nav {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
