@@ -2,6 +2,8 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+$cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +39,12 @@ if (session_status() === PHP_SESSION_NONE) {
     </form>
 
     <a href="store.php" class="btn">Animaux</a>
-    <a href="cart.php" class="btn">Panier</a>
+    <a href="cart.php" class="btn">Panier
+        <?php
+            if($cart_count > 0) {echo '| ' . $cart_count;}
+            else {echo '';}
+        ?>
+    </a>
 
 </nav>
 </body>

@@ -1,10 +1,24 @@
 <?php
+session_start();
+
 $servername = "localhost";
 $dbname = "e_commerce_project";
 $dbusername = "root";
 $dbpassword = "";
 
-if(isset($_GET['product'])) {
+if (isset($_POST['product_id'])) {
+    $product_id = intval($_POST['product_id']);
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+    if (!in_array($product_id, $_SESSION['cart'])) {
+        $_SESSION['cart'][] = $product_id;
+    }
+    header('Location: cart.php');
+    exit;
+}
+
+if (isset($_GET['product'])) {
     $search_term = htmlspecialchars(trim($_GET['product']));
 
     try {
@@ -28,31 +42,32 @@ if(isset($_GET['product'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+          content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Résultats</title>
+    <link rel="stylesheet" href="style/store.css">
 </head>
 <body>
-<?php include 'navbar.php';?>
+<?php include 'navbar.php'; ?>
 
-<h1>Résultats pour "<?= htmlspecialchars($search_term) ?>"</h1>
+<h1 class="store-title">Résultats pour "<?= htmlspecialchars($search_term) ?>"</h1>
 
-<div class="product-list">
+<div class="products">
     <?php if (!empty($results)): ?>
         <?php foreach ($results as $result): ?>
             <div class="product">
                 <h2><?= htmlspecialchars($result['typeAnimals']) ?></h2>
                 <p><?= htmlspecialchars($result['nameAnimals']) ?></p>
-                <h3>Prix : <?= htmlspecialchars($result['priceAnimals']) ?> €</h3>
+                <p>Prix : <?= htmlspecialchars($result['priceAnimals']) ?> €</p>
 
-                <form action="cart.php" method="POST">
+                <form action="search.php?product=<?= urlencode($search_term) ?>" method="POST">
                     <input type="hidden" name="product_id" value="<?= htmlspecialchars($result['idAnimals']) ?>">
                     <button type="submit">Ajouter au panier</button>
                 </form>
             </div>
         <?php endforeach; ?>
     <?php else: ?>
-        <p>Aucun résultat trouvé pour "<?= htmlspecialchars($search_term) ?>"</p>
+        <p class="no-results">Aucun résultat trouvé pour "<?= htmlspecialchars($search_term) ?>"</p>
     <?php endif; ?>
 </div>
 
