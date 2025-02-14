@@ -105,7 +105,7 @@ $cart_items = $_SESSION['cart'];
                                 </form>
                             </td>
                         </tr>
-                    <?php } ?>
+                    <?php } $_SESSION['total_price'] = $total; ?>
                 <?php endforeach; ?>
                 </tbody>
             </table>
