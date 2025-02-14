@@ -18,7 +18,7 @@ try {
 }
 
 $cart_items = $_SESSION['cart'];
-
+$total_price = 0;
 ?>
 
 <!doctype html>
@@ -41,7 +41,14 @@ $cart_items = $_SESSION['cart'];
     <?php if (!empty($cart_items)): ?>
         <p>Vous avez <?php echo count($cart_items); ?> articles dans votre panier.</p>
 
-        <div class="products">
+        <table class="cart-table">
+            <thead>
+            <tr>
+                <th>Nom du produit</th>
+                <th>Prix</th>
+            </tr>
+            </thead>
+            <tbody>
             <?php foreach ($cart_items as $idAnimals) : ?>
                 <?php
                 $product = array_filter($products, function ($prod) use ($idAnimals) {
@@ -50,18 +57,22 @@ $cart_items = $_SESSION['cart'];
 
                 if (!empty($product)) {
                     $product = array_values($product)[0];
+                    $total_price += $product['priceAnimals'];
                     ?>
-                    <div class="product">
-                        <h2><?php echo htmlspecialchars($product['nameAnimals']); ?></h2>
-                        <p>Prix: <?php echo htmlspecialchars($product['priceAnimals']); ?>€</p>
-                    </div>
+                    <tr>
+                        <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>
+                        <td><?php echo htmlspecialchars($product['priceAnimals']); ?>€</td>
+                    </tr>
                 <?php } ?>
             <?php endforeach; ?>
-        </div>
+            </tbody>
+        </table>
 
+        <h2>Prix total: <?php echo htmlspecialchars($total_price); ?>€</h2>
     <?php else: ?>
         <p>Votre panier est vide.</p>
     <?php endif; ?>
+
 
     <form id="payment-form">
         <div id="card-element"></div>
@@ -86,7 +97,6 @@ $cart_items = $_SESSION['cart'];
                 clientSecret
             } = await response.json();
 
-
             const result = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: cardElement,
@@ -96,6 +106,10 @@ $cart_items = $_SESSION['cart'];
             document.getElementById('payment-result').innerText = result.error ?
                 'Erreur : ' + result.error.message :
                 'Paiement réussi!';
+
+            await fetch('clear_cart_after_payement.php', {
+                method: 'POST',
+            });
         });
     </script>
 </body>

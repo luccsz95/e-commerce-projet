@@ -32,7 +32,7 @@ if (isset($_POST['clear_cart'])) {
 if (isset($_POST['add_to_cart'])) {
     $product_id = $_POST['product_id'];
     $_SESSION['cart'][] = $product_id;
-    header("Location: store.php");
+    header("Location: cart.php");
     exit;
 }
 
@@ -74,53 +74,58 @@ $cart_items = $_SESSION['cart'];
 
 <?php if (!empty($cart_items)): ?>
 
-    <table>
-        <thead>
-        <tr>
-            <th class="name_product">Nom du produit</th>
-            <th class="price_product">Prix</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($cart_items as $idAnimals) : ?>
-            <?php
-            $product = array_filter($products, function ($prod) use ($idAnimals) {
-                return $prod['idAnimals'] == $idAnimals;
-            });
-
-            if (!empty($product)) {
-                $product = array_values($product)[0];
-                $total += $product['priceAnimals'];
-                ?>
+    <div class="cart-container">
+        <!-- Tableau des produits à gauche -->
+        <div class="cart-products">
+            <table>
+                <thead>
                 <tr>
-                    <!--<td><img src="<?php /*echo htmlspecialchars($product['imageAnimals']); */?>" alt="<?php /*echo htmlspecialchars($product['nameAnimals']); */?>" width="100"></td>-->                    <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>
-                    <td><?php echo htmlspecialchars($product['priceAnimals']); ?>€</td>
-                    <td>
-                        <form method="post" style="display: inline;">
-                            <input type="hidden" name="idAnimals" value="<?php echo htmlspecialchars($idAnimals); ?>">
-                            <button type="submit" name="remove_item">Supprimer</button>
-                        </form>
-                    </td>
+                    <th class="name_product">Nom du produit</th>
+                    <th class="price_product">Prix</th>
                 </tr>
-            <?php }
+                </thead>
+                <tbody>
+                <?php foreach ($cart_items as $idAnimals) : ?>
+                    <?php
+                    $product = array_filter($products, function ($prod) use ($idAnimals) {
+                        return $prod['idAnimals'] == $idAnimals;
+                    });
 
-            $_SESSION['total_price'] = $total;
-            //var_dump($_SESSION['total_price']);?>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
-    <p style="display: flex; justify-content: center">Total : <?php echo number_format($total, 2, ',', ' '); ?> €</p>
+                    if (!empty($product)) {
+                        $product = array_values($product)[0];
+                        $total += $product['priceAnimals'];
+                        ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>
+                            <td><?php echo htmlspecialchars($product['priceAnimals']); ?>€</td>
+                            <td>
+                                <form method="post" style="display: inline;">
+                                    <input type="hidden" name="idAnimals" value="<?php echo htmlspecialchars($idAnimals); ?>">
+                                    <button type="submit" name="remove_item">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 
-    <div class="button-container">
-        <form method="get" action="checkout.php">
-            <button type="submit">Payer</button>
-        </form>
+        <!-- Boutons et total à droite -->
+        <div class="cart-summary">
+            <p class="total">Total : <?php echo number_format($total, 2, ',', ' '); ?> €</p>
 
-        <form method="post">
-            <button type="submit" name="clear_cart">Vider le panier</button>
-        </form>
+            <div class="actions">
+                <form method="get" action="checkout.php" style="display: inline;">
+                    <button type="submit" class="checkout">Payer</button>
+                </form>
+
+                <form method="post" style="display: inline;">
+                    <button type="submit" name="clear_cart" class="clear-cart">Vider le panier</button>
+                </form>
+            </div>
+        </div>
     </div>
-
 <?php else : ?>
     <div class="empty-cart">
         <p>Votre panier est vide.</p>
