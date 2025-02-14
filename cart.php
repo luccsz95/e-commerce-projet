@@ -109,17 +109,19 @@ $cart_items = $_SESSION['cart'];
         <?php endforeach; ?>
         </tbody>
     </table>
-    <p style="display: flex; justify-content: center">Total : <?php echo number_format($total, 2, ',', ' '); ?> €</p>
 
-    <div class="button-container">
-        <form method="get" action="checkout.php">
-            <button type="submit">Payer</button>
+    <p class="total">Total : <?php echo number_format($total, 2, ',', ' '); ?> €</p>
+
+    <div class="actions">
+        <form method="get" action="checkout.php" style="display: inline;">
+            <button type="submit" class="checkout">Payer</button>
         </form>
 
-        <form method="post">
-            <button type="submit" name="clear_cart">Vider le panier</button>
+        <form method="post" style="display: inline;">
+            <button type="submit" name="clear_cart" class="clear-cart">Vider le panier</button>
         </form>
     </div>
+
 
 <?php else : ?>
     <div class="empty-cart">
