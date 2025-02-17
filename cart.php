@@ -10,9 +10,6 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $priceQuerry = $conn->query("select min(priceAnimals) as min_price, max(priceAnimals) as max_price from animals");
-    $priceResult = $priceQuerry->fetch(PDO::FETCH_ASSOC);
-
     $stmt = $conn->query("SELECT idAnimals, nameAnimals, priceAnimals FROM animals");
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
