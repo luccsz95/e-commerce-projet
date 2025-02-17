@@ -1,6 +1,6 @@
 <?php
 $token = htmlspecialchars(trim($_GET['token']));
-var_dump($token);
+/*var_dump($token);*/
 // if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 

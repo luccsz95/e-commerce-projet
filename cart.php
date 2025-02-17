@@ -10,6 +10,9 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    $priceQuerry = $conn->query("select min(priceAnimals) as min_price, max(priceAnimals) as max_price from animals");
+    $priceResult = $priceQuerry->fetch(PDO::FETCH_ASSOC);
+
     $stmt = $conn->query("SELECT idAnimals, nameAnimals, priceAnimals FROM animals");
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -75,7 +78,6 @@ $cart_items = $_SESSION['cart'];
 <?php if (!empty($cart_items)): ?>
 
     <div class="cart-container">
-        <!-- Tableau des produits à gauche -->
         <div class="cart-products">
             <table>
                 <thead>
@@ -111,7 +113,6 @@ $cart_items = $_SESSION['cart'];
             </table>
         </div>
 
-        <!-- Boutons et total à droite -->
         <div class="cart-summary">
             <p class="total">Total : <?php echo number_format($total, 2, ',', ' '); ?> €</p>
 
