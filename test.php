@@ -1,141 +1,120 @@
 <?php
-session_start();
-$captcha = random_int(10000,99999);
-$_SESSION['captcha'] = $captcha;
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 ?>
 
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign up</title>
+    <title>Accueil</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="header.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 </head>
 
 <body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="accueilLogin.php"> <i class='bx bx-game'></i> &nbsp;L'UNIVERS DES JEUX &nbsp; <i class='bx bx-game'></i></a>
+        </div>
 
-<style>
-    .signup-container{
-        display: flex;
-        justify-content: space-around;
-        flex-direction: row;
-        align-items: center;
-        height: 100vh;
-    }
+        <ul class="nav navbar-nav">
 
-    body{
-        background: linear-gradient(rgba(247, 244, 244, 0.733), rgba(242, 241, 241, 0.696)), no-repeat, fixed
-        url(img/DALL·E\ 2024-11-29\ 13.29.03\ -\ A\ vibrant\ and\ colorful\ image\ showcasing\ various\ video\ games\ integrated\ into\ a\ single\ scene.\ The\ image\ includes\ a\ retro\ arcade\ machine\ with\ a\ glowing\ s.webp);
-    }
+            <?php if (!isset($_SESSION['firstname'])): ?>
+                <li><a href="accueil.php">ACCUEIL</a></li>
+            <?php else: ?>
+                <li><a href="accueilLogin.php">ACCUEIL LOGIN</a></li>
+            <?php endif; ?>
 
-    .titre-signup{
-        text-align: center;
-        margin-bottom: 20px;
-        color: #333;
-        width: 37vw;
-    }
-
-    label {
-        margin-top: 5px;
-        color: #333;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-        display: flex;
-        justify-content: center;
-        width: 50%;
-        padding: 3px;
-        margin: 0 auto;
-        margin-top: 5px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin-bottom: 12px;
-    }
-
-    input[type="submit"] {
-        width: 50%;
-        padding: 10px;
-        background-color: #5cb85c;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        margin-top: 20px;
-        cursor: pointer;
-    }
-
-    .captcha{
-        font-family: 'Impact', sans-serif;
-        font-size: 30px;
-        color: #333;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        background-color: #f3f3f3;
-        padding: 5px;
-        border-radius: 5px;
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        width: 200px;
-        /*changement de css*/
-        margin: 0 auto; /* Centre horizontalement */
-        display: flex;
-        justify-content: center;
-    }
-
-</style>
-
-<div class="signup-container">
-    <div class="fond-img">
-        <img src="img/signup.avif" alt="login">
-    </div>
-    <div class="titre-signup">
-        <h2 style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px"> <i class='bx bx-user'></i> &nbsp;Inscription <i class='bx bx-user'></i></h2>
-
-        <form action="signup.php" method="POST" onsubmit="return validateForm()">
-            <label for="nom">Nom d'utilisateur :</label>
-            <input type="text" id="nom" name="nom" required>
-
-            <label for="email">Email :</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="password">Mot de passe :</label>
-            <input type="password" id="password" name="password" required>
-
-            <label for="confirm-password">Confirmer le mot de passe :</label>
-            <input type="password" id="confirm-password" name="confirm-password" required>
-            <label  for="capchat">Veuillez remplir le Captcha:</label>
-            <div class="captcha">
-                <?php echo $_SESSION ['captcha']?>
+            <li><a href="jeux.php">JEUX</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">CATEGORIES
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="aventure.php">Aventure</a></li>
+                    <li><a href="rpg.php">RPG</a></li>
+                    <li><a href="historique.php">Historique</a></li>
+                    <li><a href="soulslike.php">Soulslike</a></li>
+                    <li><a href="horreur.php">Horreur</a></li>
+                    <li><a href="survie.php">Survie</a></li>
+                    <li><a href="action.php">Action</a></li>
+                </ul>
+            </li>
+            <li><a href="contact.php">CONTACT</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="panier.php">Panier &nbsp; <span class="glyphicon glyphicon-shopping-cart"></span></a></li>
+            <?php
+            if (isset($_SESSION['email'])) {
+                echo '<li><a href="favoris.php"><i class=\'bx bxs-heart\' ></i></a></li>';
+                echo '<li><a href="historique_commandes.php">Historique</a></li>';
+                echo "<li><a href=\"compte.php\">Compte</li>";
+                echo "<li><a href=\"logout.php\">Logout &nbsp; <span class=\"glyphicon glyphicon-log-in\"></span></a></li>";
+            } else {
+                echo "<li><a href=\"login.php\">Login &nbsp; <span class=\"glyphicon glyphicon-log-in\"></span></a></li>";
+            }
+            ?>
+        </ul>
+        <form class="navbar-form navbar-left" action="research.php" method="get">
+            <div class="form-group">
+                <input type="search" name="query" id="products" class="form-control" placeholder="rechercher..." required style="width: 440px" list="datalist">
+                <datalist id="datalist"></datalist>
             </div>
-            <label for="captcha">
-                <input type="text" id="captcha" name="captcha" required>
-                <input type="submit" value="S'inscrire">
+            <button type="submit" class="btn btn-default"><i class='bx bx-search-alt-2'></i>
+            </button>
         </form>
     </div>
-    <p id="error-msg"></p>
-</div>
-
+    </div>
+</nav>
 <script>
-    function validateForm() {
-        var mdp = document.getElementById("password").value;
-        var confirmPassword = document.getElementById("confirm-password").value;
-        var errorMsg = document.getElementById("error-msg");
+    $(document).ready(function() {
+        let inputRecherche = $('input[name="query"]');
 
-        if (mdp !== confirmPassword) {
-            errorMsg.textContent = "Les mots de passe ne correspondent pas.";
-            errorMsg.style.color = "red";
-            return false;
-        }
-        return true;
-    }
+        inputRecherche.on('input', function() {
+            var valeur_saisie = $(this).val();
+            if (valeur_saisie.length > 1) {
+                $.ajax({
+                    url: 'recup_produit.php',
+                    method: 'GET',
+                    dataType: 'json',
+                    data: { search: valeur_saisie },
+                    success: function(data) {
+
+                        $('#datalist').empty(); // On vide la liste avant d’ajouter de nouvelles options
+
+                        let titresAjoutes = new Set();
+                        $.each(data, function(index, produit) {
+                            if (!titresAjoutes.has(produit.titre)) {
+                                $('#datalist').append(
+                                    $('<option>', { value: produit.titre })
+                                );
+                                titresAjoutes.add(produit.titre);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        // Vider la datalist une fois qu'un jeu est sélectionné
+        inputRecherche.on('change', function() {
+            setTimeout(() => {
+                $('#datalist').empty(); // Efface la liste après la sélection
+            }, 50); // Petit délai pour éviter la suppression immédiate avant la sélection
+        });
+    });
 </script>
-<!-- <?php
-include 'footer.php'
-?> -->
-
-</html>
 </body>
 
 </html>
+

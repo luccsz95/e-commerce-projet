@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+date_default_timezone_set('Europe/Paris');
+
 $servername = "localhost";
 $dbname = "e_commerce_project";
 $dbusername = "root";
@@ -10,6 +12,7 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    //filtre
     $priceQuery = $conn->query("SELECT MIN(priceAnimals) AS min_price, MAX(priceAnimals) AS max_price FROM animals");
     $priceResult = $priceQuery->fetch(PDO::FETCH_ASSOC);
     $minPrice = $priceResult['min_price'] ?? 0;
@@ -40,7 +43,6 @@ try {
         $max_price = $_GET['price_max'];
         $sql .= " AND priceAnimals BETWEEN $min_price AND $max_price";
     }
-
     $stmt = $conn->query($sql);
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -68,26 +70,22 @@ try {
 
 <h1 class="store-title">Choix des animaux</h1>
 
-<form method="get" id="filter-form">
+<form method="get" class="filter-form" id="filter-form">
     <label>
         <input type="checkbox" name="filter_dog" value="Dog" <?php echo isset($_GET['filter_dog']) ? 'checked' : ''; ?>>
         Chien
-
         <input type="checkbox" name="filter_cat" value="Cat" <?php echo isset($_GET['filter_cat']) ? 'checked' : ''; ?>>
         Chat
-
         <input type="checkbox" name="filter_turtle" value="Turtle" <?php echo isset($_GET['filter_turtle']) ? 'checked' : ''; ?>>
         Tortue
     </label>
     <div class="price-slider">
         <input type="range" name="price_min" min="<?php echo $minPrice; ?>" max="<?php echo $maxPrice; ?>" value="<?php echo isset($_GET['price_min']) ? $_GET['price_min'] : $minPrice; ?>" step="1" style="width: 15%" id="minPrice">
-
         <input type="range" name="price_max" min="<?php echo $minPrice; ?>" max="<?php echo $maxPrice; ?>" value="<?php echo isset($_GET['price_max']) ? $_GET['price_max'] : $maxPrice; ?>" step="1" style="width: 15%" id="maxPrice">
     </div>
 
     <div class="price-values">
         <span> Prix minimum: <span id="price_min"><?php echo isset($_GET['price_min']) ? $_GET['price_min'] : $minPrice; ?></span> €</span>
-
         <span> Prix maximum: <span id="price_max"><?php echo isset($_GET['price_max']) ? $_GET['price_max'] : $maxPrice; ?></span> €</span>
     </div>
 </form>
@@ -95,18 +93,69 @@ try {
 <div class="products">
     <?php foreach ($products as $product): ?>
         <div class="product">
-            <h2><?php echo htmlspecialchars($product['nameAnimals']); ?></h2>
-            <p>Type de peluche: <?php echo htmlspecialchars($product['typeAnimals']); ?></p>
-            <p>Prix: <?php echo htmlspecialchars($product['priceAnimals']); ?>€</p>
-            <form method="post" action="cart.php">
-                <input type="hidden" name="product_id" value="<?php echo $product['idAnimals']; ?>">
-                <button type="submit" name="add_to_cart">Ajouter au panier</button>
-            </form>
+            <a href="fiche_produit.php?idAnimals=<?php echo htmlspecialchars($product['idAnimals']); ?>">
+                <h2><?php echo htmlspecialchars($product['nameAnimals']); ?></h2>
+            </a>
+                <p>Type de peluche: <?php echo htmlspecialchars($product['typeAnimals']); ?></p>
+                <p>Prix: <?php echo htmlspecialchars($product['priceAnimals']); ?>€</p>
+                <form method="post" action="cart.php">
+                    <input type="hidden" name="product_id" value="<?php echo $product['idAnimals']; ?>">
+                    <button type="submit" name="add_to_cart">Ajouter au panier</button>
+                </form>
+
+                <!--<h2>Donnez votre avis</h2>
+            <?php /*if(isset($_SESSION['firstname'])): */?>
+                <form action="" method="post">
+                    <input type="hidden" name="nameAnimals" value="<?php /*echo htmlspecialchars($product['nameAnimals']); */?>">
+                    <label>Commentaire :</label>
+                    <textarea name="comment" required></textarea>
+                    <input type="hidden" name="note" id="note" value="0">
+                    <div class="star-rating" data-nameAnimals="<?php /*echo htmlspecialchars($product['nameAnimals']); */?>">
+                        <?php /*for ($i = 0; $i <= 5; $i++): */?>
+                            <span class="star" data-note="<?php /*echo $i; */?>">⭐</span>
+                        <?php /*endfor; */?>
+                    </div>
+                    <button type="submit" name="add_comment">Ajouter un commentaire</button>
+                </form>
+            <?php /*else: */?>
+                <p><a href="connexion.php">Connectez-vous</a> pour ajouter un commentaire</p>
+            <?php /*endif; */?>
+
+            <div class="comments-section">
+                <?php /*foreach ($comments as $comment): */?>
+                    <div class="comment">
+                        <strong><?php /*echo htmlspecialchars($comment['firstname']); */?></strong>
+                        <span><?php /*echo str_repeat('⭐', $comment['note']); */?></span>
+                        <p><?php /*echo nl2br(htmlspecialchars($comment['comment'])); */?></p>
+                        <small><?php /*echo $comment['dateComment']; */?></small>
+                    </div>
+                <?php /*endforeach; */?>
+            </div>-->
         </div>
     <?php endforeach; ?>
 </div>
 
 <script>
+    /*document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('.star-rating').forEach(function (rating) {
+            const stars = rating.querySelectorAll('.star');
+            const nameAnimals = rating.getAttribute('data-nameAnimals');
+            const noteInput = document.getElementById('note_' + nameAnimals);
+
+            stars.forEach(function (star) {
+                star.addEventListener('click', function () {
+                    let value = this.getAttribute('data-note');
+                    noteInput.value = value;
+
+                    stars.forEach(s => s.classList.remove("selected"));
+                    for (let i = 0; i <= value; i++) {
+                        stars[i].classList.add("selected");
+                    }
+                });
+            });
+        });
+    });*/
+
     const minSlider = document.getElementById('minPrice');
     const maxSlider = document.getElementById('maxPrice');
     const minPriceLabel = document.getElementById('price_min');
