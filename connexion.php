@@ -27,20 +27,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 exit;
             }
 
+            // Debugging lines
+            /*echo "<p>Mot de passe saisi : $password</p>";
+            echo "<p>Mot de passe haché : " . $user['password'] . "</p>";*/
+
             if (password_verify($password, $user['password'])) {
-                // Stocker le prénom dans la session
                 $_SESSION['firstname'] = $user['firstname'];
                 echo "<p style='color: green;'>Connexion réussie !</p>";
                 header("Location: index.php");
                 exit();
-            }
-
-            else {
+            } else {
                 echo "<p style='color: red;'>Mot de passe incorrect.</p>";
             }
-        }
-
-        else {
+        } else {
             echo "<p style='color: red;'>Utilisateur non trouvé.</p>";
         }
 
@@ -80,6 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="password" name="password" id="password" placeholder="Mot de passe" required>
 
         <input type="submit" value="Se connecter">
+
     </form>
 
     <p>Pas encore inscrit ? <a href="vue_inscription.php">Inscrivez-vous ici</a></p>

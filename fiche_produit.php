@@ -58,6 +58,44 @@ try {
 </head>
 <body>
 
+<style>
+    .star-rating {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        cursor: pointer;
+        margin: 10px 0;
+    }
+
+    .star {
+        font-size: 24px;
+        color: #ccc;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .star:hover, .star.selected {
+        color: gold;
+    }
+
+    .comment {
+        background-color: white;
+        padding: 15px;
+        margin-top: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 3px black;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .comment:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 6px black;
+    }
+
+    .comment
+
+</style>
+
 <div class="navbar">
     <?php include 'navbar.php'; ?>
 </div>
@@ -79,7 +117,7 @@ try {
         <input type="hidden" name="note" id="note" value="0">
         <div class="star-rating">
             <?php for ($i = 1; $i <= 5; $i++): ?>
-                <span class="star" data-note="<?php echo $i; ?>">⭐</span>
+                <span class="star" data-note="<?php echo $i; ?>">★</span>
             <?php endfor; ?>
         </div>
         <button type="submit" name="add_comment">Ajouter un commentaire</button>
@@ -98,6 +136,23 @@ try {
         </div>
     <?php endforeach; ?>
 </div>
+
+<script>
+    const stars = document.querySelectorAll('.star');
+    const noteInput = document.getElementById('note');
+
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            let value = this.getAttribute('data-note');
+            noteInput.value = value;
+
+            stars.forEach(s => s.classList.remove("selected");
+            for (let i = 0; i <= value; i++) {
+                stars[i].classList.add("selected");
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
