@@ -31,14 +31,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             /*echo "<p>Mot de passe saisi : $password</p>";
             echo "<p>Mot de passe haché : " . $user['password'] . "</p>";*/
 
-            if (password_verify($password, $user['password'])) {
+            $email = trim($_POST['email']);
+            $password = trim($_POST['password']);
+
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $stmt = $conn->prepare("SELECT password FROM users WHERE email = :email");
+            $stmt->execute(['email' => $email]);
+            $hashed_password = $stmt->fetchColumn();
+
+            if ($hashed_password && password_verify($password, $hashed_password)) {
                 $_SESSION['firstname'] = $user['firstname'];
                 echo "<p style='color: green;'>Connexion réussie !</p>";
                 header("Location: index.php");
                 exit();
             } else {
-                echo "<p style='color: red;'>Mot de passe incorrect.</p>";
+                echo "<p style='color: red;'>Mot de passe incorrect</p>";
             }
+
         } else {
             echo "<p style='color: red;'>Utilisateur non trouvé.</p>";
         }

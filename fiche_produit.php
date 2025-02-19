@@ -92,7 +92,40 @@ try {
         box-shadow: 0 4px 6px black;
     }
 
-    .comment
+    .comment strong {
+        font-size: 16px;
+        color: #333;
+    }
+
+    .comment span {
+        font-size: 14px;
+        color: gold;
+    }
+
+    .comment p {
+        margin-top: 10px;
+        line-height: 1.6;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .comment small {
+        display: block;
+        margin-top: 10px;
+        font-size: 12px;
+        color: #666;
+    }
+
+    textarea {
+        display: flex;
+        justify-content: center;
+        width: 50%;
+        min-height: 80px;
+        margin-top: 5px;
+        padding: 10px;
+        border-radius: 5px;
+        resize: none;
+    }
 
 </style>
 
@@ -132,7 +165,7 @@ try {
             <strong><?php echo htmlspecialchars($comment['firstname']); ?></strong>
             <span><?php echo str_repeat('⭐', $comment['note']); ?></span>
             <p><?php echo nl2br(htmlspecialchars($comment['comment'])); ?></p>
-            <small><?php echo $comment['dateComment']; ?></small>
+            <small ><?php echo $comment['dateComment']; ?></small>
         </div>
     <?php endforeach; ?>
 </div>

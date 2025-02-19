@@ -32,7 +32,7 @@ try {
 
 $interval = $current_time->diff($date_inscription);
 
-if ($interval->i >= 1 || $interval->h > 0) {
+if ($interval->i >= 15 || $interval->h > 0) {
     $delete_user = $conn->prepare('DELETE FROM users WHERE token = :token');
     $delete_user->execute(['token' => $token]);
     echo "<p style='color : red;'>Le lien a expiré. Veuillez vous réinscrire</p>
