@@ -13,6 +13,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $comment = $_POST['comment'];
     $note = intval($_POST['note']);
 
+    if($note < 1 || $note > 5) {
+        echo "La note doit être comprise entre 1 et 5";
+        exit;
+    }
+
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

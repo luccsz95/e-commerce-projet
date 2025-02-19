@@ -10,19 +10,17 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $animals = null; // Initialiser la variable
+    $animals = null; // Initialize the variable
 
     if (isset($_GET['idAnimals'])) {
         $id = (int) $_GET['idAnimals'];
         $stmt = $conn->prepare("SELECT * FROM animals WHERE idAnimals = :idAnimals");
         $stmt->execute(['idAnimals' => $id]);
         $animals = $stmt->fetch(PDO::FETCH_ASSOC);
-
     }
 
     if (!$animals) {
         die("<p>Produit non trouvé. <a href='store.php'>Retourner à la boutique</a></p>");
-
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['firstname'])) {
@@ -32,9 +30,12 @@ try {
         $note = (int)$_POST['note'];
         $date_ajout = date('Y-m-d H:i:s');
 
-        if (!empty($comment) && $note >= 0 && $note <= 5) {
+        if (!empty($comment) && $note >= 1 && $note <= 5) {
             $stmt = $conn->prepare("INSERT INTO comments (nameAnimals, firstname, comment, note, dateComment) VALUES (?, ?, ?, ?, ?)");
             $stmt->execute([$nameAnimals, $firstname, $comment, $note, $date_ajout]);
+            echo "<p style='color: green;'>Votre commentaire a été ajouté avec succès.</p>";
+        } else {
+            echo "<p style='color: red;'>La note doit être comprise entre 1 et 5.</p>";
         }
     }
 
@@ -125,6 +126,7 @@ try {
         padding: 10px;
         border-radius: 5px;
         resize: none;
+        font-size: 14px;
     }
 
 </style>
@@ -179,8 +181,8 @@ try {
             let value = this.getAttribute('data-note');
             noteInput.value = value;
 
-            stars.forEach(s => s.classList.remove("selected");
-            for (let i = 0; i <= value; i++) {
+            stars.forEach(s => s.classList.remove("selected"));
+            for (let i = 0; i < value; i++) {
                 stars[i].classList.add("selected");
             }
         });
