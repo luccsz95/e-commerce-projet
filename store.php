@@ -103,20 +103,20 @@ try {
                     <button type="submit" name="add_to_cart">Ajouter au panier</button>
                 </form>
 
-                <h2>Donnez votre avis</h2>
-            <?php if(isset($_SESSION['firstname'])): ?>
+                <!--<h2>Donnez votre avis</h2>
+            <?php /*if(isset($_SESSION['firstname'])): */?>
                 <form action="" method="post">
-                    <input type="hidden" name="nameAnimals" value="<?php echo htmlspecialchars($product['nameAnimals']); ?>">
+                    <input type="hidden" name="nameAnimals" value="<?php /*echo htmlspecialchars($product['nameAnimals']); */?>">
                     <input type="hidden" name="note" id="note" value="0">
-                    <div class="star-rating" data-nameAnimals="<?php echo htmlspecialchars($product['nameAnimals']); ?>">
-                        <?php for ($i = 1; $i <= 5; $i++): ?>
-                            <span class="star" data-note="<?php echo $i; ?>">★</span>
-                        <?php endfor; ?>
+                    <div class="star-rating" data-nameAnimals="<?php /*echo htmlspecialchars($product['nameAnimals']); */?>">
+                        <?php /*for ($i = 1; $i <= 5; $i++): */?>
+                            <span class="star" data-note="<?php /*echo $i; */?>">★</span>
+                        <?php /*endfor; */?>
                     </div>
                 </form>
-            <?php else: ?>
+            <?php /*else: */?>
                 <p><a href="connexion.php">Connectez-vous</a> pour ajouter un commentaire</p>
-            <?php endif; ?>
+            --><?php /*endif; */?>
 
             <!--<div class="comments-section">
                 <?php /*foreach ($comments as $comment): */?>
