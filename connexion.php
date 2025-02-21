@@ -2,6 +2,7 @@
 // connexion.php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     session_start(); // Démarrer la session pour accéder aux variables de session
+    session_regenerate_id(true); // Régénérer l'ID de session pour éviter les attaques de fixation de session
 
     $email = htmlspecialchars(trim($_POST['email']));
     $password = htmlspecialchars(trim($_POST['password']));
@@ -43,7 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if ($hashed_password && password_verify($password, $hashed_password)) {
                 $_SESSION['firstname'] = $user['firstname'];
+                $_SESSION['email'] = $email;
+                $_SESSION['idUser'] = $user['idUser'];
                 echo "<p style='color: green;'>Connexion réussie !</p>";
+
+                /*var_dump($_SESSION); // Debugging
+                die();*/
                 header("Location: index.php");
                 exit();
             } else {

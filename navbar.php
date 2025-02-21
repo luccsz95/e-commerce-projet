@@ -28,6 +28,7 @@ $cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
         <form action="logout.php" method="POST" style="display:inline;">
             <button type="submit" class="btn">Se déconnecter</button>
         </form>
+        <a href="view_account.php" class="btn">Mon compte</a>
     <?php endif; ?>
 
 

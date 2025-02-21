@@ -25,13 +25,10 @@ DROP TABLE IF EXISTS `animals`;
 CREATE TABLE `animals` (
   `idAnimals` int(100) NOT NULL AUTO_INCREMENT,
   `nameAnimals` varchar(100) NOT NULL,
-  `raceAnimals` varchar(100) NOT NULL,
-  `genderAnimals` varchar(100) NOT NULL,
   `typeAnimals` varchar(100) NOT NULL,
-  `bithdayAnimals` date NOT NULL,
-  `weight Animals` varchar(100) NOT NULL,
+  `weightAnimals` varchar(100) NOT NULL,
   `colorAnimals` varchar(100) NOT NULL,
-  `priceAnimals` varchar(100) NOT NULL,
+  `priceAnimals` decimal(5,2) NOT NULL,
   PRIMARY KEY (`idAnimals`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -42,8 +39,35 @@ CREATE TABLE `animals` (
 
 LOCK TABLES `animals` WRITE;
 /*!40000 ALTER TABLE `animals` DISABLE KEYS */;
-INSERT INTO `animals` VALUES (1,'Wisky','British Shorthair','Male','Cat','0000-00-00','5','Gray','3000'),(2,'Wiskas','Persian','Female','Cat','0000-00-00','3','White','3500'),(3,'John','Beagle','Male','Dog','0000-00-00','20','Brown and White','2400'),(4,'Franklin','Turtle','Male','Turtle','0000-00-00','0.5','Green','150'),(5,'Frédérique','Stray Cat','Female','Cat','0000-00-00','8','White and Black','3400'),(6,'Roger','Corgi','Male','Dog','0000-00-00','4','Orange','2500'),(7,'Cerise','Corgi','Female','Dog','0000-00-00','10','Orange','2500');
+INSERT INTO `animals` VALUES (1,'Wisky','Cat','5','Gray',24.99),(2,'Wiskas','Cat','3','White',24.99),(3,'John','Dog','20','Brown and White',25.99),(4,'Franklin','Turtle','0.5','Green',13.99),(5,'Frédérique','Cat','8','White and Black',24.99),(6,'Roger','Dog','4','Orange',25.99),(7,'Cerise','Dog','10','Orange',26.99);
 /*!40000 ALTER TABLE `animals` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `comments`
+--
+
+DROP TABLE IF EXISTS `comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comments` (
+  `idComment` int(100) NOT NULL AUTO_INCREMENT,
+  `nameAnimals` varchar(100) NOT NULL,
+  `firstname` varchar(100) NOT NULL,
+  `comment` varchar(512) NOT NULL,
+  `note` float NOT NULL,
+  `dateComment` date NOT NULL,
+  PRIMARY KEY (`idComment`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comments`
+--
+
+LOCK TABLES `comments` WRITE;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -55,15 +79,15 @@ DROP TABLE IF EXISTS `password_resets`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `password_resets` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
-  `email` varchar(30) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `token` varchar(100) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `expires_at` datetime NOT NULL,
   `etat_du_ticket` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `unique_email` (`email`),
   CONSTRAINT `fk_EMAIL` FOREIGN KEY (`email`) REFERENCES `users` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,7 +110,7 @@ CREATE TABLE `users` (
   `idUser` int(30) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(30) NOT NULL,
   `lastname` varchar(30) NOT NULL,
-  `email` varchar(30) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `phonenumber` varchar(10) NOT NULL,
   `etat_du_token` varchar(100) DEFAULT '0',
@@ -94,7 +118,7 @@ CREATE TABLE `users` (
   `date_inscription` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`idUser`),
   UNIQUE KEY `unique_email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +127,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (0,'admin','admin','e.commerce.project.insta@gmail','$2y$10$lGXbY7rcsqQv67Sl/5ho7OzcqTpDJ427GqaVjdSQWpiDeWsUtALse','0000000000','1','1fc63e2cb3db11bc6880644a06815f70','2025-02-07 11:57:47'),(128,'Lucas','Casenaz','casenazl95@gmail.com','$2y$10$HN46R/l3mog.I1ttS3TYJ.zcSR3eJYFmrv3stUre5mBK57EviF0iC','0123456789','1','3a508b4db3bfbddc94d97adda4d26930','2025-02-07 12:56:38');
+INSERT INTO `users` VALUES (2,'admin','admin','e.commerce.project.insta@gmail.com','$2y$10$ZfNh.DCnEEXMU/XUadhpn.GEk.fE93P/r94VRe8Z8VuJJvqj7CvDm','0000000000','1','aba3c8edb1591a74158e8f3a76d34f71','2025-02-21 10:35:19');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -116,4 +140,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-07 15:17:10
+-- Dump completed on 2025-02-21 11:02:23
