@@ -95,4 +95,6 @@ $_SESSION['captcha'] = $getCaptchaCode;
     <script src="inscription.js"></script>
 </body>
 
+<?php include "footer.php"?>
+
 </html>

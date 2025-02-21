@@ -21,5 +21,7 @@ if (isset($_SESSION['firstname'])) {
 }
 ?>
 
+<?php include "footer.php"?>
+
 </body>
 </html>

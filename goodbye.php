@@ -17,5 +17,8 @@ session_start();
 <p>Si vous avez des questions ou des préoccupations, n'hésitez pas à nous contacter.</p>
 
 <a href="index.php">Retour à l'accueil</a>
+
+<?php include "footer.php"?>
+
 </body>
 </html>

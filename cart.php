@@ -129,5 +129,8 @@ $cart_items = $_SESSION['cart'];
         <p>Votre panier est vide.</p>
     </div>
 <?php endif ?>
+
+<?php include "footer.php"?>
+
 </body>
 </html>

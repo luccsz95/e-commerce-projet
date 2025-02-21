@@ -39,46 +39,52 @@ $total_price = 0;
     <h1>Finalisation de l'achat</h1>
 
     <?php if (!empty($cart_items)): ?>
-        <p>Vous avez <?php echo count($cart_items); ?> articles dans votre panier.</p>
-
-        <table class="cart-table">
-            <thead>
-            <tr>
-                <th>Nom du produit</th>
-                <th>Prix</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($cart_items as $idAnimals) : ?>
-                <?php
-                $product = array_filter($products, function ($prod) use ($idAnimals) {
-                    return $prod['idAnimals'] == $idAnimals;
-                });
-
-                if (!empty($product)) {
-                    $product = array_values($product)[0];
-                    $total_price += $product['priceAnimals'];
-                    ?>
+        <div class="checkout-container">
+            <!-- Partie Gauche : Tableau des Produits -->
+            <div class="cart-section">
+                <table class="cart-table">
+                    <thead>
                     <tr>
-                        <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>
-                        <td><?php echo htmlspecialchars($product['priceAnimals']); ?>€</td>
+                        <th>Nom du produit</th>
+                        <th>Prix</th>
                     </tr>
-                <?php } ?>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($cart_items as $idAnimals) : ?>
+                        <?php
+                        foreach ($products as $product) {
+                            if ($product['idAnimals'] == $idAnimals) {
+                                $total_price += $product['priceAnimals'];
+                                ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>
+                                    <td><?php echo htmlspecialchars($product['priceAnimals']); ?>€</td>
+                                </tr>
+                                <?php
+                                break;
+                            }
+                        }
+                        ?>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
 
-        <h2>Prix total: <?php echo htmlspecialchars($total_price); ?>€</h2>
+            <!-- Partie Droite : Prix Total + Formulaire -->
+            <div class="payment-section">
+                <h2>Total : <?php echo number_format($total_price, 2, ',', ' '); ?>€</h2>
+
+                <form id="payment-form">
+                    <div id="card-element"></div>
+                    <button type="submit">Payer</button>
+                    <div id="payment-result"></div>
+                </form>
+            </div>
+        </div>
     <?php else: ?>
         <p>Votre panier est vide.</p>
     <?php endif; ?>
 
-
-    <form id="payment-form">
-        <div id="card-element"></div>
-        <button type="submit">Payer</button>
-        <div id="payment-result"></div>
-    </form>
 
     <script>
         const stripe = Stripe('pk_test_51QrcwuLUXdwi5EWDa2YC6hxkz4AjQEUuV3GdJeAJtnNtcIhX646SzWYeO9MplVNVOsDKmBL0awqT51NclmQFD9Ur00a3ZzOBRK');

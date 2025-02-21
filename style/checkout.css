@@ -14,6 +14,30 @@ h1, h2, h3 {
     margin: 20px 0;
 }
 
+.checkout-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+.cart-section {
+    width: 60%;
+}
+
+.payment-section {
+    width: 35%;
+    text-align: center;
+}
+
+#payment-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
 /* Conteneur principal */
 .container {
     max-width: 800px;

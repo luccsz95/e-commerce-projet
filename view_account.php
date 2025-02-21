@@ -50,5 +50,8 @@ $conn = null;
 <p><strong>Numéro de téléphone :</strong> <?php echo htmlspecialchars($user['phonenumber']); ?></p>
 
 <a href="account.php">Modifier mes informations</a>
+
+<?php include "footer.php"?>
+
 </body>
 </html>

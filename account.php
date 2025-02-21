@@ -102,5 +102,8 @@ $conn = null;
 <form action="delete_account.php" method="post">
     <input type="submit" value="Supprimer mon compte">
 </form>
+
+<?php include "footer.php"?>
+
 </body>
 </html>
