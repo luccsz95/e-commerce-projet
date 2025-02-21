@@ -17,16 +17,26 @@ $stmt->bindParam(':token', $token);
 $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$date_inscription = new DateTime($user['date_inscription']);
+if ($user === false) {
+    echo "<p style='color : red;'>Le lien est invalide ou a expiré. Veuillez vous réinscrire</p>
+    <a href='vue_inscription.php'>Retour à l'inscription</a>";
+    exit;
+}
+
+try {
+    $date_inscription = new DateTime($user['date_inscription']);
+} catch (DateMalformedStringException $e) {
+    echo $e->getMessage();
+    exit;
+}
 
 $interval = $current_time->diff($date_inscription);
 
-if ($interval->i >= 1 || $interval->h > 0) {
+if ($interval->i >= 15 || $interval->h > 0) {
     $delete_user = $conn->prepare('DELETE FROM users WHERE token = :token');
     $delete_user->execute(['token' => $token]);
-    echo "<p style='color : red;'>Le lien a expiré. Veuiller vous réinscrire</p>
-    <a href='inscription.php'>Retour à l'inscription</a>";
-
+    echo "<p style='color : red;'>Le lien a expiré. Veuillez vous réinscrire</p>
+    <a href='vue_inscription.php'>Retour à l'inscription</a>";
     exit;
 }
 

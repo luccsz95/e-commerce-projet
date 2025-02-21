@@ -1,0 +1,158 @@
+/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+h1, h2 {
+    color: #343a40;
+    text-align: center;
+    margin: 20px 0;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Titre de la page */
+.store-title {
+    margin: 20px auto;
+    font-size: 28px;
+    text-align: center;
+    color: #495057;
+}
+
+/* Bare de filtre */
+.filter-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+/* Centrer les labels */
+.filter-form label {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Ajuster la taille des sliders */
+/* Centrage du filtre et des sliders */
+.price-slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Espacement entre les sliders */
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Augmentation de la taille des sliders */
+.price-slider input[type="range"] {
+    width: 40%; /* Augmente la largeur */
+    height: 12px; /* Augmente l'épaisseur */
+    border-radius: 6px;
+    background: #ced4da;
+    outline: none;
+    opacity: 0.9;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Effet au survol */
+.price-slider input[type="range"]:hover {
+    opacity: 1;
+}
+
+/* Affichage des valeurs des prix bien aligné */
+.price-values {
+    display: flex;
+    justify-content: center;
+    gap: 50px; /* Espacement entre les valeurs */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+
+
+/* Section des produits */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+/* Carte produit */
+.product {
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product h2 {
+    font-size: 20px;
+    color: #343a40;
+    margin-bottom: 10px;
+}
+
+.product p {
+    font-size: 16px;
+    color: #495057;
+    margin-bottom: 15px;
+}
+
+.product button {
+    background-color: #2E7D32;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.product button:hover {
+    background-color: #255d27;
+}
+
+/* Animation sur hover de la carte produit */
+.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .products {
+        grid-template-columns: 1fr;
+    }
+
+    .product {
+        margin: 0 auto;
+    }
+}

@@ -1,6 +1,6 @@
 <?php
 $token = htmlspecialchars(trim($_GET['token']));
-var_dump($token);
+/*var_dump($token);*/
 // if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
@@ -8,6 +8,7 @@ $new_password = trim($_POST['newPassword']);
 $confirm_password = trim($_POST['password_confirm']);
 
 //echo "Le token est : " . htmlspecialchars($token);
+//var_dump($new_password);
 
 if($new_password !== $confirm_password){
     echo"<p style='color: red;'>Le mot de passe ne correspond pas.</p>";

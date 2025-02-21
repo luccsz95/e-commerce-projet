@@ -1,7 +1,12 @@
 <?php
 include 'bdd.php';
 
-date_default_timezone_set('Europe/Paris'); 
+date_default_timezone_set('Europe/Paris');
+
+$servername = "localhost";
+$dbname = "e_commerce_project";
+$dbusername = "root";
+$dbpassword = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = htmlspecialchars(trim($_POST['email']));

@@ -1,5 +1,8 @@
 {
     "require": {
-        "phpmailer/phpmailer": "^6.9"
+        "phpmailer/phpmailer": "^6.9",
+        "google/cloud-recaptcha-enterprise": "^2.0",
+      "ext-gd": "*",
+        "stripe/stripe-php": "^16.5"
     }
 }

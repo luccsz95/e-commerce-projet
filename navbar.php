@@ -2,6 +2,8 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+$cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
 ?>
 
 <!DOCTYPE html>
@@ -22,10 +24,11 @@ if (session_status() === PHP_SESSION_NONE) {
     <?php if (!isset($_SESSION['firstname'])): ?>
         <a href="connexion.php" class="btn">Se connecter</a>
     <?php else: ?>
-        <span>Bienvenue, <?php echo htmlspecialchars($_SESSION['firstname']); ?></span>
+        <span style="color: white; margin-left: 10px;">Bienvenue, <?php echo htmlspecialchars($_SESSION['firstname']); ?></span>
         <form action="logout.php" method="POST" style="display:inline;">
             <button type="submit" class="btn">Se déconnecter</button>
         </form>
+        <a href="view_account.php" class="btn">Mon compte</a>
     <?php endif; ?>
 
 
@@ -36,7 +39,13 @@ if (session_status() === PHP_SESSION_NONE) {
         <button type="submit" class="btn-search">Rechercher</button>
     </form>
 
-    <a href="cart.php" class="btn">Panier</a>
+    <a href="store.php" class="btn">Animaux</a>
+    <a href="cart.php" class="btn">Panier
+        <?php
+            if($cart_count > 0) {echo '| ' . $cart_count;}
+            else {echo '';}
+        ?>
+    </a>
 
 </nav>
 </body>

@@ -1,16 +1,17 @@
 <?php
 
-include "bdd.php";
+session_start();
 
 require 'vendor/autoload.php';
-
-/*require 'PHPMailer.php';
-require 'SMTP.php';
-require 'Exception.php';*/
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
+
+$servername = "localhost";
+$dbname = "e_commerce_project";
+$dbusername = "root";
+$dbpassword = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lastname = htmlspecialchars($_POST['lastname']);
@@ -19,6 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = htmlspecialchars($_POST['password']);
     $confirmPassword = htmlspecialchars($_POST['confirm-password']);
     $phonenumber = htmlspecialchars($_POST['phonenumber']);
+
+    if ($_POST['captcha'] != $_SESSION['captcha']) {
+        $_SESSION['errorMessage'] = "<p style='color: red;'>Le code de vérification est incorrect</p>";
+        header("Location: " . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
 
     if ($password != $confirmPassword) {
         echo "<p style='color: red;'>Les mots de passe ne correspondent pas</p>";
@@ -47,46 +54,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bindParam(':phonenumber', $phonenumber);
             $stmt->bindParam(':token', $token);
 
-
             $mail = new PHPMailer(true);
 
-            if ($stmt->execute()) {
-                $mail->isSMTP();
-                $mail->Host = 'smtp.mail.yahoo.com';
-                //$mail->Host = 'smtp.mail.gmail.com';
-                $mail->SMTPAuth = true;
-                $mail->Username = 'kouicicontact@yahoo.com';
-                //$mail->Username = 'e.commerce.project.insta@gmail.com';
-                $mail->Password = 'ndvmyqlrsnmeecxw';
-                //$mail->Password = 'phpmailer';
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port = 587;
-                $mail->setFrom('kouicicontact@yahoo.com', 'E-commerce');
-                //$mail->setFrom('e.commerce.project.insta@gmail.com', 'E-commerce');
-                $mail->addAddress($email, htmlspecialchars("$firstname $lastname"));
+        }
+        if ($stmt->execute()) {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.mail.yahoo.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'kouicicontact@yahoo.com';
+            $mail->Password = 'ndvmyqlrsnmeecxw';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+            $mail->setFrom('kouicicontact@yahoo.com', 'E-commerce');
+            $mail->addAddress($email, htmlspecialchars("$firstname $lastname"));
+            $mail->isHTML(true);
+            $mail->CharSet = 'UTF-8';
+            $mail->Subject = 'Inscription réussie';
 
-                $mail->isHTML(true);
-                $mail->CharSet = 'UTF-8';
-                $mail->Subject = 'Inscription réussie';
-                $mail->Body = "Bonjour " . htmlspecialchars($firstname) .". Vous êtes maintenant inscrit.
+            $mail->Body = "Bonjour " . htmlspecialchars($firstname) .". Vous êtes maintenant inscrit.
                 <br><a href='http://localhost/BTS-project/newE-project/email_verif.php?token=" . urlencode($token) . "'>
                 Vérifier votre email</a>";
 
-                if($mail->send()){
-                    error_log("E-mail de vérification envoyé avec succès à $email.");
-                } else {
-                    $_SESSION['message'] = "L'envoi de l'e-mail a échoué.";
-                    error_log("Erreur lors de l'envoi de l'e-mail: {$mail->ErrorInfo}");
-                }
-
-                $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-
-                header("Location: connexion.php");
-
-                exit();
+            if($mail->send()){
+                error_log("E-mail de vérification envoyé avec succès à $email.");
             } else {
-                echo "<p style='color: red;'>Erreur lors de l'inscription</p>";
+                $_SESSION['message'] = "L'envoi de l'e-mail a échoué.";
+                error_log("Erreur lors de l'envoi de l'e-mail: {$mail->ErrorInfo}");
             }
+
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+
+            header("Location: connexion.php");
+            exit();
         }
     } catch (PDOException $e) {
         echo "Erreur : " . $e->getMessage();

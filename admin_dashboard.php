@@ -13,7 +13,10 @@ $username = isset($_SESSION['admin']) ? $_SESSION['admin'] : 'Utilisateur';
 echo "<h1>Bienvenue, $username !</h1>";
 
 // Connexion à la base de données
-include "bdd.php";
+$servername = "localhost";
+$dbname = "e_commerce_project";
+$dbusername = "root";
+$dbpassword = "";
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
@@ -51,7 +54,6 @@ try {
 </head>
 <body>
 
-
 <h2>Liste des tables dans la base de données "<?php echo $dbname; ?>"</h2>
 
 <?php
@@ -84,7 +86,9 @@ if ($tables) {
                 // Ajouter des boutons pour modifier et supprimer
                 echo "<td>";
                 $idColumn = array_keys($rows[0])[0]; // Prendre la première colonne qui est généralement l'ID
-                echo "<a href='edit.php?table=$tableName&id={$row[$idColumn]}'>Modifier</a> | ";
+                if ($tableName != 'users') {
+                    echo "<a href='edit.php?table=$tableName&id={$row[$idColumn]}'>Modifier</a> | ";
+                }
                 echo "<a href='delete.php?table=$tableName&id={$row[$idColumn]}' onclick='return confirm(\"Êtes-vous sûr de vouloir supprimer cet enregistrement ?\");'>Supprimer</a>";
                 echo "</td>";
 

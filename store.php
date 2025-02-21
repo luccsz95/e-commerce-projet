@@ -1,3 +1,56 @@
+<?php
+session_start();
+
+date_default_timezone_set('Europe/Paris');
+
+$servername = "localhost";
+$dbname = "e_commerce_project";
+$dbusername = "root";
+$dbpassword = "";
+
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    //filtre
+    $priceQuery = $conn->query("SELECT MIN(priceAnimals) AS min_price, MAX(priceAnimals) AS max_price FROM animals");
+    $priceResult = $priceQuery->fetch(PDO::FETCH_ASSOC);
+    $minPrice = $priceResult['min_price'] ?? 0;
+    $maxPrice = $priceResult['max_price'] ?? 300.00;
+
+    $filter = [];
+    $sql = "SELECT idAnimals, nameAnimals, priceAnimals, typeAnimals FROM animals WHERE 1=1";
+
+    $filterCondition = [];
+    if (isset($_GET['filter_dog'])) {
+        $filterCondition[] = "typeAnimals = 'Dog'";
+    }
+
+    if (isset($_GET['filter_cat'])) {
+        $filterCondition[] = "typeAnimals = 'Cat'";
+    }
+
+    if (isset($_GET['filter_turtle'])) {
+        $filterCondition[] = "typeAnimals = 'Turtle'";
+    }
+
+    if (!empty($filterCondition)) {
+        $sql .= " AND (" . implode(" OR ", $filterCondition) . ")";
+    }
+
+    if (isset($_GET['price_min']) && isset($_GET['price_max'])) {
+        $min_price = $_GET['price_min'];
+        $max_price = $_GET['price_max'];
+        $sql .= " AND priceAnimals BETWEEN $min_price AND $max_price";
+    }
+    $stmt = $conn->query($sql);
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Erreur de connexion : " . $e->getMessage();
+    exit;
+}
+?>
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -5,150 +58,130 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style/store.css">
     <title>Store</title>
 </head>
 <body>
 
 <!-- Barre de navigation -->
 <div class="navbar">
-
-    <!-- Image à gauche -->
-    <!-- <div class="navbar-left"><img src="images/logo.jpg" alt="Logo" class="navbar-logo"></div> -->
-
-    <?php include 'navbar.php';?>
+    <?php include 'navbar.php'; ?>
 </div>
 
-<h1 class="store-title">Choix des produits</h1>
+<h1 class="store-title">Choix des animaux</h1>
 
+<form method="get" class="filter-form" id="filter-form">
+    <label>
+        <input type="checkbox" name="filter_dog" value="Dog" <?php echo isset($_GET['filter_dog']) ? 'checked' : ''; ?>>
+        Chien
+        <input type="checkbox" name="filter_cat" value="Cat" <?php echo isset($_GET['filter_cat']) ? 'checked' : ''; ?>>
+        Chat
+        <input type="checkbox" name="filter_turtle" value="Turtle" <?php echo isset($_GET['filter_turtle']) ? 'checked' : ''; ?>>
+        Tortue
+    </label>
+    <div class="price-slider">
+        <input type="range" name="price_min" min="<?php echo $minPrice; ?>" max="<?php echo $maxPrice; ?>" value="<?php echo isset($_GET['price_min']) ? $_GET['price_min'] : $minPrice; ?>" step="1" style="width: 15%" id="minPrice">
+        <input type="range" name="price_max" min="<?php echo $minPrice; ?>" max="<?php echo $maxPrice; ?>" value="<?php echo isset($_GET['price_max']) ? $_GET['price_max'] : $maxPrice; ?>" step="1" style="width: 15%" id="maxPrice">
+    </div>
 
-<style>
-    .card {
-        border: 1px solid black;
-        height: 200px;
-        width: 200px;
-        margin: 10px;
-        float: left;
-    }
+    <div class="price-values">
+        <span> Prix minimum: <span id="price_min"><?php echo isset($_GET['price_min']) ? $_GET['price_min'] : $minPrice; ?></span> €</span>
+        <span> Prix maximum: <span id="price_max"><?php echo isset($_GET['price_max']) ? $_GET['price_max'] : $maxPrice; ?></span> €</span>
+    </div>
+</form>
 
-    .card-body {
-        border: 1px solid red;
-        text-align: center;
-        height: 150px;
-        width: 150px;
-        margin: 0px;
-    }
+<div class="products">
+    <?php foreach ($products as $product): ?>
+        <div class="product">
+            <a href="fiche_produit.php?idAnimals=<?php echo htmlspecialchars($product['idAnimals']); ?>">
+                <h2><?php echo htmlspecialchars($product['nameAnimals']); ?></h2>
+            </a>
+                <p>Type de peluche: <?php echo htmlspecialchars($product['typeAnimals']); ?></p>
+                <p>Prix: <?php echo htmlspecialchars($product['priceAnimals']); ?>€</p>
+                <form method="post" action="cart.php">
+                    <input type="hidden" name="product_id" value="<?php echo $product['idAnimals']; ?>">
+                    <button type="submit" name="add_to_cart">Ajouter au panier</button>
+                </form>
 
-    /* Style général pour la navbar */
-    .navbar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #2e7d32; /* Vert foncé pour correspondre au style d'inscription */
-        padding: 10px 20px;
-        z-index: 1000; /* Assure que la navbar reste au-dessus des autres éléments */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+                <!--<h2>Donnez votre avis</h2>
+            <?php /*if(isset($_SESSION['firstname'])): */?>
+                <form action="" method="post">
+                    <input type="hidden" name="nameAnimals" value="<?php /*echo htmlspecialchars($product['nameAnimals']); */?>">
+                    <input type="hidden" name="note" id="note" value="0">
+                    <div class="star-rating" data-nameAnimals="<?php /*echo htmlspecialchars($product['nameAnimals']); */?>">
+                        <?php /*for ($i = 1; $i <= 5; $i++): */?>
+                            <span class="star" data-note="<?php /*echo $i; */?>">★</span>
+                        <?php /*endfor; */?>
+                    </div>
+                </form>
+            <?php /*else: */?>
+                <p><a href="connexion.php">Connectez-vous</a> pour ajouter un commentaire</p>
+            --><?php /*endif; */?>
 
-    /* Ajouter un espace sous la navbar pour éviter que le contenu ne soit masqué */
-    body {
-        margin-top: 80px; /* Ajuste la hauteur pour correspondre à celle de la navbar */
-    }
+            <!--<div class="comments-section">
+                <?php /*foreach ($comments as $comment): */?>
+                    <div class="comment">
+                        <strong><?php /*echo htmlspecialchars($comment['firstname']); */?></strong>
+                        <span><?php /*echo str_repeat('⭐', $comment['note']); */?></span>
+                        <p><?php /*echo nl2br(htmlspecialchars($comment['comment'])); */?></p>
+                        <small><?php /*echo $comment['dateComment']; */?></small>
+                    </div>
+                <?php /*endforeach; */?>
+            </div>-->
+        </div>
+    <?php endforeach; ?>
+</div>
 
-    /* Style des liens dans la navbar */
-    .navbar-right a {
-        color: #ffffff;
-        text-decoration: none;
-        padding: 10px 20px;
-        font-family: 'Arial', sans-serif;
-        font-size: 1rem;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('.star-rating').forEach(function (rating) {
+            const stars = rating.querySelectorAll('.star');
+            const nameAnimals = rating.getAttribute('data-nameAnimals');
+            const noteInput = document.getElementById('note_' + nameAnimals);
 
-    .navbar-right a:hover {
-        background-color: #255d27; /* Teinte plus foncée de vert pour le survol */
-        transform: scale(1.05);
-    }
+            stars.forEach(function (star) {
+                star.addEventListener('click', function () {
+                    let value = this.getAttribute('data-note');
+                    noteInput.value = value;
 
-    /* Style de bienvenue pour l'utilisateur connecté */
-    .navbar-right span {
-        color: #ffffff;
-        font-family: 'Arial', sans-serif;
-        font-size: 1rem;
-        margin-right: 15px;
-    }
+                    stars.forEach(s => s.classList.remove("selected"));
+                    for (let i = 0; i <= value; i++) {
+                        stars[i].classList.add("selected");
+                    }
+                });
+            });
+        });
+    });
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .navbar {
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 15px;
+    const minSlider = document.getElementById('minPrice');
+    const maxSlider = document.getElementById('maxPrice');
+    const minPriceLabel = document.getElementById('price_min');
+    const maxPriceLabel = document.getElementById('price_max');
+    const filterForm = document.getElementById('filter-form');
+
+    minSlider.addEventListener('input', function () {
+        if (parseInt(minSlider.value) > parseInt(maxSlider.value)) {
+            maxSlider.value = minSlider.value;
         }
+        minPriceLabel.textContent = minSlider.value;
+        filterForm.submit();
+    });
 
-        .navbar-right {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
+    maxSlider.addEventListener('input', function () {
+        if (parseInt(maxSlider.value) < parseInt(minSlider.value)) {
+            minSlider.value = maxSlider.value;
         }
+        maxPriceLabel.textContent = maxSlider.value;
+        filterForm.submit();
+    });
 
-        .navbar-right a {
-            width: 100%;
-            text-align: left;
-            padding: 10px;
-        }
-
-        .navbar-right span {
-            margin-bottom: 10px;
-        }
-    }
-
-</style>
-
-<div class="card">
-    <div class="card-body">
-        <h5>Maison à vendre</h5>
-        <p>Belle maison à Los Angeles</p>
-        <p>Prix : 1 500 000€</p>
-        <a href="#"> Ajouter au panier</a>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-body">
-        <h5>Maison</h5>
-        <p>Exemple</p>
-        <a href="#"> Ajouter au panier</a>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-body">
-        <h5>Card Title</h5>
-        <p>Exemple</p>
-        <a href="#"> Ajouter au panier</a>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-body">
-        <h5>Card Title</h5>
-        <p>Exemple</p>
-        <a href="#"> Ajouter au panier</a>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-body">
-        <h5>Card Title</h5>
-        <p>Exemple</p>
-        <a href="#"> Ajouter au panier</a>
-    </div>
-</div>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            filterForm.submit();
+        });
+    });
+</script>
 
 </body>
 </html>
