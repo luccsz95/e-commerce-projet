@@ -1,0 +1,179 @@
+/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+/* Titre du produit */
+.product-title {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+    color: #495057;
+}
+
+/* Informations du produit */
+p {
+    text-align: center;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+/* Bouton d'ajout au panier */
+form {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+button[name="add_to_cart"] {
+    background-color: #2E7D32;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[name="add_to_cart"]:hover {
+    background-color: #255d27;
+}
+
+/* Section des commentaires */
+h2 {
+    text-align: center;
+    color: #343a40;
+    margin: 30px 0 15px;
+}
+
+/* Formulaire d'ajout de commentaire */
+form[action=""] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+form[action=""] label {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border-radius: 5px;
+    resize: none;
+    font-size: 14px;
+    border: 1px solid #ced4da;
+}
+
+button[name="add_comment"] {
+    margin-top: 10px;
+    background-color: #2E7D32;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button[name="add_comment"]:hover {
+    background-color: #255d27;
+}
+
+/* Étoiles de notation */
+.star-rating {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.star {
+    font-size: 24px;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star:hover, .star.selected {
+    color: gold;
+}
+
+/* Section des commentaires */
+.comments-section {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 10px;
+}
+
+/* Commentaire */
+.comment {
+    background-color: white;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.comment:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.comment strong {
+    font-size: 16px;
+    color: #333;
+}
+
+.comment span {
+    font-size: 14px;
+    color: gold;
+}
+
+.comment p {
+    margin-top: 10px;
+    line-height: 1.6;
+    font-size: 14px;
+    color: #555;
+}
+
+.comment small {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    form[action=""] {
+        max-width: 90%;
+    }
+
+    .comments-section {
+        max-width: 90%;
+    }
+
+    textarea {
+        width: 100%;
+    }
+}

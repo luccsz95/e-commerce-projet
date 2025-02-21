@@ -32,7 +32,7 @@ $cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
     <?php endif; ?>
 
 
-    <form class="search-form" role="search" action="search.php" method="GET" style="display: flex; align-items: center;">
+    <form class="search-form" role="search" action="fiche_produit.php" method="GET" style="display: flex; align-items: center;">
         <input list="products" name="product" id="product" class="nav-search"
                placeholder="Rechercher un produit" type="search" style="width: 350px;">
         <datalist id="products"></datalist>

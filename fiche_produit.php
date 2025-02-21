@@ -17,6 +17,13 @@ try {
         $stmt = $conn->prepare("SELECT * FROM animals WHERE idAnimals = :idAnimals");
         $stmt->execute(['idAnimals' => $id]);
         $animals = $stmt->fetch(PDO::FETCH_ASSOC);
+    } elseif (isset($_GET['product'])) {
+        $search_term = htmlspecialchars(trim($_GET['product']));
+        $stmt = $conn->prepare("SELECT * FROM animals WHERE nameAnimals LIKE :product");
+        $query = '%' . $search_term . '%';
+        $stmt->bindParam(':product', $query, PDO::PARAM_STR);
+        $stmt->execute();
+        $animals = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     if (!$animals) {
@@ -55,81 +62,10 @@ try {
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style/store.css">
+    <link rel="stylesheet" href="style/fiche_produit.css">
     <title>Fiche Produit</title>
 </head>
 <body>
-
-<style>
-    .star-rating {
-        display: flex;
-        justify-content: center;
-        gap: 5px;
-        cursor: pointer;
-        margin: 10px 0;
-    }
-
-    .star {
-        font-size: 24px;
-        color: #ccc;
-        cursor: pointer;
-        transition: color 0.2s;
-    }
-
-    .star:hover, .star.selected {
-        color: gold;
-    }
-
-    .comment {
-        background-color: white;
-        padding: 15px;
-        margin-top: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 3px black;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .comment:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 6px black;
-    }
-
-    .comment strong {
-        font-size: 16px;
-        color: #333;
-    }
-
-    .comment span {
-        font-size: 14px;
-        color: gold;
-    }
-
-    .comment p {
-        margin-top: 10px;
-        line-height: 1.6;
-        font-size: 14px;
-        color: #555;
-    }
-
-    .comment small {
-        display: block;
-        margin-top: 10px;
-        font-size: 12px;
-        color: #666;
-    }
-
-    textarea {
-        display: flex;
-        justify-content: center;
-        width: 50%;
-        min-height: 80px;
-        margin-top: 5px;
-        padding: 10px;
-        border-radius: 5px;
-        resize: none;
-        font-size: 14px;
-    }
-
-</style>
 
 <div class="navbar">
     <?php include 'navbar.php'; ?>
