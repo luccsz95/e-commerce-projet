@@ -13,7 +13,7 @@ session_start(); // Démarrer la session pour accéder aux variables de session
 <body>
 <?php include 'navbar.php';?>
 
-<h1 class="title">Bienvenue dans notre agence !</h1>
+<h1 class="title">Bienvenue</h1>
 
 <?php
 if (isset($_SESSION['firstname'])) {

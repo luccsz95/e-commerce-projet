@@ -1,10 +1,17 @@
 <?php
 session_start();
+session_regenerate_id(true); // Régénérer l'ID de session pour éviter les attaques de fixation de session
+
 
 $servername = "localhost";
 $dbname = "e_commerce_project";
 $dbusername = "root";
 $dbpassword = "";
+
+
+$idUsers = $_SESSION['user_id'];
+var_dump($idUsers);
+
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
@@ -53,6 +60,27 @@ if (isset($_POST['remove_item'])) {
 }
 
 $cart_items = $_SESSION['cart'];
+
+if (isset($_SESSION['user_id'])) {
+    $idUsers = $_SESSION['user_id'];
+    $stmt = $conn->prepare("SELECT adresseUsers FROM adresse WHERE idUsers = :idUsers");
+    $stmt->bindParam(':idUsers', $idUsers);
+    $stmt->execute();
+    $user_address = $stmt->fetchColumn() > 0;
+
+    if (isset($_POST['checkout'])) {
+        if ($user_address) {
+            header("Location: checkout.php");
+        } else {
+            header("Location: adresseUsers.php");
+        }
+        exit;
+    }
+}
+
+else {
+    echo "L'utilisateur n'est pas connecté.";
+}
 ?>
 
 <!doctype html>
@@ -114,8 +142,8 @@ $cart_items = $_SESSION['cart'];
             <p class="total">Total : <?php echo number_format($total, 2, ',', ' '); ?> €</p>
 
             <div class="actions">
-                <form method="get" action="checkout.php" style="display: inline;">
-                    <button type="submit" class="checkout">Payer</button>
+                <form method="post" style="display: inline;">
+                    <button type="submit" name="checkout" class="checkout">Payer</button>
                 </form>
 
                 <form method="post" style="display: inline;">

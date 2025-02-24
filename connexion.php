@@ -4,6 +4,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     session_start(); // Démarrer la session pour accéder aux variables de session
     session_regenerate_id(true); // Régénérer l'ID de session pour éviter les attaques de fixation de session
 
+    if(isset($_SESSION['user_id'])) {
+        $idUsers = $_SESSION['user_id'];
+    }
+    else {
+        echo "l'opération à échoué";
+    }
+
     $email = htmlspecialchars(trim($_POST['email']));
     $password = htmlspecialchars(trim($_POST['password']));
 

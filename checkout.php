@@ -12,6 +12,9 @@ try {
 
     $stmt = $conn->query("SELECT idAnimals, nameAnimals, priceAnimals FROM animals");
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $stmt = $conn->query("SELECT idUsers, adresseUsers FROM adresse WHERE idUsers = '{$_SESSION['idUser']}'");
+    $address = $stmt->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Erreur de connexion : " . $e->getMessage();
     exit;
@@ -70,6 +73,8 @@ $total_price = 0;
                 </table>
             </div>
 
+            <?php echo htmlspecialchars($address['adresseUsers']); ?>
+
             <!-- Partie Droite : Prix Total + Formulaire -->
             <div class="payment-section">
                 <h2>Total : <?php echo number_format($total_price, 2, ',', ' '); ?>€</h2>
@@ -84,7 +89,6 @@ $total_price = 0;
     <?php else: ?>
         <p>Votre panier est vide.</p>
     <?php endif; ?>
-
 
     <script>
         const stripe = Stripe('pk_test_51QrcwuLUXdwi5EWDa2YC6hxkz4AjQEUuV3GdJeAJtnNtcIhX646SzWYeO9MplVNVOsDKmBL0awqT51NclmQFD9Ur00a3ZzOBRK');

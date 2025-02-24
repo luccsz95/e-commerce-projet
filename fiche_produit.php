@@ -31,8 +31,8 @@ try {
         $date_ajout = date('Y-m-d H:i:s');
 
         if (!empty($comment) && $note >= 1 && $note <= 5) {
-            $stmt = $conn->prepare("INSERT INTO comments (nameAnimals, firstname, comment, note, dateComment) VALUES (?, ?, ?, ?, ?)");
-            $stmt->execute([$nameAnimals, $firstname, $comment, $note, $date_ajout]);
+            $stmt = $conn->prepare("INSERT INTO comments (idAnimals, nameAnimals, firstname, comment, note, dateComment) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$id, $nameAnimals, $firstname, $comment, $note, $date_ajout]);
             echo "<p style='color: green;'>Votre commentaire a été ajouté avec succès.</p>";
         } else {
             echo "<p style='color: red;'>La note doit être comprise entre 1 et 5.</p>";

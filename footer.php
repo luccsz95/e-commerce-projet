@@ -10,8 +10,16 @@
 </head>
 <body>
 </body>
-<div class="footer">
-    <p class="footer-name-right">&copy; <?php echo date("Y"); ?> Lucas CASENAZ Tous droits réservés.</p>
-    <p class="footer-policy"><a href="politique_de_confidentialite.html">Politique de confidentialité</a> | <a href="condition_utilisation.html">Conditions d'utilisation</a></p>
+
+<div class="wrapper">
+    <div class="main-content">
+    </div>
+
+    <div class="footer">
+        <p class="footer-name-right">&copy; <?php echo date("Y"); ?> Lucas CASENAZ Tous droits réservés.</p>
+        <p class="footer-policy"><a href="politique_de_confidentialite.html">Politique de confidentialité</a> | <a href="condition_utilisation.html">Conditions d'utilisation</a></p>
+    </div>
 </div>
+
+
 </html>
