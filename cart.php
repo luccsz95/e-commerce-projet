@@ -63,10 +63,10 @@ $cart_items = $_SESSION['cart'];
 
 if (isset($_SESSION['idUser'])) {
 
-    $stmt = $conn->prepare("SELECT adresseUsers FROM adresse WHERE email = :email");
-    $stmt->bindParam(':email', $email);
+    $stmt = $conn->prepare("SELECT adresseUsers FROM adresse WHERE idUsers = :idUsers");
+    $stmt->bindParam(':idUsers', $id_user, PDO::PARAM_INT);
     $stmt->execute();
-    $user_address = $stmt->fetchColumn() > 0;
+    $user_address = $stmt->fetchColumn();
 
     if (isset($_POST['checkout'])) {
         if ($user_address) {
