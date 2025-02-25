@@ -39,98 +39,99 @@ $total_price = 0;
 </head>
 
 <body>
-    <?php include 'navbar.php' ?>
+<?php include 'navbar.php' ?>
 
-    <h1>Finalisation de l'achat</h1>
+<h1>Finalisation de l'achat</h1>
 
-    <?php if (!empty($cart_items)): ?>
-        <div class="checkout-container">
-            <!-- Partie Gauche : Tableau des Produits -->
-            <div class="cart-section">
-                <table class="cart-table">
-                    <thead>
-                    <tr>
-                        <th>Nom du produit</th>
-                        <th>Prix</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($cart_items as $idAnimals) : ?>
-                        <?php
-                        foreach ($products as $product) {
-                            if ($product['idAnimals'] == $idAnimals) {
-                                $total_price += $product['priceAnimals'];
-                                ?>
-                                <tr>
-                                    <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>
-                                    <td><?php echo htmlspecialchars($product['priceAnimals']); ?>€</td>
-                                </tr>
-                                <?php
-                                break;
-                            }
+<?php if (!empty($cart_items)): ?>
+    <div class="checkout-container">
+        <!-- Partie Gauche : Tableau des Produits -->
+        <div class="cart-section">
+            <table class="cart-table">
+                <thead>
+                <tr>
+                    <th>Nom du produit</th>
+                    <th>Prix</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($cart_items as $idAnimals) : ?>
+                    <?php
+                    foreach ($products as $product) {
+                        if ($product['idAnimals'] == $idAnimals) {
+                            $total_price += $product['priceAnimals'];
+                            ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>
+                                <td><?php echo htmlspecialchars($product['priceAnimals']); ?>€</td>
+                            </tr>
+                            <?php
+                            break;
                         }
-                        ?>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Partie Droite : Sélection de l'adresse + Prix Total + Formulaire -->
-            <div class="payment-section">
-                <h2>Total : <?php echo number_format($total_price, 2, ',', ' '); ?>€</h2>
-
-                <form id="payment-form" method="post" action="process_checkout.php">
-                    <label for="address">Sélectionnez une adresse de livraison :</label>
-                    <select name="address" id="address" required>
-                        <?php foreach ($addresses as $address): ?>
-                            <option value="<?php echo htmlspecialchars($address['adresseUsers']); ?>">
-                                <?php echo htmlspecialchars($address['adresseUsers']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-
-                    <div id="card-element"></div>
-                    <button type="submit">Payer</button>
-                    <div id="payment-result"></div>
-                </form>
-            </div>
+                    }
+                    ?>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
-    <?php else: ?>
-        <p>Votre panier est vide.</p>
-    <?php endif; ?>
 
-    <script>
-        const stripe = Stripe('pk_test_51QrcwuLUXdwi5EWDa2YC6hxkz4AjQEUuV3GdJeAJtnNtcIhX646SzWYeO9MplVNVOsDKmBL0awqT51NclmQFD9Ur00a3ZzOBRK');
-        const elements = stripe.elements();
-        const cardElement = elements.create('card');
-        cardElement.mount('#card-element');
+        <!-- Partie Droite : Sélection de l'adresse + Prix Total + Formulaire -->
+        <div class="payment-section">
+            <h2>Total : <?php echo number_format($total_price, 2, ',', ' '); ?>€</h2>
 
-        document.getElementById('payment-form').addEventListener('submit', async (event) => {
-            event.preventDefault();
+            <form id="payment-form" method="post">
+                <label for="address">Sélectionnez une adresse de livraison :</label>
+                <select name="address" id="address" required>
+                    <?php foreach ($addresses as $address): ?>
+                        <option value="<?php echo htmlspecialchars($address['adresseUsers']); ?>">
+                            <?php echo htmlspecialchars($address['adresseUsers']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
 
-            const response = await fetch('payement.php', {
-                method: 'POST',
-            });
+                <div id="card-element"></div>
+                <button type="submit">Payer</button>
+                <div id="payment-result"></div>
+            </form>
+        </div>
+    </div>
+<?php else: ?>
+    <p>Votre panier est vide.</p>
+<?php endif; ?>
 
-            const {
-                clientSecret
-            } = await response.json();
+<script>
+    const stripe = Stripe('pk_test_51QrcwuLUXdwi5EWDa2YC6hxkz4AjQEUuV3GdJeAJtnNtcIhX646SzWYeO9MplVNVOsDKmBL0awqT51NclmQFD9Ur00a3ZzOBRK');
+    const elements = stripe.elements();
+    const cardElement = elements.create('card');
+    cardElement.mount('#card-element');
 
-            const result = await stripe.confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: cardElement,
-                },
-            });
+    document.getElementById('payment-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
 
-            document.getElementById('payment-result').innerText = result.error ?
-                'Erreur : ' + result.error.message :
-                'Paiement réussi!';
-
-            await fetch('clear_cart_after_payement.php', {
-                method: 'POST',
-            });
+        const response = await fetch('payement.php', {
+            method: 'POST',
         });
-    </script>
+
+        const {
+            clientSecret
+        } = await response.json();
+
+        const result = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: cardElement,
+            },
+        });
+
+        document.getElementById('payment-result').innerText = result.error ?
+            'Erreur : ' + result.error.message :
+            'Paiement réussi!';
+        window.location.href = "commands.php";
+
+        /*await fetch('clear_cart_after_payement.php', {
+            method: 'POST',
+        });*/
+    });
+</script>
 </body>
 
 </html>
