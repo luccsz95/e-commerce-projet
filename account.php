@@ -1,8 +1,6 @@
 <?php
 session_start();
 session_regenerate_id(true);
-/*var_dump($_SESSION);
-die(); // Arrête l'exécution ici pour voir la sortie*/
 
 $servername = "localhost";
 $dbname = "e_commerce_project";
@@ -20,7 +18,7 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $conn->prepare("SELECT idUser, firstname, lastname, email FROM users WHERE email = :email");
+    $stmt = $conn->prepare("SELECT idUser, firstname, lastname, email, phonenumber FROM users WHERE email = :email");
     $stmt->bindParam(':email', $email);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -30,11 +28,17 @@ try {
         exit;
     }
 
+    $stmt = $conn->prepare("SELECT adresseUsers FROM adresse WHERE idUsers = :idUsers");
+    $stmt->bindParam(':idUsers', $user['idUser']);
+    $stmt->execute();
+    $address = $stmt->fetchColumn();
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $newLastname = htmlspecialchars(trim($_POST["lastname"]));
         $newfirstname = htmlspecialchars(trim($_POST["firstname"]));
         $newEmail = htmlspecialchars(trim($_POST["email"]));
         $newPhonenumber = htmlspecialchars(trim($_POST["phonenumber"]));
+        $newAddress = htmlspecialchars(trim($_POST["address"]));
         $newPassword = !empty($_POST["password"]) ? password_hash($_POST["password"], PASSWORD_DEFAULT) : null;
 
         try {
@@ -48,6 +52,11 @@ try {
                 $stmt->bindParam(':password', $newPassword);
             }
             $stmt->bindParam(':idUser', $user['idUser']);
+            $stmt->execute();
+
+            $stmt = $conn->prepare("UPDATE adresse SET adresseUsers = :adresseUsers WHERE idUsers = :idUsers");
+            $stmt->bindParam(':adresseUsers', $newAddress);
+            $stmt->bindParam(':idUsers', $user['idUser']);
             $stmt->execute();
 
             $_SESSION["email"] = $newEmail;
@@ -81,16 +90,19 @@ $conn = null;
 <h1>Mon Profil</h1>
 <form action="account.php" method="post">
     <label for="lastname">Nom :</label>
-    <input type="text" name="lastname" id="lastname" required>
+    <input type="text" name="lastname" id="lastname" value="<?php echo htmlspecialchars($user['lastname']); ?>" required>
 
     <label for="firstname">Prénom :</label>
-    <input type="text" name="firstname" id="firstname" required>
+    <input type="text" name="firstname" id="firstname" value="<?php echo htmlspecialchars($user['firstname']); ?>" required>
 
     <label for="email">Adresse email :</label>
-    <input type="email" name="email" id="email" required>
+    <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
 
     <label for="phonenumber">Numéro de téléphone :</label>
-    <input type="text" name="phonenumber" id="phonenumber" required>
+    <input type="text" name="phonenumber" id="phonenumber" value="<?php echo htmlspecialchars($user['phonenumber']); ?>" required>
+
+    <label for="address">Adresse :</label>
+    <input type="text" name="address" id="address" value="<?php echo htmlspecialchars($address); ?>" required>
 
     <label for="password">Mot de passe :</label>
     <input type="password" name="password" id="password">

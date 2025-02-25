@@ -73,7 +73,13 @@ $total_price = 0;
                 </table>
             </div>
 
-            <?php echo htmlspecialchars($address['adresseUsers']); ?>
+            <?php
+                foreach ($address as $adresses) {
+                    echo htmlspecialchars($address['adresseUsers']);
+                }
+            ?>
+
+            <p>Voulez-vous entrer une autres adresse ? <a href="adresseUsers.php">Cliquer ici</a></p>
 
             <!-- Partie Droite : Prix Total + Formulaire -->
             <div class="payment-section">

@@ -17,7 +17,7 @@ try {
         $zip = $_POST['zip'];
         $fullAddress = $address . ', ' . $city . ', ' . $zip;
 
-        $stmt = $conn->prepare("INSERT INTO adresse (idUsers, adresseUsers) VALUES (:idUsers, :adresseUsers) ON DUPLICATE KEY UPDATE adresseUsers = :adresseUsers");
+        $stmt = $conn->prepare("INSERT INTO adresse (idUsers, adresseUsers) VALUES (:idUsers, :adresseUsers);");
         $stmt->bindParam(':idUsers', $idUsers);
         $stmt->bindParam(':adresseUsers', $fullAddress);
         $stmt->execute();

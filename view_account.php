@@ -22,19 +22,20 @@ try {
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    if ($user) {
+        $_SESSION['user_id'] = $user['idUser'];
 
-    $_SESSION['user_id'] = $user['idUsers'];
-
-
-
-    if (!$user) {
+        $stmt = $conn->prepare("SELECT adresseUsers FROM adresse WHERE idUsers = :idUsers");
+        $stmt->bindParam(':idUsers', $user['idUser']);
+        $stmt->execute();
+        $address = $stmt->fetchColumn();
+    } else {
         echo "Utilisateur introuvable";
         exit;
     }
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
 }
-
 
 $conn = null;
 ?>
@@ -56,6 +57,7 @@ $conn = null;
     <p><strong>Prénom :</strong> <?php echo htmlspecialchars($user['firstname']); ?></p>
     <p><strong>Email :</strong> <?php echo htmlspecialchars($user['email']); ?></p>
     <p><strong>Numéro de téléphone :</strong> <?php echo htmlspecialchars($user['phonenumber']); ?></p>
+    <p><strong>Adresse :</strong> <?php echo htmlspecialchars($address); ?></p>
 
     <a href="account.php">Modifier mes informations</a>
 
