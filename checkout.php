@@ -13,8 +13,10 @@ try {
     $stmt = $conn->query("SELECT idAnimals, nameAnimals, priceAnimals FROM animals");
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $stmt = $conn->query("SELECT idUsers, adresseUsers FROM adresse WHERE idUsers = '{$_SESSION['idUser']}'");
-    $address = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $conn->prepare("SELECT idUsers, adresseUsers FROM adresse WHERE idUsers = :idUsers");
+    $stmt->bindParam(':idUsers', $_SESSION['user_id']);
+    $stmt->execute();
+    $addresses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Erreur de connexion : " . $e->getMessage();
     exit;
@@ -73,19 +75,20 @@ $total_price = 0;
                 </table>
             </div>
 
-            <?php
-                foreach ($address as $adresses) {
-                    echo htmlspecialchars($address['adresseUsers']);
-                }
-            ?>
-
-            <p>Voulez-vous entrer une autres adresse ? <a href="adresseUsers.php">Cliquer ici</a></p>
-
-            <!-- Partie Droite : Prix Total + Formulaire -->
+            <!-- Partie Droite : Sélection de l'adresse + Prix Total + Formulaire -->
             <div class="payment-section">
                 <h2>Total : <?php echo number_format($total_price, 2, ',', ' '); ?>€</h2>
 
-                <form id="payment-form">
+                <form id="payment-form" method="post" action="process_checkout.php">
+                    <label for="address">Sélectionnez une adresse de livraison :</label>
+                    <select name="address" id="address" required>
+                        <?php foreach ($addresses as $address): ?>
+                            <option value="<?php echo htmlspecialchars($address['adresseUsers']); ?>">
+                                <?php echo htmlspecialchars($address['adresseUsers']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
                     <div id="card-element"></div>
                     <button type="submit">Payer</button>
                     <div id="payment-result"></div>

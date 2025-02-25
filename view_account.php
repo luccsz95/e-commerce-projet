@@ -28,7 +28,7 @@ try {
         $stmt = $conn->prepare("SELECT adresseUsers FROM adresse WHERE idUsers = :idUsers");
         $stmt->bindParam(':idUsers', $user['idUser']);
         $stmt->execute();
-        $address = $stmt->fetchColumn();
+        $addresses = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } else {
         echo "Utilisateur introuvable";
         exit;
@@ -57,7 +57,12 @@ $conn = null;
     <p><strong>Prénom :</strong> <?php echo htmlspecialchars($user['firstname']); ?></p>
     <p><strong>Email :</strong> <?php echo htmlspecialchars($user['email']); ?></p>
     <p><strong>Numéro de téléphone :</strong> <?php echo htmlspecialchars($user['phonenumber']); ?></p>
-    <p><strong>Adresse :</strong> <?php echo htmlspecialchars($address); ?></p>
+    <p><strong>Adresses :</strong></p>
+    <ul>
+        <?php foreach ($addresses as $address): ?>
+            <li><?php echo htmlspecialchars($address['adresseUsers']); ?></li>
+        <?php endforeach; ?>
+    </ul>
 
     <a href="account.php">Modifier mes informations</a>
 
