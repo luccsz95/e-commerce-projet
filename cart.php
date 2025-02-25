@@ -5,6 +5,9 @@ session_regenerate_id(true); // Régénérer l'ID de session pour éviter les at
 $id_user = $_SESSION['idUser'];
 var_dump($id_user);
 
+$email = $_SESSION["email"];
+var_dump($email);
+
 $servername = "localhost";
 $dbname = "e_commerce_project";
 $dbusername = "root";
@@ -60,21 +63,21 @@ $cart_items = $_SESSION['cart'];
 
 if (isset($_SESSION['idUser'])) {
 
-    //     $stmt = $conn->prepare("SELECT adresseUsers FROM adresse WHERE email = :email");
-    //     $stmt->bindParam(':email', $email);
-    //     $stmt->execute();
-    //     $user_address = $stmt->fetchColumn() > 0;
+    $stmt = $conn->prepare("SELECT adresseUsers FROM adresse WHERE email = :email");
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+    $user_address = $stmt->fetchColumn() > 0;
 
-    //     if (isset($_POST['checkout'])) {
-    //         if ($user_address) {
-    //             header("Location: checkout.php");
-    //         } else {
-    //             header("Location: adresseUsers.php");
-    //         }
-    //         exit;
-    //     }
-    // } else {
-    //     echo "L'utilisateur n'est pas connecté.";
+    if (isset($_POST['checkout'])) {
+        if ($user_address) {
+            header("Location: checkout.php");
+        } else {
+            header("Location: adresseUsers.php");
+        }
+        exit;
+    }
+} else {
+    echo "L'utilisateur n'est pas connecté.";
 }
 ?>
 
