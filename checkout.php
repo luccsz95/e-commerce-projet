@@ -88,6 +88,8 @@ $total_price = 0;
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <p>Livrez à une autre adresse ? <a href="adresseUsers.php">Cliquer ici</a></p>
+                <input type="hidden" id="adresseUsers">
 
                 <div id="card-element"></div>
                 <button type="submit">Payer</button>

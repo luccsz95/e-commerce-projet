@@ -12,7 +12,6 @@ $cart = $_SESSION['cart'];
 $amount = $_SESSION['total_price'];
 //var_dump($amount);
 
-
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -22,13 +21,19 @@ try {
         'idUsers' => $idUser,
         'amount' => $amount
     ]);
-    $idCommand = $conn->lastInsertId("command_idCommand");
 
-    $sqlDetails = $conn->prepare("INSERT INTO command_details (idCommand, price) VALUES (:idCommand, :amount)");
-    $sqlDetails->execute([
-        'idCommand' => $idCommand,
-        'price' => $amount,
-    ]);
+    $idCommand = $conn->lastInsertId();
+
+    $sqlDetails = $conn->prepare("INSERT INTO command_details (idCommand, idAnimals) VALUES (:idCommand, :idAnimals)");
+
+    foreach ($_SESSION['cart'] as $idAnimals) {
+        $sqlDetails->execute([
+            'idCommand' => $idCommand,
+            'idAnimals' => $idAnimals
+        ]);
+    }
+
+    echo json_encode(['success' => 'Commande validée avec succès']);
 
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);

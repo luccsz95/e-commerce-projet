@@ -6,8 +6,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_SESSION['user_id'])) {
         $idUsers = $_SESSION['user_id'];
-    } else {
-        echo "l'opération à échoué";
     }
 
     $email = htmlspecialchars(trim($_POST['email']));
