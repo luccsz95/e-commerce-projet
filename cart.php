@@ -2,16 +2,13 @@
 session_start();
 session_regenerate_id(true); // Régénérer l'ID de session pour éviter les attaques de fixation de session
 
+$id_user = $_SESSION['idUser'];
+var_dump($id_user);
 
 $servername = "localhost";
 $dbname = "e_commerce_project";
 $dbusername = "root";
 $dbpassword = "";
-
-
-$idUsers = $_SESSION['user_id'];
-var_dump($idUsers);
-
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
@@ -61,25 +58,23 @@ if (isset($_POST['remove_item'])) {
 
 $cart_items = $_SESSION['cart'];
 
-if (isset($_SESSION['user_id'])) {
-    $idUsers = $_SESSION['user_id'];
-    $stmt = $conn->prepare("SELECT adresseUsers FROM adresse WHERE idUsers = :idUsers");
-    $stmt->bindParam(':idUsers', $idUsers);
-    $stmt->execute();
-    $user_address = $stmt->fetchColumn() > 0;
+if (isset($_SESSION['idUser'])) {
 
-    if (isset($_POST['checkout'])) {
-        if ($user_address) {
-            header("Location: checkout.php");
-        } else {
-            header("Location: adresseUsers.php");
-        }
-        exit;
-    }
-}
+    //     $stmt = $conn->prepare("SELECT adresseUsers FROM adresse WHERE email = :email");
+    //     $stmt->bindParam(':email', $email);
+    //     $stmt->execute();
+    //     $user_address = $stmt->fetchColumn() > 0;
 
-else {
-    echo "L'utilisateur n'est pas connecté.";
+    //     if (isset($_POST['checkout'])) {
+    //         if ($user_address) {
+    //             header("Location: checkout.php");
+    //         } else {
+    //             header("Location: adresseUsers.php");
+    //         }
+    //         exit;
+    //     }
+    // } else {
+    //     echo "L'utilisateur n'est pas connecté.";
 }
 ?>
 
@@ -96,69 +91,71 @@ else {
 
 <body>
 
-<?php include 'navbar.php'; ?>
+    <?php include 'navbar.php'; ?>
 
-<h1>Votre Panier</h1>
+    <h1>Votre Panier</h1>
 
-<?php if (!empty($cart_items)): ?>
+    <?php if (!empty($cart_items)): ?>
 
-    <div class="cart-container">
-        <div class="cart-products">
-            <table>
-                <thead>
-                <tr>
-                    <th class="name_product">Nom du produit</th>
-                    <th class="price_product">Prix</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php foreach ($cart_items as $idAnimals) : ?>
-                    <?php
-                    $product = array_filter($products, function ($prod) use ($idAnimals) {
-                        return $prod['idAnimals'] == $idAnimals;
-                    });
-
-                    if (!empty($product)) {
-                        $product = array_values($product)[0];
-                        $total += $product['priceAnimals'];
-                        ?>
+        <div class="cart-container">
+            <div class="cart-products">
+                <table>
+                    <thead>
                         <tr>
-                            <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>
-                            <td><?php echo htmlspecialchars($product['priceAnimals']); ?>€</td>
-                            <td>
-                                <form method="post" style="display: inline;">
-                                    <input type="hidden" name="idAnimals" value="<?php echo htmlspecialchars($idAnimals); ?>">
-                                    <button type="submit" name="remove_item">Supprimer</button>
-                                </form>
-                            </td>
+                            <th class="name_product">Nom du produit</th>
+                            <th class="price_product">Prix</th>
                         </tr>
-                    <?php } $_SESSION['total_price'] = $total; ?>
-                <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($cart_items as $idAnimals) : ?>
+                            <?php
+                            $product = array_filter($products, function ($prod) use ($idAnimals) {
+                                return $prod['idAnimals'] == $idAnimals;
+                            });
 
-        <div class="cart-summary">
-            <p class="total">Total : <?php echo number_format($total, 2, ',', ' '); ?> €</p>
+                            if (!empty($product)) {
+                                $product = array_values($product)[0];
+                                $total += $product['priceAnimals'];
+                            ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>
+                                    <td><?php echo htmlspecialchars($product['priceAnimals']); ?>€</td>
+                                    <td>
+                                        <form method="post" style="display: inline;">
+                                            <input type="hidden" name="idAnimals" value="<?php echo htmlspecialchars($idAnimals); ?>">
+                                            <button type="submit" name="remove_item">Supprimer</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php }
+                            $_SESSION['total_price'] = $total; ?>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
 
-            <div class="actions">
-                <form method="post" style="display: inline;">
-                    <button type="submit" name="checkout" class="checkout">Payer</button>
-                </form>
+            <div class="cart-summary">
+                <p class="total">Total : <?php echo number_format($total, 2, ',', ' '); ?> €</p>
 
-                <form method="post" style="display: inline;">
-                    <button type="submit" name="clear_cart" class="clear-cart">Vider le panier</button>
-                </form>
+                <div class="actions">
+                    <form method="post" style="display: inline;">
+                        <button type="submit" name="checkout" class="checkout">Payer</button>
+                    </form>
+
+                    <form method="post" style="display: inline;">
+                        <button type="submit" name="clear_cart" class="clear-cart">Vider le panier</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-<?php else : ?>
-    <div class="empty-cart">
-        <p>Votre panier est vide.</p>
-    </div>
-<?php endif ?>
+    <?php else : ?>
+        <div class="empty-cart">
+            <p>Votre panier est vide.</p>
+        </div>
+    <?php endif ?>
 
-<?php include "footer.php"?>
+    <?php include "footer.php" ?>
 
 </body>
+
 </html>

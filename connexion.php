@@ -4,10 +4,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     session_start(); // Démarrer la session pour accéder aux variables de session
     session_regenerate_id(true); // Régénérer l'ID de session pour éviter les attaques de fixation de session
 
-    if(isset($_SESSION['user_id'])) {
+    if (isset($_SESSION['user_id'])) {
         $idUsers = $_SESSION['user_id'];
-    }
-    else {
+    } else {
         echo "l'opération à échoué";
     }
 
@@ -53,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['firstname'] = $user['firstname'];
                 $_SESSION['email'] = $email;
                 $_SESSION['idUser'] = $user['idUser'];
+
                 echo "<p style='color: green;'>Connexion réussie !</p>";
 
                 /*var_dump($_SESSION); // Debugging
@@ -62,11 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 echo "<p style='color: red;'>Mot de passe incorrect</p>";
             }
-
         } else {
             echo "<p style='color: red;'>Utilisateur non trouvé.</p>";
         }
-
     } catch (PDOException $e) {
         echo "Erreur : " . $e->getMessage();
     }
@@ -77,38 +75,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!doctype html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style/inscription.css">
     <title>Page de connexion</title>
 </head>
+
 <body>
 
-<div class="">
-    <div class="header">
-        <a class="logo-link" href="index.php"><img src="image/logo_chat.png" alt="logo" style="height: 100px; width:100px;"></a>
+    <div class="">
+        <div class="header">
+            <a class="logo-link" href="index.php"><img src="image/logo_chat.png" alt="logo" style="height: 100px; width:100px;"></a>
+        </div>
     </div>
-</div>
 
-<div class="signup">
-    <h2>Connexion</h2>
-    <form action="connexion.php" method="POST">
-        <label for="email">Email :</label>
-        <input type="email" name="email" id="email" placeholder="Email" required>
+    <div class="signup">
+        <h2>Connexion</h2>
+        <form action="connexion.php" method="POST">
+            <label for="email">Email :</label>
+            <input type="email" name="email" id="email" placeholder="Email" required>
 
-        <label for="password">Mot de passe :</label>
-        <input type="password" name="password" id="password" placeholder="Mot de passe" required>
+            <label for="password">Mot de passe :</label>
+            <input type="password" name="password" id="password" placeholder="Mot de passe" required>
 
-        <input type="submit" value="Se connecter">
+            <input type="submit" value="Se connecter">
 
-    </form>
+        </form>
 
-    <p>Pas encore inscrit ? <a href="vue_inscription.php">Inscrivez-vous ici</a></p>
-    <p>Mot de passe oublié ? <a href="reset_password.html">Cliquez ici</a></p>
-</div>
+        <p>Pas encore inscrit ? <a href="vue_inscription.php">Inscrivez-vous ici</a></p>
+        <p>Mot de passe oublié ? <a href="reset_password.html">Cliquez ici</a></p>
+    </div>
 
 </body>
+
 </html>

@@ -17,10 +17,15 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $conn->prepare("SELECT firstname, lastname, email, phonenumber FROM users WHERE email = :email");
+    $stmt = $conn->prepare("SELECT idUser, firstname, lastname, email, phonenumber FROM users WHERE email = :email");
     $stmt->bindParam(':email', $email);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+    $_SESSION['user_id'] = $user['idUsers'];
+
+
 
     if (!$user) {
         echo "Utilisateur introuvable";
@@ -30,28 +35,32 @@ try {
     echo "Erreur : " . $e->getMessage();
 }
 
+
 $conn = null;
 ?>
 
 <!doctype html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Profil</title>
 </head>
+
 <body>
-<?php include "navbar.php"?>
+    <?php include "navbar.php" ?>
 
-<h1>Mon Profil</h1>
-<p><strong>Nom :</strong> <?php echo htmlspecialchars($user['lastname']); ?></p>
-<p><strong>Prénom :</strong> <?php echo htmlspecialchars($user['firstname']); ?></p>
-<p><strong>Email :</strong> <?php echo htmlspecialchars($user['email']); ?></p>
-<p><strong>Numéro de téléphone :</strong> <?php echo htmlspecialchars($user['phonenumber']); ?></p>
+    <h1>Mon Profil</h1>
+    <p><strong>Nom :</strong> <?php echo htmlspecialchars($user['lastname']); ?></p>
+    <p><strong>Prénom :</strong> <?php echo htmlspecialchars($user['firstname']); ?></p>
+    <p><strong>Email :</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+    <p><strong>Numéro de téléphone :</strong> <?php echo htmlspecialchars($user['phonenumber']); ?></p>
 
-<a href="account.php">Modifier mes informations</a>
+    <a href="account.php">Modifier mes informations</a>
 
-<?php include "footer.php"?>
+    <?php include "footer.php" ?>
 
 </body>
+
 </html>
