@@ -26,13 +26,7 @@ try {
     echo "Erreur de connexion : " . $e->getMessage();
     exit;
 }
-
-if(isset($_SESSION['cart'])) {
-    $cart_items = $_SESSION['cart'];
-} else {
-    $cart_items = [];
-}
-
+$cart_items = $_SESSION['cart'];
 $total_price = 0;
 ?>
 
@@ -100,16 +94,17 @@ $total_price = 0;
                     <?php /*endforeach; */?>
                 </select>-->
                 <select name="address" id="address" required>
-                    <?php foreach ($addresses as $address):
-                        $isSelected = ($address['idAdresse'] == $selectedAddressId) ? 'selected' : '';
-                        ?>
-                        <option value="<?php echo htmlspecialchars($address['idAdresse']); ?>" <?php echo $isSelected; ?>>
+                    <?php foreach ($addresses as $address): ?>
+                        <option value="<?php echo htmlspecialchars($address['idAdresse']); ?>">
+                            <?php $_SESSION['idAdresse'] = $address['idAdresse']; ?>
                             <?php echo htmlspecialchars($address['adresseUsers']); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
                 <p>Livrez à une autre adresse ? <a href="adresseUsers.php">Cliquer ici</a></p>
-                <input type="hidden" id="idAdresse" name="idAdresse" value="<?php echo htmlspecialchars($selectedAddressId); ?>">
+                <input type="hidden" id="idAdresse" name="idAdresse" value="<?php echo htmlspecialchars($address['idAdresse']); ?>">
+
+                <?php var_dump($_SESSION['idAdresse']);?>
 
                 <div id="card-element"></div>
                 <button type="submit">Payer</button>
@@ -155,5 +150,4 @@ $total_price = 0;
     });
 </script>
 </body>
-
 </html>

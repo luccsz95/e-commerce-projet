@@ -11,9 +11,9 @@ $dbpassword = "";
 $idUser = $_SESSION['user_id'];
 $cart = $_SESSION['cart'];
 $amount = $_SESSION['total_price'];
+
 $idAdresse = $_SESSION['idAdresse'];
-var_dump($_SESSION['idAdresse']);
-//var_dump($idUser);
+var_dump($idAdresse);
 //var_dump($amount);
 
 try {
@@ -46,7 +46,6 @@ try {
 
 
 ?>
-
 <!doctype html>
 <html lang="fr">
 <head>
@@ -59,6 +58,6 @@ try {
 <body>
 
 <?php include "navbar.php"?>
-    <h1>toto</h1>
+<h1>toto</h1>
 </body>
 </html>
