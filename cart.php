@@ -2,11 +2,18 @@
 session_start();
 session_regenerate_id(true); // Régénérer l'ID de session pour éviter les attaques de fixation de session
 
-$id_user = $_SESSION['idUser'];
-//var_dump($id_user);
+if(isset($_SESSION['idUser'])){
+    $id_user = $_SESSION['idUser'];
+}
 
+if(isset($_SESSION['email'])){
+    $email = $_SESSION['email'];
+}
+
+/*$id_user = $_SESSION['idUser'];
+//var_dump($id_user);
 $email = $_SESSION["email"];
-//var_dump($email);
+//var_dump($email);*/
 
 $servername = "localhost";
 $dbname = "e_commerce_project";

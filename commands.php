@@ -1,5 +1,7 @@
 <?php
 session_start();
+session_regenerate_id(true); // Régénérer l'ID de session pour éviter les attaques de fixation de session
+
 
 $servername = "localhost";
 $dbname = "e_commerce_project";
@@ -10,6 +12,11 @@ $idUser = $_SESSION['user_id'];
 //var_dump($idUser);
 $cart = $_SESSION['cart'];
 $amount = $_SESSION['total_price'];
+
+var_dump($_SESSION['idAdresse']);
+
+$idAdresse = $_SESSION['idAdresse'];
+
 //var_dump($amount);
 
 try {
@@ -24,12 +31,13 @@ try {
 
     $idCommand = $conn->lastInsertId();
 
-    $sqlDetails = $conn->prepare("INSERT INTO command_details (idCommand, idAnimals) VALUES (:idCommand, :idAnimals)");
+    $sqlDetails = $conn->prepare("INSERT INTO command_details (idCommand, idAnimals, idAdresse) VALUES (:idCommand, :idAnimals, :idAdresse)");
 
     foreach ($_SESSION['cart'] as $idAnimals) {
         $sqlDetails->execute([
             'idCommand' => $idCommand,
-            'idAnimals' => $idAnimals
+            'idAnimals' => $idAnimals,
+            'idAdresse' => $idAdresse
         ]);
     }
 

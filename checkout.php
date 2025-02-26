@@ -6,6 +6,10 @@ $dbname = "e_commerce_project";
 $dbusername = "root";
 $dbpassword = "";
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['address'])) {
+    $_SESSION['adresseid'] = $_POST['address'];
+}
+
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -13,7 +17,7 @@ try {
     $stmt = $conn->query("SELECT idAnimals, nameAnimals, priceAnimals FROM animals");
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $stmt = $conn->prepare("SELECT idUsers, adresseUsers FROM adresse WHERE idUsers = :idUsers");
+    $stmt = $conn->prepare("SELECT idUsers, adresseUsers, idAdresse FROM adresse WHERE idUsers = :idUsers");
     $stmt->bindParam(':idUsers', $_SESSION['user_id']);
     $stmt->execute();
     $addresses = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -22,7 +26,12 @@ try {
     exit;
 }
 
-$cart_items = $_SESSION['cart'];
+if(isset($_SESSION['cart'])) {
+    $cart_items = $_SESSION['cart'];
+} else {
+    $cart_items = [];
+}
+
 $total_price = 0;
 ?>
 
@@ -81,15 +90,25 @@ $total_price = 0;
 
             <form id="payment-form" method="post">
                 <label for="address">Sélectionnez une adresse de livraison :</label>
+                <!--<select name="address" id="address" required>
+                    <?php /*foreach ($addresses as $address): */?>
+                        <option value="<?php /*echo htmlspecialchars($address['adresseUsers']); */?>">
+                            <?php /*$_SESSION['idAdresse'] = $address['idAdresse']; */?>
+                            <?php /*echo htmlspecialchars($address['adresseUsers']); */?>
+                        </option>
+                    <?php /*endforeach; */?>
+                </select>-->
                 <select name="address" id="address" required>
-                    <?php foreach ($addresses as $address): ?>
-                        <option value="<?php echo htmlspecialchars($address['adresseUsers']); ?>">
+                    <?php foreach ($addresses as $address):
+                        $isSelected = ($address['idAdresse'] == $selectedAddressId) ? 'selected' : '';
+                        ?>
+                        <option value="<?php echo htmlspecialchars($address['idAdresse']); ?>" <?php echo $isSelected; ?>>
                             <?php echo htmlspecialchars($address['adresseUsers']); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
                 <p>Livrez à une autre adresse ? <a href="adresseUsers.php">Cliquer ici</a></p>
-                <input type="hidden" id="adresseUsers">
+                <input type="hidden" id="idAdresse" name="idAdresse" value="<?php echo htmlspecialchars($address['idAdresse']); ?>">
 
                 <div id="card-element"></div>
                 <button type="submit">Payer</button>
