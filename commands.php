@@ -2,7 +2,6 @@
 session_start();
 session_regenerate_id(true); // Régénérer l'ID de session pour éviter les attaques de fixation de session
 
-
 $servername = "localhost";
 $dbname = "e_commerce_project";
 $dbusername = "root";
@@ -11,8 +10,8 @@ $dbpassword = "";
 $idUser = $_SESSION['user_id'];
 $cart = $_SESSION['cart'];
 $amount = $_SESSION['total_price'];
-
 $idAdresse = $_SESSION['idAdresse'];
+
 var_dump($idAdresse);
 //var_dump($amount);
 
@@ -43,9 +42,8 @@ try {
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }
-
-
 ?>
+
 <!doctype html>
 <html lang="fr">
 <head>
