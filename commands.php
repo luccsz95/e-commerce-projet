@@ -45,7 +45,6 @@ try {
 
 
 ?>
-
 <!doctype html>
 <html lang="fr">
 <head>
@@ -58,6 +57,6 @@ try {
 <body>
 
 <?php include "navbar.php"?>
-    <h1>toto</h1>
+<h1>toto</h1>
 </body>
 </html>

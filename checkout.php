@@ -21,7 +21,6 @@ try {
     echo "Erreur de connexion : " . $e->getMessage();
     exit;
 }
-
 $cart_items = $_SESSION['cart'];
 $total_price = 0;
 ?>
@@ -138,5 +137,4 @@ $total_price = 0;
     });
 </script>
 </body>
-
 </html>
