@@ -10,6 +10,9 @@ $idUser = $_SESSION['user_id'];
 //var_dump($idUser);
 $cart = $_SESSION['cart'];
 $amount = $_SESSION['total_price'];
+
+$idAdresse = $_SESSION['idAdresse'];
+var_dump($idAdresse);
 //var_dump($amount);
 
 try {
@@ -24,12 +27,13 @@ try {
 
     $idCommand = $conn->lastInsertId();
 
-    $sqlDetails = $conn->prepare("INSERT INTO command_details (idCommand, idAnimals) VALUES (:idCommand, :idAnimals)");
+    $sqlDetails = $conn->prepare("INSERT INTO command_details (idCommand, idAnimals, idAdresse) VALUES (:idCommand, :idAnimals, :idAdresse)");
 
     foreach ($_SESSION['cart'] as $idAnimals) {
         $sqlDetails->execute([
             'idCommand' => $idCommand,
-            'idAnimals' => $idAnimals
+            'idAnimals' => $idAnimals,
+            'idAdresse' => $idAdresse
         ]);
     }
 

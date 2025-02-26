@@ -13,7 +13,7 @@ try {
     $stmt = $conn->query("SELECT idAnimals, nameAnimals, priceAnimals FROM animals");
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $stmt = $conn->prepare("SELECT idUsers, adresseUsers FROM adresse WHERE idUsers = :idUsers");
+    $stmt = $conn->prepare("SELECT idUsers, adresseUsers, idAdresse FROM adresse WHERE idUsers = :idUsers");
     $stmt->bindParam(':idUsers', $_SESSION['user_id']);
     $stmt->execute();
     $addresses = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -83,13 +83,16 @@ $total_price = 0;
                 <label for="address">Sélectionnez une adresse de livraison :</label>
                 <select name="address" id="address" required>
                     <?php foreach ($addresses as $address): ?>
-                        <option value="<?php echo htmlspecialchars($address['adresseUsers']); ?>">
+                        <option value="<?php echo htmlspecialchars($address['idAdresse']); ?>">
+                            <?php $_SESSION['idAdresse'] = $address['idAdresse']; ?>
                             <?php echo htmlspecialchars($address['adresseUsers']); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
                 <p>Livrez à une autre adresse ? <a href="adresseUsers.php">Cliquer ici</a></p>
-                <input type="hidden" id="adresseUsers">
+                <input type="hidden" id="idAdresse" name="idAdresse" value="<?php echo htmlspecialchars($address['idAdresse']); ?>">
+
+                <?php var_dump($_SESSION['idAdresse']);?>
 
                 <div id="card-element"></div>
                 <button type="submit">Payer</button>
