@@ -7,8 +7,9 @@ $dbusername = "root";
 $dbpassword = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['address'])) {
-    $_SESSION['adresseid'] = $_POST['address'];
+    $_SESSION['idAdresse'] = $_POST['idAdresse'];
 }
+$selectedAddressId = $_SESSION['idAdresse'] ?? null;
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
@@ -108,7 +109,7 @@ $total_price = 0;
                     <?php endforeach; ?>
                 </select>
                 <p>Livrez à une autre adresse ? <a href="adresseUsers.php">Cliquer ici</a></p>
-                <input type="hidden" id="idAdresse" name="idAdresse" value="<?php echo htmlspecialchars($address['idAdresse']); ?>">
+                <input type="hidden" id="idAdresse" name="idAdresse" value="<?php echo htmlspecialchars($selectedAddressId); ?>">
 
                 <div id="card-element"></div>
                 <button type="submit">Payer</button>

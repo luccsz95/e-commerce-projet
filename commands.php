@@ -9,14 +9,11 @@ $dbusername = "root";
 $dbpassword = "";
 
 $idUser = $_SESSION['user_id'];
-//var_dump($idUser);
 $cart = $_SESSION['cart'];
 $amount = $_SESSION['total_price'];
-
-var_dump($_SESSION['idAdresse']);
-
 $idAdresse = $_SESSION['idAdresse'];
-
+var_dump($_SESSION['idAdresse']);
+//var_dump($idUser);
 //var_dump($amount);
 
 try {
