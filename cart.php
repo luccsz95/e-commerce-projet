@@ -15,10 +15,7 @@ if(isset($_SESSION['email'])){
 $email = $_SESSION["email"];
 //var_dump($email);*/
 
-$servername = "localhost";
-$dbname = "e_commerce_project";
-$dbusername = "root";
-$dbpassword = "";
+include 'bdd.php';
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
@@ -102,7 +99,7 @@ if (isset($_SESSION['idUser'])) {
 <body>
 
     <?php include 'navbar.php'; ?>
-
+    <br><br><br><br><br><br><br>
     <h1>Votre Panier</h1>
 
     <?php if (!empty($cart_items)): ?>

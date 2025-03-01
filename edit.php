@@ -16,9 +16,21 @@ $table = isset($_GET['table']) ? htmlspecialchars($_GET['table']) : '';
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 // Déterminer la clé primaire de la table
-$primaryKey = 'id'; // Valeur par défaut
-if ($table == 'animals') {
-    $primaryKey = 'idAnimals'; // Remplacez par la clé primaire réelle de la table animals
+$primaryKey = ''; // Valeur par défaut
+switch ($table) {
+    case 'animals':
+        $primaryKey = 'idAnimals';
+        break;
+    case 'users':
+        $primaryKey = 'idUser';
+        break;
+    case 'adresse':
+        $primaryKey = 'idAdresse';
+        break;
+    // Ajouter d'autres tables ici si nécessaire
+    default:
+        $primaryKey = 'id'; // Assure-toi que cela est cohérent avec ta base de données
+        break;
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

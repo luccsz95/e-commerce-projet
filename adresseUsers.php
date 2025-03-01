@@ -43,7 +43,7 @@ try {
 <body>
 
 <?php include'navbar.php'?>
-
+<br><br><br><br><br><br><br>
     <h1>Entrer votre adresse</h1>
     <form action="adresseUsers.php" method="post">
         <input type="hidden" name="idUsers" value="<?php echo $_SESSION['idUser']; ?>">

@@ -7,9 +7,8 @@ $dbusername = "root";
 $dbpassword = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['address'])) {
-    $_SESSION['idAdresse'] = $_POST['idAdresse'];
+    $_SESSION['idAdresse'] = $_POST['address'];
 }
-$selectedAddressId = $_SESSION['idAdresse'] ?? null;
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
@@ -89,16 +88,9 @@ $total_price = 0;
         <div class="payment-section">
             <h2>Total : <?php echo number_format($total_price, 2, ',', ' '); ?>€</h2>
 
-            <form id="payment-form" method="post">
+            <form action="" method="post">
                 <label for="address">Sélectionnez une adresse de livraison :</label>
-                <!--<select name="address" id="address" required>
-                    <?php /*foreach ($addresses as $address): */?>
-                        <option value="<?php /*echo htmlspecialchars($address['adresseUsers']); */?>">
-                            <?php /*$_SESSION['idAdresse'] = $address['idAdresse']; */?>
-                            <?php /*echo htmlspecialchars($address['adresseUsers']); */?>
-                        </option>
-                    <?php /*endforeach; */?>
-                </select>-->
+
                 <select name="address" id="address" required>
                     <?php foreach ($addresses as $address):
                         $isSelected = ($address['idAdresse'] == $selectedAddressId) ? 'selected' : '';
@@ -108,6 +100,10 @@ $total_price = 0;
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <button type="submit">Valider l'adresse</button>
+            </form>
+
+            <form id="payment-form" method="post">
                 <p>Livrez à une autre adresse ? <a href="adresseUsers.php">Cliquer ici</a></p>
                 <input type="hidden" id="idAdresse" name="idAdresse" value="<?php echo htmlspecialchars($selectedAddressId); ?>">
 

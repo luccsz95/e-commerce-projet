@@ -2,6 +2,7 @@
 session_start();
 session_regenerate_id(true); // Régénérer l'ID de session pour éviter les attaques de fixation de session
 
+var_dump($_SESSION['idAdresse']);
 
 $servername = "localhost";
 $dbname = "e_commerce_project";

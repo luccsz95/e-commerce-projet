@@ -82,14 +82,14 @@ $conn = null;
         }
 
         /* Informations utilisateur */
-        p {
+        .container p {
             font-size: 18px;
             margin: 10px 0;
             color: #333;
         }
 
         /* Lien de modification */
-        a {
+        .information {
             display: inline-block;
             margin-top: 20px;
             text-decoration: none;
@@ -103,15 +103,6 @@ $conn = null;
 
         a:hover {
             background-color: #1f5a21;
-        }
-
-        /* Footer toujours en bas */
-        footer {
-            background-color: #2c7b2f;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            margin-top: auto;
         }
 
         /* 🟢 RESPONSIVE DESIGN 🟢 */
@@ -130,7 +121,7 @@ $conn = null;
                 font-size: 16px;
             }
 
-            a {
+            .information {
                 font-size: 14px;
                 padding: 8px 12px;
             }
@@ -145,7 +136,7 @@ $conn = null;
                 font-size: 14px;
             }
 
-            a {
+            .information {
                 font-size: 12px;
                 padding: 6px 10px;
             }
@@ -154,6 +145,7 @@ $conn = null;
     </style>
 
     <?php include "navbar.php" ?>
+    <br><br><br><br><br><br><br>
 
     <div class="container">
         <h1>Mon Profil</h1>
@@ -167,9 +159,8 @@ $conn = null;
                 <li><?php echo htmlspecialchars($address['adresseUsers']); ?></li>
             <?php endforeach; ?>
         </ul>
-        <a href="account.php">Modifier mes informations</a>
+        <a href="account.php" class="information">Modifier mes informations</a>
     </div>
-
 
     <?php include "footer.php" ?>
 

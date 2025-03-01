@@ -34,7 +34,7 @@
 
 /* Ajouter un espace sous la navbar pour éviter que le contenu ne soit masqué */
 body {
-    margin-top: 150px; /* Ajuste la hauteur pour correspondre à celle de la navbar */
+    margin-top: 200px; /* Ajuste la hauteur pour correspondre à celle de la navbar */
 }
 
 /* Style pour le logo */

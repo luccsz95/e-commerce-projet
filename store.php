@@ -67,7 +67,7 @@ try {
 <div class="navbar">
     <?php include 'navbar.php'; ?>
 </div>
-
+<br><br><br><br><br><br><br>
 <h1 class="store-title">Choix des animaux</h1>
 
 <form method="get" class="filter-form" id="filter-form">
