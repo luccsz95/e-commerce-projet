@@ -135,6 +135,8 @@ try {
     <?php include 'navbar.php'; ?>
 </div>
 
+<br><br><br><br><br>
+
 <h1 class="product-title"><?php echo htmlspecialchars($animals['nameAnimals']); ?></h1>
 <p>Type: <?php echo htmlspecialchars($animals['typeAnimals']); ?></p>
 <p>Prix: <?php echo htmlspecialchars($animals['priceAnimals']); ?>€</p>

@@ -48,6 +48,14 @@ if (isset($_GET['product'])) {
     <link rel="stylesheet" href="style/store.css">
 </head>
 <body>
+
+<style>
+    .imageAnimals {
+        width: 100px;
+        height: 100px;
+    }
+</style>
+
 <?php include 'navbar.php'; ?>
 
 <h1 class="store-title">Résultats pour "<?= htmlspecialchars($search_term) ?>"</h1>
@@ -56,8 +64,11 @@ if (isset($_GET['product'])) {
     <?php if (!empty($results)): ?>
         <?php foreach ($results as $result): ?>
             <div class="product">
-                <h2><?= htmlspecialchars($result['typeAnimals']) ?></h2>
-                <p><?= htmlspecialchars($result['nameAnimals']) ?></p>
+                <a href="fiche_produit.php?idAnimals=<?php echo htmlspecialchars($result['idAnimals']); ?>">
+                    <h2><?= htmlspecialchars($result['nameAnimals']) ?></h2>
+                    <img class="imageAnimals" src="<?= htmlspecialchars($result['imageAnimals']) ?>" alt="<?= htmlspecialchars($result['nameAnimals']) ?>">
+                </a>
+                <p><?= htmlspecialchars($result['typeAnimals']) ?></p>
                 <p>Prix : <?= htmlspecialchars($result['priceAnimals']) ?> €</p>
 
                 <form action="search.php?product=<?= urlencode($search_term) ?>" method="POST">

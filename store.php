@@ -19,7 +19,7 @@ try {
     $maxPrice = $priceResult['max_price'] ?? 300.00;
 
     $filter = [];
-    $sql = "SELECT idAnimals, nameAnimals, priceAnimals, typeAnimals FROM animals WHERE 1=1";
+    $sql = "SELECT idAnimals, nameAnimals, priceAnimals, typeAnimals, imageAnimals FROM animals WHERE 1=1";
 
     $filterCondition = [];
     if (isset($_GET['filter_dog'])) {
@@ -63,6 +63,13 @@ try {
 </head>
 <body>
 
+<style>
+    .imageAnimals {
+        width: 100px;
+        height: 100px;
+    }
+</style>
+
 <!-- Barre de navigation -->
 <div class="navbar">
     <?php include 'navbar.php'; ?>
@@ -95,6 +102,7 @@ try {
         <div class="product">
             <a href="fiche_produit.php?idAnimals=<?php echo htmlspecialchars($product['idAnimals']); ?>">
                 <h2><?php echo htmlspecialchars($product['nameAnimals']); ?></h2>
+                <img class="imageAnimals" src="<?php echo htmlspecialchars($product['imageAnimals']); ?>" alt="<?php echo htmlspecialchars($product['nameAnimals']); ?>">
             </a>
                 <p>Type de peluche: <?php echo htmlspecialchars($product['typeAnimals']); ?></p>
                 <p>Prix: <?php echo htmlspecialchars($product['priceAnimals']); ?>€</p>
@@ -102,32 +110,6 @@ try {
                     <input type="hidden" name="product_id" value="<?php echo $product['idAnimals']; ?>">
                     <button type="submit" name="add_to_cart">Ajouter au panier</button>
                 </form>
-
-                <!--<h2>Donnez votre avis</h2>
-            <?php /*if(isset($_SESSION['firstname'])): */?>
-                <form action="" method="post">
-                    <input type="hidden" name="nameAnimals" value="<?php /*echo htmlspecialchars($product['nameAnimals']); */?>">
-                    <input type="hidden" name="note" id="note" value="0">
-                    <div class="star-rating" data-nameAnimals="<?php /*echo htmlspecialchars($product['nameAnimals']); */?>">
-                        <?php /*for ($i = 1; $i <= 5; $i++): */?>
-                            <span class="star" data-note="<?php /*echo $i; */?>">★</span>
-                        <?php /*endfor; */?>
-                    </div>
-                </form>
-            <?php /*else: */?>
-                <p><a href="connexion.php">Connectez-vous</a> pour ajouter un commentaire</p>
-            --><?php /*endif; */?>
-
-            <!--<div class="comments-section">
-                <?php /*foreach ($comments as $comment): */?>
-                    <div class="comment">
-                        <strong><?php /*echo htmlspecialchars($comment['firstname']); */?></strong>
-                        <span><?php /*echo str_repeat('⭐', $comment['note']); */?></span>
-                        <p><?php /*echo nl2br(htmlspecialchars($comment['comment'])); */?></p>
-                        <small><?php /*echo $comment['dateComment']; */?></small>
-                    </div>
-                <?php /*endforeach; */?>
-            </div>-->
         </div>
     <?php endforeach; ?>
 </div>

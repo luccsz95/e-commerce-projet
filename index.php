@@ -12,7 +12,7 @@ session_start(); // Démarrer la session pour accéder aux variables de session
 </head>
 <body>
 <?php include 'navbar.php';?>
-
+<br><br><br><br><br><br><br>
 <h1 class="title">Bienvenue</h1>
 
 <?php

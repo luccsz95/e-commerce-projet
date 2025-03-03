@@ -99,7 +99,7 @@ if (isset($_SESSION['idUser'])) {
 <body>
 
     <?php include 'navbar.php'; ?>
-    <br><br><br><br><br><br><br>
+    <br><br><br><br><br>
     <h1>Votre Panier</h1>
 
     <?php if (!empty($cart_items)): ?>
