@@ -49,6 +49,8 @@ try {
     echo "Erreur de connexion : " . $e->getMessage();
     exit;
 }
+
+
 ?>
 
 <!doctype html>
@@ -106,8 +108,9 @@ try {
             </a>
                 <p>Type de peluche: <?php echo htmlspecialchars($product['typeAnimals']); ?></p>
                 <p>Prix: <?php echo htmlspecialchars($product['priceAnimals']); ?>€</p>
-                <form method="post" action="cart.php">
+                <form method="POST" action="cart.php">
                     <input type="hidden" name="product_id" value="<?php echo $product['idAnimals']; ?>">
+                    <input type="number" id="quantity" name="quantity" value="1" min="1">
                     <button type="submit" name="add_to_cart">Ajouter au panier</button>
                 </form>
         </div>

@@ -26,7 +26,7 @@ try {
     exit;
 }
 
-if(isset($_SESSION['cart'])) {
+if (isset($_SESSION['cart'])) {
     $cart_items = $_SESSION['cart'];
 } else {
     $cart_items = [];
@@ -49,7 +49,7 @@ $total_price = 0;
 
 <body>
 <?php include 'navbar.php' ?>
-
+<br><br><br><br><br>
 <h1>Finalisation de l'achat</h1>
 
 <?php if (!empty($cart_items)): ?>
@@ -61,18 +61,20 @@ $total_price = 0;
                 <tr>
                     <th>Nom du produit</th>
                     <th>Prix</th>
+                    <th>Quantité</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($cart_items as $idAnimals) : ?>
+                <?php foreach ($cart_items as $item) : ?>
                     <?php
                     foreach ($products as $product) {
-                        if ($product['idAnimals'] == $idAnimals) {
-                            $total_price += $product['priceAnimals'];
+                        if ($product['idAnimals'] == $item['product_id']) {
+                            $total_price += $product['priceAnimals'] * $item['quantity'];
                             ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($product['nameAnimals']); ?></td>
                                 <td><?php echo htmlspecialchars($product['priceAnimals']); ?>€</td>
+                                <td><?php echo htmlspecialchars($item['quantity']); ?></td>
                             </tr>
                             <?php
                             break;
@@ -93,7 +95,7 @@ $total_price = 0;
 
                 <select name="address" id="address" required>
                     <?php foreach ($addresses as $address):
-                        $isSelected = ($address['idAdresse'] == $selectedAddressId) ? 'selected' : '';
+                        $isSelected = ($address['idAdresse'] == $_SESSION['idAdresse']) ? 'selected' : '';
                         ?>
                         <option value="<?php echo htmlspecialchars($address['idAdresse']); ?>" <?php echo $isSelected; ?>>
                             <?php echo htmlspecialchars($address['adresseUsers']); ?>
@@ -105,7 +107,7 @@ $total_price = 0;
 
             <form id="payment-form" method="post">
                 <p>Livrez à une autre adresse ? <a href="adresseUsers.php">Cliquer ici</a></p>
-                <input type="hidden" id="idAdresse" name="idAdresse" value="<?php echo htmlspecialchars($selectedAddressId); ?>">
+                <input type="hidden" id="idAdresse" name="idAdresse" value="<?php echo htmlspecialchars($_SESSION['idAdresse']); ?>">
 
                 <div id="card-element"></div>
                 <button type="submit">Payer</button>
@@ -150,6 +152,9 @@ $total_price = 0;
         });*/
     });
 </script>
+
+<?php include 'footer.php' ?>
+
 </body>
 
 </html>
