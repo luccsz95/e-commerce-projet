@@ -9,14 +9,55 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Au revoir</title>
 </head>
-<body>
+<body class="goodbye-page">
+
+<style>
+    .goodbye-page {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .title {
+        color: #333;
+        font-size: 2.5em;
+        margin-bottom: 20px;
+    }
+
+    .goodbye-paragraphe {
+        color: #666;
+        font-size: 1.2em;
+        margin-bottom: 30px;
+    }
+
+    .link_index {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 1em;
+        color: #fff;
+        background-color: #2e7d32;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .link_index:hover {
+        background-color: #255d27;
+    }
+</style>
+
 <?php include "navbar.php"?>
+<br><br><br><br><br><br><br>
+<h1 class="title">Au revoir</h1>
+<p class="goodbye-paragraphe">Votre compte a été supprimé avec succès. Nous sommes désolés de vous voir partir.</p>
 
-<h1>Au revoir</h1>
-<p>Votre compte a été supprimé avec succès. Nous sommes désolés de vous voir partir.</p>
-<p>Si vous avez des questions ou des préoccupations, n'hésitez pas à nous contacter.</p>
-
-<a href="index.php">Retour à l'accueil</a>
+<a class="link_index" href="index.php">Retour à l'accueil</a>
 
 <?php include "footer.php"?>
 

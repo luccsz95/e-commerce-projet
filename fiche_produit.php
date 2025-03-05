@@ -180,6 +180,16 @@ try {
         align-items: center;
     }
 
+    .quantity-input {
+        width: 25px;
+        margin : 0;
+    }
+
+    .quantity-container {
+        display: flex;
+        justify-content: center; /* Center the input field horizontally */
+    }
+
 </style>
 
 <div class="navbar">
@@ -196,6 +206,10 @@ try {
 
     <form method="post" action="cart.php">
         <input type="hidden" name="product_id" value="<?php echo $animals['idAnimals']; ?>">
+        <div class="quantity-container">
+            <input class="quantity-input" type="number" id="quantity" name="quantity" value="1" min="1">
+        </div>
+        <br>
         <button class="add_to_cart" type="submit" name="add_to_cart">Ajouter au panier</button>
     </form>
 </div>
