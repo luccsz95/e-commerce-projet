@@ -1,0 +1,98 @@
+/* 🌿 Style général */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ✅ Conteneur principal */
+.container {
+    width: 80%;
+    max-width: 600px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* ✅ Titre */
+h1 {
+    font-size: 26px;
+    font-weight: bold;
+    color: #2e7d32;
+    margin-bottom: 20px;
+}
+
+/* ✅ Formulaire */
+.form-account {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    align-items: center; /* Centrer les éléments */
+}
+
+/* ✅ Labels */
+label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #444;
+    text-align: left;
+}
+
+/* ✅ Champs de saisie */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center; /* Centrer le texte à l'intérieur des inputs */
+}
+
+/* ✅ Bouton Mettre à jour */
+input[type="submit"] {
+    background-color: #2e7d32;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+input[type="submit"]:hover {
+    background-color: #255d27;
+    transform: scale(1.05);
+}
+
+/* ✅ Suppression de compte */
+.form[action="delete_account.php"] input[type="submit"] {
+    background-color: red;
+}
+
+.form[action="delete_account.php"] input[type="submit"]:hover {
+    background-color: darkred;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+}

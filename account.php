@@ -82,13 +82,14 @@ $conn = null;
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style/account.css">
     <title>Mon Profil</title>
 </head>
 <body>
 <?php include "navbar.php"?>
-
+<br><br><br><br><br><br><br>
 <h1>Mon Profil</h1>
-<form action="account.php" method="post">
+<form class="form-account" action="account.php" method="post">
     <label for="lastname">Nom :</label>
     <input type="text" name="lastname" id="lastname" value="<?php echo htmlspecialchars($user['lastname']); ?>" required>
 
@@ -111,7 +112,7 @@ $conn = null;
 </form>
 
 <p>Vous pouvez également supprimer votre compte :</p>
-<form action="delete_account.php" method="post">
+<form class="form"  action="delete_account.php" method="post">
     <input type="submit" value="Supprimer mon compte">
 </form>
 

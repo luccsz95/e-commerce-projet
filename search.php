@@ -57,7 +57,7 @@ if (isset($_GET['product'])) {
 </style>
 
 <?php include 'navbar.php'; ?>
-
+<br><br><br><br><br><br><br>
 <h1 class="store-title">Résultats pour "<?= htmlspecialchars($search_term) ?>"</h1>
 
 <div class="products">
@@ -81,6 +81,8 @@ if (isset($_GET['product'])) {
         <p class="no-results">Aucun résultat trouvé pour "<?= htmlspecialchars($search_term) ?>"</p>
     <?php endif; ?>
 </div>
+
+<?php include "footer.php"?>
 
 </body>
 </html>

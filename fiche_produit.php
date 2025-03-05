@@ -29,11 +29,15 @@ try {
         $comment = trim($_POST['comment']);
         $note = (int)$_POST['note'];
         $date_ajout = date('Y-m-d H:i:s');
+        $bonsoir = $_POST['add_comment'];
 
-        if (!empty($comment) && $note >= 1 && $note <= 5) {
+        if (!empty($comment) && $note >= 1 && $note <= 5 && isset($bonsoir)) {
             $stmt = $conn->prepare("INSERT INTO comments (idAnimals, nameAnimals, firstname, comment, note, dateComment) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->execute([$id, $nameAnimals, $firstname, $comment, $note, $date_ajout]);
             echo "<p style='color: green;'>Votre commentaire a été ajouté avec succès.</p>";
+
+            header('Location:'. $_SERVER['REQUEST_URI']);
+            exit();
         } else {
             echo "<p style='color: red;'>La note doit être comprise entre 1 et 5.</p>";
         }
@@ -79,6 +83,11 @@ try {
         color: gold;
     }
 
+    .imageAnimals {
+        width: 200px;
+        height: 200px;
+    }
+
     .comment {
         background-color: white;
         padding: 15px;
@@ -118,8 +127,6 @@ try {
     }
 
     textarea {
-        display: flex;
-        justify-content: center;
         width: 50%;
         min-height: 80px;
         margin-top: 5px;
@@ -127,6 +134,50 @@ try {
         border-radius: 5px;
         resize: none;
         font-size: 14px;
+    }
+
+    .add_comment_btn, .add_to_cart {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #2e7d32;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .add_comment_btn:hover, .add_to_cart:hover {
+        background-color: #255d27;
+    }
+
+    .comment-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    .comment-container label,
+    .comment-container textarea {
+        width: 50%;
+        text-align: center;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .content-product{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
 </style>
@@ -137,27 +188,32 @@ try {
 
 <br><br><br><br><br>
 
-<h1 class="product-title"><?php echo htmlspecialchars($animals['nameAnimals']); ?></h1>
-<p>Type: <?php echo htmlspecialchars($animals['typeAnimals']); ?></p>
-<p>Prix: <?php echo htmlspecialchars($animals['priceAnimals']); ?>€</p>
+<div class="content-product">
+    <h1 class="product-title"><?php echo htmlspecialchars($animals['nameAnimals']); ?></h1>
+    <img class="imageAnimals" src="<?php echo htmlspecialchars($animals['imageAnimals']); ?>" alt="<?php echo htmlspecialchars($animals['nameAnimals']); ?>">
+    <p>Type: <?php echo htmlspecialchars($animals['typeAnimals']); ?></p>
+    <p>Prix: <?php echo htmlspecialchars($animals['priceAnimals']); ?>€</p>
 
-<form method="post" action="cart.php">
-    <input type="hidden" name="product_id" value="<?php echo $animals['idAnimals']; ?>">
-    <button type="submit" name="add_to_cart">Ajouter au panier</button>
-</form>
+    <form method="post" action="cart.php">
+        <input type="hidden" name="product_id" value="<?php echo $animals['idAnimals']; ?>">
+        <button class="add_to_cart" type="submit" name="add_to_cart">Ajouter au panier</button>
+    </form>
+</div>
 
 <h2>Donnez votre avis</h2>
 <?php if (isset($_SESSION['firstname'])): ?>
-    <form action="" method="post">
-        <label>Commentaire :</label>
-        <textarea name="comment" required></textarea>
+    <form class="form" action="" method="post">
+        <div class="comment-container">
+            <label>Commentaire :</label>
+            <textarea name="comment" required></textarea>
+        </div>
         <input type="hidden" name="note" id="note" value="0">
         <div class="star-rating">
             <?php for ($i = 1; $i <= 5; $i++): ?>
                 <span class="star" data-note="<?php echo $i; ?>">★</span>
             <?php endfor; ?>
         </div>
-        <button type="submit" name="add_comment">Ajouter un commentaire</button>
+        <button class="add_comment_btn" type="submit" id="add_comment" name="add_comment">Ajouter un commentaire</button>
     </form>
 <?php else: ?>
     <p><a href="connexion.php">Connectez-vous</a> pour ajouter un commentaire</p>

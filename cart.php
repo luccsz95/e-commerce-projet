@@ -121,7 +121,7 @@ if (isset($_SESSION['idUser'])) {
                 <thead>
                     <tr>
                         <th class="name_product">Nom du produit</th>
-                        <th class="price_product">Prix</th>
+                        <th class="price_product">Prix par unitée</th>
                         <th class="quantity_product">Quantité</th>
                         <th class="actions">Actions</th>
                     </tr>

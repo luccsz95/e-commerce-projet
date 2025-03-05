@@ -60,7 +60,7 @@ $total_price = 0;
                 <thead>
                 <tr>
                     <th>Nom du produit</th>
-                    <th>Prix</th>
+                    <th>Prix par unitée</th>
                     <th>Quantité</th>
                 </tr>
                 </thead>
@@ -107,7 +107,11 @@ $total_price = 0;
 
             <form id="payment-form" method="post">
                 <p>Livrez à une autre adresse ? <a href="adresseUsers.php">Cliquer ici</a></p>
-                <input type="hidden" id="idAdresse" name="idAdresse" value="<?php echo htmlspecialchars($_SESSION['idAdresse']); ?>">
+                <?php
+                if(isset($_SESSION['idAdresse'])) {
+                    echo '<input type="hidden" id="idAdresse" name="idAdresse" value="' . htmlspecialchars($_SESSION['idAdresse']) . '">';
+                }
+                ?>
 
                 <div id="card-element"></div>
                 <button type="submit">Payer</button>

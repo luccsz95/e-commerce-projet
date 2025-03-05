@@ -2,8 +2,6 @@
 session_start();
 session_regenerate_id(true); // Régénérer l'ID de session pour éviter les attaques de fixation de session
 
-var_dump($_SESSION['idAdresse']);
-
 $servername = "localhost";
 $dbname = "e_commerce_project";
 $dbusername = "root";
@@ -13,9 +11,6 @@ $idUser = $_SESSION['user_id'];
 $cart = $_SESSION['cart'];
 $amount = $_SESSION['total_price'];
 $idAdresse = $_SESSION['idAdresse'];
-var_dump($_SESSION['idAdresse']);
-//var_dump($idUser);
-//var_dump($amount);
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
@@ -29,23 +24,24 @@ try {
 
     $idCommand = $conn->lastInsertId();
 
-    $sqlDetails = $conn->prepare("INSERT INTO command_details (idCommand, idAnimals, idAdresse) VALUES (:idCommand, :idAnimals, :idAdresse)");
+    $sqlDetails = $conn->prepare("INSERT INTO command_details (idCommand, idAnimals, idAdresse, quantity) VALUES (:idCommand, :idAnimals, :idAdresse, :quantity)");
 
-    foreach ($_SESSION['cart'] as $idAnimals) {
+    foreach ($cart as $item) {
         $sqlDetails->execute([
             'idCommand' => $idCommand,
-            'idAnimals' => $idAnimals,
-            'idAdresse' => $idAdresse
+            'idAnimals' => $item['product_id'],
+            'idAdresse' => $idAdresse,
+            'quantity' => $item['quantity']
         ]);
     }
 
-    echo json_encode(['success' => 'Commande validée avec succès']);
+    // Vider le panier après l'insertion des détails de la commande
+    $_SESSION['cart'] = [];
+    $_SESSION['total_price'] = 0;
 
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }
-
-
 ?>
 
 <!doctype html>
@@ -60,6 +56,6 @@ try {
 <body>
 
 <?php include "navbar.php"?>
-    <h1>toto</h1>
+    <h1>Commande validée avec succès !</h1>
 </body>
 </html>

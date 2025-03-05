@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 exit();
             } else {
                 echo "<p style='color: red;'>Mot de passe incorrect.</p>";
+                echo "<a href='admin.html'>Réessayer</a>";
             }
 
         } else {
