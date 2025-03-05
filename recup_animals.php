@@ -1,5 +1,11 @@
 <?php
 include 'bdd.php';
+
+$servername = "localhost";
+$dbname = "e_commerce_project";
+$dbusername = "root";
+$dbpassword = "";
+
 header('Content-Type: text/html; charset=UTF-8');
 
 if (!isset($_GET['search_term']) || empty(trim($_GET['search_term']))) {
@@ -10,12 +16,12 @@ if (!isset($_GET['search_term']) || empty(trim($_GET['search_term']))) {
 
 $searchTerm = '%' . trim($_GET['search_term']) . '%';
 
-$sql = "SELECT nameAnimals 
-        FROM animals 
-        WHERE nameAnimals LIKE :search_term 
-        LIMIT 10";
+$sql = "SELECT nameAnimals FROM animals WHERE nameAnimals LIKE :search_term LIMIT 10";
 
-$stmt = $pdo->prepare($sql);
+$conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$stmt = $conn->prepare($sql);
 $stmt->execute(['search_term' => $searchTerm]);
 
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -27,3 +33,4 @@ if ($results) {
 } else {
     echo '<option value="">Aucun produit trouvé.</option>';
 }
+?>

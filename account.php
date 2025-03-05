@@ -35,7 +35,7 @@ try {
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $newLastname = htmlspecialchars(trim($_POST["lastname"]));
-        $newfirstname = htmlspecialchars(trim($_POST["firstname"]));
+        $newFirstname = htmlspecialchars(trim($_POST["firstname"]));
         $newEmail = htmlspecialchars(trim($_POST["email"]));
         $newPhonenumber = htmlspecialchars(trim($_POST["phonenumber"]));
         $newAddress = htmlspecialchars(trim($_POST["address"]));
@@ -45,7 +45,7 @@ try {
             $sql = "UPDATE users SET lastname = :lastname, firstname = :firstname, email = :email, phonenumber = :phonenumber" . ($newPassword ? ", password = :password" : "") . " WHERE idUser = :idUser";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':lastname', $newLastname);
-            $stmt->bindParam(':firstname', $newfirstname);
+            $stmt->bindParam(':firstname', $newFirstname);
             $stmt->bindParam(':email', $newEmail);
             $stmt->bindParam(':phonenumber', $newPhonenumber);
             if ($newPassword) {
@@ -60,7 +60,7 @@ try {
             $stmt->execute();
 
             $_SESSION["email"] = $newEmail;
-            $_SESSION["firstname"] = $newfirstname;
+            $_SESSION["firstname"] = $newFirstname;
             $_SESSION["lastname"] = $newLastname;
 
             echo "<p style='color: green'>Votre compte a bien été mis à jour</p>";
@@ -107,6 +107,10 @@ $conn = null;
 
     <label for="password">Mot de passe :</label>
     <input type="password" name="password" id="password">
+
+    <!-- Bouton pour accéder à adresseUsers.php -->
+    <!--<p>Gérer vos adresses :</p>
+    <button class="button-adresses"><a href="adresseUsers.php" style="text-decoration: none; color: white;">Gérer mes adresses</a></button>-->
 
     <input type="submit" value="Mettre à jour">
 </form>
