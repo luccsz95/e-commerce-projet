@@ -57,5 +57,6 @@ try {
 
 <?php include "navbar.php"?>
     <h1>Commande validée avec succès !</h1>
+    <p>Merci pour votre achat. Vous recevrez un email de confirmation sous peu.</p>
 </body>
 </html>

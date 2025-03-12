@@ -70,8 +70,8 @@ $conn = null;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/view_account.css">
-    <title>Mon Profil</title>
+    <link rel="stylesheet" href="style/command_history.css">
+    <title>Historique de commandes</title>
 </head>
 
 <body>
@@ -79,19 +79,26 @@ $conn = null;
     <br><br><br><br><br><br><br>
 
     <div class="container">
-        <h1>Mon Profil</h1>
-        <p><strong>Nom :</strong> <?php echo htmlspecialchars($user['lastname']); ?></p>
-        <p><strong>Prénom :</strong> <?php echo htmlspecialchars($user['firstname']); ?></p>
-        <p><strong>Email :</strong> <?php echo htmlspecialchars($user['email']); ?></p>
-        <p><strong>Numéro de téléphone :</strong> <?php echo htmlspecialchars($user['phonenumber']); ?></p>
-        <p><strong>Adresses :</strong></p>
-        <ul>
-            <?php foreach ($addresses as $address): ?>
-                <li><?php echo htmlspecialchars($address['adresseUsers']); ?></li>
-            <?php endforeach; ?>
-        </ul>
-        <a href="account.php" class="information">Modifier mes informations</a>
-        <a href="command_history.php" class="information">Voir mon historique de commande</a>
+        <h1>Historique des commandes</h1>
+        <?php if (!empty($groupedOrders)): ?>
+            <ul>
+                <?php foreach ($groupedOrders as $orderId => $order): ?><br>
+                    <li>
+                        <strong>Date de commande : <?php echo htmlspecialchars($order['date']); ?></strong><br><br>
+                        Produits :
+                        <ul>
+                            <?php foreach ($order['products'] as $product): ?>
+                                <li><?php echo htmlspecialchars($product['name']); ?> - Quantité : <?php echo htmlspecialchars($product['quantity']); ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                        <br>
+                        Montant total : <?php echo htmlspecialchars($order['amount']); ?> €
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php else: ?>
+            <p>Aucune commande trouvée.</p>
+        <?php endif; ?>
     </div>
 
     <?php include "footer.php" ?>
