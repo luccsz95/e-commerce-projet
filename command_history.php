@@ -85,7 +85,7 @@ $conn = null;
                 <?php foreach ($groupedOrders as $orderId => $order): ?><br>
                     <li>
                         <strong>Date de commande : <?php echo htmlspecialchars($order['date']); ?></strong><br><br>
-                        Produits :
+                        <u>Produits :</u>
                         <ul>
                             <?php foreach ($order['products'] as $product): ?>
                                 <li><?php echo htmlspecialchars($product['name']); ?> - Quantité : <?php echo htmlspecialchars($product['quantity']); ?></li>

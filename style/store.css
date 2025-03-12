@@ -61,7 +61,7 @@ a:hover {
     justify-content: center;
     align-items: center;
     gap: 20px; /* Espacement entre les sliders */
-    width: 100%;
+    width: 200%;
     margin-top: 10px;
 }
 
@@ -89,8 +89,6 @@ a:hover {
     font-weight: bold;
     margin-top: 10px;
 }
-
-
 
 /* Section des produits */
 .products {
