@@ -67,6 +67,10 @@ if ($tables) {
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($rows) {
+            // Récupérer le nom de la colonne de clé primaire
+            $primaryKeyStmt = $conn->query("SHOW KEYS FROM $tableName WHERE Key_name = 'PRIMARY'");
+            $primaryKey = $primaryKeyStmt->fetch(PDO::FETCH_ASSOC)['Column_name'];
+
             // Afficher les en-têtes de colonne
             echo "<table>";
             echo "<tr>";
@@ -85,11 +89,10 @@ if ($tables) {
 
                 // Ajouter des boutons pour modifier et supprimer
                 echo "<td>";
-                $idColumn = array_keys($rows[0])[0]; // Prendre la première colonne qui est généralement l'ID
-                if ($tableName != 'users') {
-                    echo "<a href='edit.php?table=$tableName&id={$row[$idColumn]}'>Modifier</a> | ";
+                if ($tableName != 'users' && $tableName != 'command' && $tableName != 'command_details') {
+                    echo "<a href='edit.php?table=$tableName&primaryKey=$primaryKey&id={$row[$primaryKey]}'>Modifier</a> | ";
                 }
-                echo "<a href='delete.php?table=$tableName&id={$row[$idColumn]}' onclick='return confirm(\"Êtes-vous sûr de vouloir supprimer cet enregistrement ?\");'>Supprimer</a>";
+                echo "<a href='delete.php?table=$tableName&primaryKey=$primaryKey&id={$row[$primaryKey]}' onclick='return confirm(\"Êtes-vous sûr de vouloir supprimer cet enregistrement ?\");'>Supprimer</a>";
                 echo "</td>";
 
                 echo "</tr>";

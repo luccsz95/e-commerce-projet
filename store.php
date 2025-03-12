@@ -23,15 +23,23 @@ try {
 
     $filterCondition = [];
     if (isset($_GET['filter_dog'])) {
-        $filterCondition[] = "typeAnimals = 'Dog'";
+        $filterCondition[] = "typeAnimals = 'Chiens'";
     }
 
     if (isset($_GET['filter_cat'])) {
-        $filterCondition[] = "typeAnimals = 'Cat'";
+        $filterCondition[] = "typeAnimals = 'Chat'";
     }
 
     if (isset($_GET['filter_turtle'])) {
-        $filterCondition[] = "typeAnimals = 'Turtle'";
+        $filterCondition[] = "typeAnimals = 'Tortue'";
+    }
+
+    if (isset($_GET['filter_lapin'])) {
+        $filterCondition[] = "typeAnimals = 'Lapin'";
+    }
+
+    if (isset($_GET['filter_panda'])) {
+        $filterCondition[] = "typeAnimals = 'Panda'";
     }
 
     if (!empty($filterCondition)) {
@@ -80,18 +88,35 @@ try {
 <div class="navbar">
     <?php include 'navbar.php'; ?>
 </div>
-<br><br><br><br><br><br><br>
+<br><br><br><br><br><br>
 <h1 class="store-title">Choix des animaux</h1>
 
 <form method="get" class="filter-form" id="filter-form">
     <label>
         <input type="checkbox" name="filter_dog" value="Dog" <?php echo isset($_GET['filter_dog']) ? 'checked' : ''; ?>>
         Chien
+    </label>
+
+    <label>
         <input type="checkbox" name="filter_cat" value="Cat" <?php echo isset($_GET['filter_cat']) ? 'checked' : ''; ?>>
         Chat
+    </label>
+
+    <label>
         <input type="checkbox" name="filter_turtle" value="Turtle" <?php echo isset($_GET['filter_turtle']) ? 'checked' : ''; ?>>
         Tortue
     </label>
+
+    <label>
+        <input type="checkbox" name="filter_lapin" value="Lapin" <?php echo isset($_GET['filter_lapin']) ? 'checked' : ''; ?>>
+        Lapin
+    </label>
+
+    <label>
+        <input type="checkbox" name="filter_panda" value="Panda" <?php echo isset($_GET['filter_panda']) ? 'checked' : ''; ?>>
+        Panda
+    </label>
+
     <div class="price-slider">
         <input type="range" name="price_min" min="<?php echo $minPrice; ?>" max="<?php echo $maxPrice; ?>" value="<?php echo isset($_GET['price_min']) ? $_GET['price_min'] : $minPrice; ?>" step="1" style="width: 15%" id="minPrice">
         <input type="range" name="price_max" min="<?php echo $minPrice; ?>" max="<?php echo $maxPrice; ?>" value="<?php echo isset($_GET['price_max']) ? $_GET['price_max'] : $maxPrice; ?>" step="1" style="width: 15%" id="maxPrice">

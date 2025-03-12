@@ -153,6 +153,11 @@ try {
         background-color: #255d27;
     }
 
+    .connected-add-comment {
+        text-align: center;
+        margin: 20px 0;
+    }
+
     .comment-container {
         display: flex;
         flex-direction: column;
@@ -230,7 +235,7 @@ try {
         <button class="add_comment_btn" type="submit" id="add_comment" name="add_comment">Ajouter un commentaire</button>
     </form>
 <?php else: ?>
-    <p><a href="connexion.php">Connectez-vous</a> pour ajouter un commentaire</p>
+    <p class="connected-add-comment"><a href="connexion.php">Connectez-vous</a> pour ajouter un commentaire</p>
 <?php endif; ?>
 
 <div class="comments-section">

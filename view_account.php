@@ -101,7 +101,7 @@ $conn = null;
             transition: background 0.3s;
         }
 
-        a:hover {
+        .information:hover {
             background-color: #1f5a21;
         }
 
