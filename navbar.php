@@ -20,9 +20,9 @@ if (isset($_SESSION['email'])) {
     $stmt = $conn->prepare($query);
     $stmt->bindParam(':email', $_SESSION['email']);
     $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $userA = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($user && $user['idUser'] == 0) {
+    if ($userA && $userA['idUser'] == 0) {
         $isAdmin = true;
     }
 }
