@@ -53,7 +53,9 @@ try {
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
-            echo "Enregistrement mis à jour avec succès.";
+            echo "Enregistrement mis à jour avec succès.
+            <a href='admin_dashboard.php'>Retour au tableau de bord admin</a>
+            ";
             exit();
         }
     } else {

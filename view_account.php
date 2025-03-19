@@ -22,37 +22,21 @@ try {
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    /*var_dump($user);
+    echo "--------------------";*/
+
     if ($user) {
         $_SESSION['user_id'] = $user['idUser'];
+
+        /*var_dump($user['idUser']);
+        echo "--------------------";
+        var_dump($_SESSION['user_id']);
+        exit();*/
 
         $stmt = $conn->prepare("SELECT adresseUsers FROM adresse WHERE idUsers = :idUsers");
         $stmt->bindParam(':idUsers', $user['idUser']);
         $stmt->execute();
         $addresses = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Retrieve the user's order history
-        $stmt = $conn->prepare("
-            SELECT c.idCommand, c.commandDate, c.amount, a.nameAnimals, cd.quantity
-            FROM command c
-            INNER JOIN command_details cd ON c.idCommand = cd.idCommand
-            INNER JOIN animals a ON a.idAnimals = cd.idAnimals
-            WHERE c.idUsers = :idUsers
-            ORDER BY c.idCommand, a.nameAnimals;
-        ");
-        $stmt->bindParam(':idUsers', $user['idUser']);
-        $stmt->execute();
-        $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Group products by order ID
-        $groupedOrders = [];
-        foreach ($orders as $order) {
-            $groupedOrders[$order['idCommand']]['date'] = $order['commandDate'];
-            $groupedOrders[$order['idCommand']]['amount'] = $order['amount'];
-            $groupedOrders[$order['idCommand']]['products'][] = [
-                'name' => $order['nameAnimals'],
-                'quantity' => $order['quantity']
-            ];
-        }
     } else {
         echo "Utilisateur introuvable";
         exit;

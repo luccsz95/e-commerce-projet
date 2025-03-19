@@ -11,6 +11,9 @@ if (!isset($_SESSION['admin'])) {
 $username = isset($_SESSION['admin']) ? $_SESSION['admin'] : 'Utilisateur';
 
 echo "<h1>Bienvenue, $username !</h1>";
+echo "<h2>Tableau de Bord Admin</h2>";
+echo "<p><a href='index.php'>Retour à la page d'accueil</a></p>";
+echo "<p><a href='logout.php'>Se déconnecter</a></p>";
 
 // Connexion à la base de données
 $servername = "localhost";
