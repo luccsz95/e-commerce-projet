@@ -38,79 +38,13 @@ try {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style/adresseUsers.css">
     <title>Entrer votre adresse</title>
 </head>
 <body>
 
 <style>
-    /* ✅ Style général */
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        text-align: center;
-    }
 
-    /* ✅ Conteneur du formulaire */
-    .add-adresses-form {
-        background: white;
-        max-width: 400px;
-        margin: 30px auto;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    /* ✅ Style des labels */
-    label {
-        display: block;
-        font-weight: bold;
-        margin: 10px 0 5px;
-        font-size: 14px;
-    }
-
-    /* ✅ Champs de saisie */
-    input[type="text"] {
-        width: 70%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 14px;
-    }
-
-    /* ✅ Bouton Valider */
-    input[type="submit"] {
-        background-color: #2e7d32;
-        color: white;
-        padding: 10px 15px;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background 0.3s, transform 0.2s;
-        margin-top: 15px;
-    }
-
-    /* ✅ Effet hover */
-    input[type="submit"]:hover {
-        background-color: #1b5e20;
-        transform: scale(1.05);
-    }
-
-    /* ✅ Responsive */
-    @media (max-width: 600px) {
-        form {
-            width: 90%;
-            padding: 15px;
-        }
-
-        input[type="text"] {
-            font-size: 12px;
-        }
-
-        input[type="submit"] {
-            font-size: 14px;
-        }
-    }
 
 </style>
 

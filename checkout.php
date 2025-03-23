@@ -96,7 +96,7 @@ $total_price = 0;
                 <select name="address" id="address" required>
                     <?php foreach ($addresses as $address):
                         $isSelected = ($address['idAdresse'] == $_SESSION['idAdresse']) ? 'selected' : '';
-                        ?>
+                    ?>
                         <option value="<?php echo htmlspecialchars($address['idAdresse']); ?>" <?php echo $isSelected; ?>>
                             <?php echo htmlspecialchars($address['adresseUsers']); ?>
                         </option>

@@ -103,7 +103,7 @@ $conn = null;
     <input type="text" name="phonenumber" id="phonenumber" value="<?php echo htmlspecialchars($user['phonenumber']); ?>" required>
 
     <label for="address">Adresse :</label>
-    <input type="text" name="address" id="address" value="<?php echo htmlspecialchars($address); ?>" required>
+    <input type="text" name="address" id="address" value="<?php echo htmlspecialchars($address); ?>" readonly required>
 
     <label for="password">Mot de passe :</label>
     <input type="password" name="password" id="password">
@@ -113,6 +113,11 @@ $conn = null;
     <button class="button-adresses"><a href="adresseUsers.php" style="text-decoration: none; color: white;">Gérer mes adresses</a></button>-->
 
     <input type="submit" value="Mettre à jour">
+</form>
+
+<p>Vous pouvez également modifier vos adresses :</p>
+<form class="form" action="ModifyAdresseUsers.php" method="post">
+    <input type="submit" value="Modifier vos adresses" formaction="ModifyAdresseUsers.php">
 </form>
 
 <p>Vous pouvez également supprimer votre compte :</p>

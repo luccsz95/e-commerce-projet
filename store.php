@@ -73,17 +73,6 @@ try {
 </head>
 <body>
 
-<style>
-    .imageAnimals {
-        width: 100px;
-        height: 100px;
-    }
-
-    .quantity-input {
-        width: 25px; /* Ajustez cette valeur selon vos besoins */
-    }
-</style>
-
 <!-- Barre de navigation -->
 <div class="navbar">
     <?php include 'navbar.php'; ?>
@@ -140,7 +129,7 @@ try {
                 <form method="POST" action="cart.php">
                     <input type="hidden" name="product_id" value="<?php echo $product['idAnimals']; ?>">
                     <input class="quantity-input" type="number" id="quantity" name="quantity" value="1" min="1">
-                    <br>
+                    <br><br>
                     <button type="submit" name="add_to_cart">Ajouter au panier</button>
                 </form>
         </div>
