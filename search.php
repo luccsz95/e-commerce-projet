@@ -49,13 +49,6 @@ if (isset($_GET['product'])) {
 </head>
 <body>
 
-<style>
-    .imageAnimals {
-        width: 100px;
-        height: 100px;
-    }
-</style>
-
 <?php include 'navbar.php'; ?>
 <br><br><br><br><br><br><br>
 <h1 class="store-title">Résultats pour "<?= htmlspecialchars($search_term) ?>"</h1>

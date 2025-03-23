@@ -144,9 +144,16 @@ a:hover {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
-.quantity-input {
-    margin: 10px auto;
+
+.imageAnimals {
+    width: 100px;
+    height: 100px;
 }
+
+.quantity-input {
+    width: 25px;
+}
+
 
 /* Responsive */
 @media (max-width: 768px) {
