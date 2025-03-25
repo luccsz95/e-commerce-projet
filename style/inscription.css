@@ -21,7 +21,7 @@ body {
 #chiffre.invalid,
 #special.invalid,
 #password-match.invalid {
-    color: gray;
+    color: red;
 }
 
 #caracteres.valid,
@@ -55,6 +55,53 @@ h2 {
     text-align: center;
     color: #2e7d32; /* Remplacement du bleu par un vert foncé */
 }
+
+.password-container {
+    display: flex;
+    align-items: center;
+    width: 94.5%;
+}
+
+.password-container input[type="password"], .password-container input[type="text"] {
+    flex: 1;
+    padding-right: 40px; /* Add space for the button */
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.password-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: -40px; /* Adjust to position the button inside the input */
+}
+
+.password-container button img {
+    width: 20px;
+    height: 20px;
+}
+
+/*#password {
+    width: 100%;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+#togglePassword {
+    margin: auto;
+    padding: 0;
+}
+
+#togglePasswordIcon {
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}*/
 
 /* Conteneur du formulaire */
 .signup {
@@ -91,14 +138,14 @@ input[type="password"] {
 input[type="text"]:focus,
 input[type="email"],
 input[type="password"]:focus {
-    border-color: #2e7d32; /* Remplacement du bleu par un vert foncé */
+    /*border-color: #2e7d32;*/
     outline: none;
     box-shadow: 0 0 5px rgba(46, 125, 50, 0.2);
 }
 
 /* Boutons */
 input[type="submit"],
-button {
+.insc-btn {
     padding: 0.8rem;
     font-size: 1rem;
     border: none;
@@ -108,22 +155,22 @@ button {
 }
 
 input[type="submit"] {
-    background-color: #2e7d32; /* Remplacement du bleu par un vert foncé */
+    background-color: #2e7d32;
     color: #fff;
 }
 
 input[type="submit"]:hover {
-    background-color: #255d27; /* Teinte plus foncée de vert */
+    background-color: #255d27;
     transform: scale(1.02);
 }
 
-button {
+.insc-btn {
     background-color: #e7e7e7;
     color: #333;
     margin-top: -0.5rem;
 }
 
-button:hover {
+.insc-btn:hover {
     background-color: #d4d4d4;
     transform: scale(1.02);
 }
@@ -153,7 +200,7 @@ button:hover {
     input[type="password"],
     input[type="email"],
     input[type="submit"],
-    button {
+    .insc-btn {
         font-size: 0.9rem;
         padding: 0.7rem;
     }
@@ -168,7 +215,7 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2e7d32; /* Vert foncé pour correspondre au style d'inscription */
+    background-color: #2e7d32;
     padding: 10px 20px;
     z-index: 1000; /* Assure que la navbar reste au-dessus des autres éléments */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -191,7 +238,7 @@ body {
 }
 
 .navbar-right a:hover {
-    background-color: #255d27; /* Teinte plus foncée de vert pour le survol */
+    background-color: #255d27;
     transform: scale(1.05);
 }
 

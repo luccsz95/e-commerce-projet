@@ -97,8 +97,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <label for="email">Email :</label>
             <input type="email" name="email" id="email" placeholder="Email" required>
 
-            <label for="password">Mot de passe :</label>
-            <input type="password" name="password" id="password" placeholder="Mot de passe" required>
+            <!--<label for="password">Mot de passe :</label>
+            <input type="password" name="password" id="password" placeholder="Mot de passe" required>-->
+            <label for="password">Mot de passe</label>
+            <div class="password-container">
+                <input type="password" name="password" id="password" placeholder="Mot de passe">
+                <button type="button" id="togglePassword">
+                    <img src="image/afficher_mdp.png" alt="Afficher" id="togglePasswordIcon">
+                </button>
+            </div>
 
             <input type="submit" value="Se connecter">
 
@@ -107,6 +114,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <p>Pas encore inscrit ? <a href="vue_inscription.php">Inscrivez-vous ici</a></p>
         <p>Mot de passe oublié ? <a href="reset_password.html">Cliquez ici</a></p>
     </div>
+
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordField = document.getElementById('password');
+        const passwordIcon = document.getElementById('togglePasswordIcon');
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        passwordIcon.src = type === 'password' ? 'image/afficher_mdp.png' : 'image/cacher_mdp.png';
+        passwordIcon.alt = type === 'password' ? 'Afficher' : 'Cacher';
+    });
+</script>
 
 </body>
 

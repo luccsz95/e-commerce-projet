@@ -51,8 +51,15 @@ $_SESSION['captcha'] = $getCaptchaCode;
             <input type="text" name="phonenumber" id="phonenumber" placeholder="Numéro de téléphone" maxlength="10">
 
             <label for="password">Mot de passe</label>
-            <input type="password" name="password" id="password" placeholder="Mot de passe">
+            <div class="password-container">
+                <input type="password" name="password" id="password" placeholder="Mot de passe">
+                <button type="button" id="togglePassword">
+                    <img src="image/afficher_mdp.png" alt="Afficher" id="togglePasswordIcon">
+                </button>
+            </div>
+
             <div class="force_password" id="force_password"></div>
+
             <div id="password-requirements">
                 <ul class="list-unstyled">
                     <li id="caracteres" class="invalid">Au moins 8 caractères</li>
@@ -63,7 +70,13 @@ $_SESSION['captcha'] = $getCaptchaCode;
             </div>
 
             <label for="confirm-password">Confirmer le mot de passe</label>
-            <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirmer le mot de passe">
+            <div class="password-container">
+                <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirmer le mot de passe">
+                <button type="button" id="toggleConfirmPassword">
+                    <img src="image/afficher_mdp.png" alt="Afficher" id="toggleConfirmPasswordIcon">
+                </button>
+            </div>
+
             <div class="password_confirm"></div>
 
             <label for="captcha">Recopier le code</label>
@@ -76,14 +89,8 @@ $_SESSION['captcha'] = $getCaptchaCode;
                 ?>
             </div>
 
-            <?php
-/*            if (isset($_SESSION['errorMessage'])) {
-                echo $_SESSION['errorMessage'];
-                unset($_SESSION['errorMessage']);
-            }
-            */?>
             <input type="text" name="captcha" id="captcha" placeholder="Recopier le code">
-            <input type="submit" name="button" value="S'inscrire">
+            <input type="submit" name="button" class="insc-btn" value="S'inscrire">
             <p>Déjà un compte ? <a href="connexion.php">Connectez-vous ici</a></p>
 
         </form>
@@ -91,10 +98,27 @@ $_SESSION['captcha'] = $getCaptchaCode;
         <p id="error-msg"></p>
     </div>
 
+    <script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordField = document.getElementById('password');
+        const passwordIcon = document.getElementById('togglePasswordIcon');
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        passwordIcon.src = type === 'password' ? 'image/afficher_mdp.png' : 'image/cacher_mdp.png';
+        passwordIcon.alt = type === 'password' ? 'Afficher' : 'Cacher';
+    });
+
+    document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
+        const confirmPasswordField = document.getElementById('confirm-password');
+        const confirmPasswordIcon = document.getElementById('toggleConfirmPasswordIcon');
+        const type = confirmPasswordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        confirmPasswordField.setAttribute('type', type);
+        confirmPasswordIcon.src = type === 'password' ? 'image/afficher_mdp.png' : 'image/cacher_mdp.png';
+        confirmPasswordIcon.alt = type === 'password' ? 'Afficher' : 'Cacher';
+    });
+    </script>
     <script src="validateForm.js"></script>
     <script src="inscription.js"></script>
 </body>
-
-<?php include "footer.php"?>
 
 </html>
