@@ -43,11 +43,6 @@ try {
 </head>
 <body>
 
-<style>
-
-
-</style>
-
 <?php include'navbar.php'?>
 <br><br><br><br><br><br><br>
     <h1>Entrer votre adresse</h1>

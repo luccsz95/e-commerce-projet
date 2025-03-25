@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('Europe/Paris');
+
 $servername = "localhost";
 $dbname = "e_commerce_project";
 $dbusername = "root";
@@ -29,11 +31,20 @@ try {
     exit;
 }
 
+/*var_dump($current_time);
 
+echo "-------------------";
+
+var_dump($date_inscription);
+
+echo "-------------------";*/
 
 $interval = $current_time->diff($date_inscription);
 
-if ($interval->i >= 15 || $interval->h > 24) {
+/*var_dump($interval);
+exit;*/
+
+if ($interval->i >= 15 || $interval->h > 0) {
     $delete_user = $conn->prepare('DELETE FROM users WHERE token = :token');
     $delete_user->execute(['token' => $token]);
     echo "<p style='color : red;'>Le lien a expiré. Veuillez vous réinscrire</p> <a href='vue_inscription.php'>Retour à l'inscription</a>";

@@ -24,14 +24,23 @@ try {
     $stmt->execute();
     $adresses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['address_id']) && isset($_POST['new_address'])) {
-        // Mettre à jour l'adresse sélectionnée
-        $stmt = $conn->prepare("UPDATE adresse SET adresseUsers = :newAddress WHERE idAdresse = :addressId AND idUsers = :idUser");
-        $stmt->bindParam(':newAddress', $_POST['new_address']);
-        $stmt->bindParam(':addressId', $_POST['address_id']);
-        $stmt->bindParam(':idUser', $idUser);
-        $stmt->execute();
-        echo "Adresse mise à jour avec succès";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST['address_id']) && isset($_POST['new_address'])) {
+            // Mettre à jour l'adresse sélectionnée
+            $stmt = $conn->prepare("UPDATE adresse SET adresseUsers = :newAddress WHERE idAdresse = :addressId AND idUsers = :idUser");
+            $stmt->bindParam(':newAddress', $_POST['new_address']);
+            $stmt->bindParam(':addressId', $_POST['address_id']);
+            $stmt->bindParam(':idUser', $idUser);
+            $stmt->execute();
+            echo "Adresse mise à jour avec succès";
+        } elseif (isset($_POST['delete_address_id'])) {
+            // Supprimer l'adresse sélectionnée
+            $stmt = $conn->prepare("DELETE FROM adresse WHERE idAdresse = :addressId AND idUsers = :idUser");
+            $stmt->bindParam(':addressId', $_POST['delete_address_id']);
+            $stmt->bindParam(':idUser', $idUser);
+            $stmt->execute();
+            echo "Adresse supprimée avec succès";
+        }
     }
 } catch (PDOException $e) {
     echo "Erreur de connexion : " . $e->getMessage();
@@ -51,8 +60,8 @@ try {
 <body>
 
 <?php include "navbar.php" ?>
-<br><br><br><br><br><br><br><br><br>
-<h1>Modifier votre adresse</h1>
+<br><br><br><br><br><br>
+<h1 class="commun-title">Modifier votre adresse</h1>
 
 <form action="" method="post" class="modify-address-form">
     <label for="address_id">Sélectionnez une adresse à modifier :</label>
@@ -65,10 +74,12 @@ try {
     </select>
 
     <label for="new_address">Nouvelle adresse :</label>
-    <input type="text" name="new_address" id="new_address" class="new_address" required>
+    <input type="text" name="new_address" id="new_address" class="new_address" style="width: auto" required>
 
     <button type="submit">Modifier l'adresse</button>
 </form>
+
+
 
 <?php include "footer.php" ?>
 

@@ -14,7 +14,7 @@ h1 {
     margin: 30px 0;
 }
 
-/* Formulaire */
+/* Formulaire de modification */
 .modify-address-form {
     background-color: #ffffff;
     max-width: 500px;
@@ -27,6 +27,19 @@ h1 {
     gap: 15px;
 }
 
+.delete-address-form {
+    background-color: #ffffff;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
 /* Labels */
 label {
     font-size: 16px;
@@ -35,7 +48,7 @@ label {
 }
 
 /* Sélecteur d'adresse */
-select {
+select, input[type="text"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ced4da;
@@ -43,18 +56,8 @@ select {
     font-size: 16px;
 }
 
-input[type="text"] {
-    width: 92.5%;
-    padding: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-/* Bouton de modification */
+/* Boutons */
 button {
-    background-color: #2E7D32;
-    color: white;
     font-size: 16px;
     border: none;
     padding: 10px;
@@ -63,13 +66,68 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
+/* Bouton Modifier */
+.modify-address-form button {
+    background-color: #2E7D32;
+    color: white;
+}
+
+.modify-address-form button:hover {
     background-color: #255d27;
+}
+
+/* Section Suppression des adresses */
+.delete-address-container {
+    max-width: 600px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Style des cartes d'adresses */
+.delete-address-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Texte adresse */
+.delete-address-form p {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #495057;
+    font-weight: bold;
+}
+
+/* Bouton Supprimer */
+.delete-address-form button {
+    background-color: #d32f2f;
+    color: white;
+    width: 100%;
+    max-width: 200px;
+}
+
+.delete-address-form button:hover {
+    background-color: #b71c1c;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    form {
+    .modify-address-form, .delete-address-container {
         max-width: 90%;
+    }
+
+    .delete-address-form {
+        width: 100%;
+    }
+
+    .delete-address-form button {
+        width: 100%;
     }
 }

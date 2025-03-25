@@ -82,6 +82,15 @@ input[type="password"] {
     background-color: #255d27;
 }
 
+.btn-add-modify-addresses {
+    display: flex;
+    justify-content: space-around;
+}
+
+.addAddress {
+    margin-left: 10px;
+}
+
 /* ✅ Bouton Mettre à jour */
 input[type="submit"] {
     background-color: #2e7d32;

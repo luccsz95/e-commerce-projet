@@ -54,10 +54,10 @@ try {
             $stmt->bindParam(':idUser', $user['idUser']);
             $stmt->execute();
 
-            $stmt = $conn->prepare("UPDATE adresse SET adresseUsers = :adresseUsers WHERE idUsers = :idUsers");
+            /*$stmt = $conn->prepare("UPDATE adresse SET adresseUsers = :adresseUsers WHERE idUsers = :idUsers");
             $stmt->bindParam(':adresseUsers', $newAddress);
             $stmt->bindParam(':idUsers', $user['idUser']);
-            $stmt->execute();
+            $stmt->execute();*/
 
             $_SESSION["email"] = $newEmail;
             $_SESSION["firstname"] = $newFirstname;
@@ -108,17 +108,16 @@ $conn = null;
     <label for="password">Mot de passe :</label>
     <input type="password" name="password" id="password">
 
-    <!-- Bouton pour accéder à adresseUsers.php -->
-    <!--<p>Gérer vos adresses :</p>
-    <button class="button-adresses"><a href="adresseUsers.php" style="text-decoration: none; color: white;">Gérer mes adresses</a></button>-->
-
     <input type="submit" value="Mettre à jour">
 </form>
 
-<p>Vous pouvez également modifier vos adresses :</p>
-<form class="form" action="ModifyAdresseUsers.php" method="post">
-    <input type="submit" value="Modifier vos adresses" formaction="ModifyAdresseUsers.php">
-</form>
+<p>Vous pouvez également modifier vos adresses ou en ajouter une nouvelle :</p>
+
+<div class="btn-add-modify-addresses">
+    <form class="form" action="ModifyAdresseUsers.php" method="post">
+        <input type="submit" value="Modifier vos adresses" formaction="ModifyAdresseUsers.php">
+    </form>
+</div>
 
 <p>Vous pouvez également supprimer votre compte :</p>
 <form class="form"  action="delete_account.php" method="post">
