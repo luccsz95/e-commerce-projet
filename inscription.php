@@ -42,6 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $token = bin2hex(random_bytes(16));
 
+        $test = $token;
+
         if ($stmt->rowCount() > 0) {
             echo "<p style='color: red;'>Cet email est déjà utilisé</p>";
         } else {
@@ -93,4 +95,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $conn = null;
 }
 ?>
-
